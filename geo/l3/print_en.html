@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unit 1 Lesson 3 · Finding Places with the Grid</title>
+<style>
+@page{size:A4;margin:14mm 14mm 16mm}
+*{box-sizing:border-box}
+body{margin:0;font-family:Georgia,"Times New Roman","Liberation Serif","Noto Serif SC","Songti SC","SimSun",serif;color:#1d1a16;font-size:10.5pt;line-height:1.65;background:#e9e4da}
+.sheet{max-width:210mm;margin:0 auto;background:#fff;padding:14mm}
+@media print{body{background:#fff}.sheet{padding:0;max-width:none}.noprint{display:none!important}}
+.noprint{position:sticky;top:0;background:#2F6680;color:#fff;padding:10px 16px;font-family:sans-serif;font-size:14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;z-index:5}
+.noprint button{font:inherit;border:0;border-radius:20px;padding:6px 16px;background:#fff;color:#2F6680;cursor:pointer}
+.noprint label{display:flex;gap:6px;align-items:center}
+h1{font-size:19pt;margin:0 0 2pt}
+h2{font-size:12.5pt;margin:14pt 0 5pt;padding-bottom:2pt;border-bottom:1.2pt solid #2F6680;color:#2F6680;break-after:avoid}
+h3{font-size:11pt;margin:9pt 0 3pt;break-after:avoid}
+.meta{font-size:9pt;color:#555;font-family:sans-serif;letter-spacing:.05em}
+.who{display:flex;gap:18pt;margin:8pt 0 4pt;font-size:10pt}.who span{flex:1;border-bottom:.6pt solid #333}
+.lines{margin:4pt 0}.lines i{display:block;height:20pt;border-bottom:.5pt solid #999}
+.q{margin:6pt 0;break-inside:avoid}
+.q .t{font-weight:700}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:1pt 14pt;margin:2pt 0 0 12pt}
+.opts span::before{content:attr(data-l) ". ";font-weight:700}
+.ans{display:none;color:#2F6680;font-size:9.5pt;margin-left:12pt}
+.teacher .ans{display:block}
+.box{border:.6pt solid #999;padding:6pt 9pt;border-radius:3pt;margin:5pt 0;break-inside:avoid}
+.key li{margin:1pt 0}
+.maps{display:grid;grid-template-columns:repeat(3,1fr);gap:6pt;margin:4pt 0}
+.maps svg{width:100%;height:auto;border:.5pt solid #bbb}
+.maps div{text-align:center;font-size:9pt;font-weight:700}
+.match td{padding:3pt 6pt;border-bottom:.5pt solid #ccc}.match{border-collapse:collapse;width:100%}
+.cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8pt}
+.cols .h{font-weight:700;font-size:9.5pt}
+.verse{text-align:center;font-size:13pt;margin:6pt 0 2pt}
+.small{font-size:9pt;color:#555}
+.chk td{padding:3pt 5pt;border:.5pt solid #bbb;vertical-align:top;font-size:9.5pt}.chk{border-collapse:collapse;width:100%}
+.pb{break-before:page}
+.grid4{display:grid;grid-template-columns:repeat(2,1fr);gap:4pt 14pt}.atl{position:relative;width:62%;margin:4pt 0}.atl img{width:100%;display:block}.atl .g{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(6,1fr)}.atl .g i{border:.6pt solid #2F6680}.tb td,.tb th{border:.5pt solid #999;padding:3pt 5pt;font-size:9.5pt}.tb{border-collapse:collapse;width:100%}.teacher span.ans{display:inline}
+</style><style>.teacher .hitc{background:#2F6680}</style></head>
+<body>
+<div class="noprint">
+  <b>Print this lesson</b>
+  <button onclick="doPrint()">Print / Save as PDF</button>
+  <label><input type="checkbox" id="tch" onchange="document.body.classList.toggle('teacher',this.checked)"> Show answers (teacher)</label>
+  <span id="tip" style="opacity:.85">If no print window appears, press Ctrl+P (⌘P on Mac) and choose “Save as PDF”.</span>
+</div>
+<div class="sheet">
+<div class="meta">Heaven·Earth·People Geography · Grade 7 · Unit 1 “Earth and Maps” · Lesson 3</div>
+<h1>Finding Places with the Grid</h1>
+<div class="who"><span>Name:</span><span>Class:</span><span>Date:</span></div>
+<div class="box key"><b>Textbook page · Key points</b>　Key sentence: <b>latitude first, then longitude, and after reading, check.</b><ul><li>Reading a point: look at N/S → count lines of latitude from the equator → look at E/W → count lines of longitude from the prime meridian; between two lines, estimate. Writing: 6°S, 107°E = −6.2, 106.8 on a phone; 60 minutes (′) = 1 degree.</li><li>Four mistakes: latitude and longitude swapped (latitude is never above 90°), north and south mixed up, east and west mixed up, missing numbers (treated as 0°, 0°, “Null Island”).</li><li>Three ways to check: letters, neighbors, another tool.</li></ul></div>
+<h2>1. Opening question (write now, answer again at the end)</h2>
+<p><b>A friend sends you the numbers “−8.4, 115.2” with no place name. Without a map app, can you find it on a globe? And once you find it, how do you know you have not got it wrong?</b></p>
+<div class="lines"><i></i><i></i><i></i></div>
+<h2>2. Warm-up</h2>
+<h3>a. “Coordinates” in daily life (not graded)</h3><div id="quiz-warm"></div>
+<h3>b. An atlas grid</h3>
+<p>Map of central Jakarta (columns A–F, rows 1–6). The National Monument is in C4. Write: Istiqlal Mosque is in ______ (<span class="ans">D3</span>), Jakarta Cathedral is in ______ (<span class="ans">E3</span>), Gambir Station is in ______ (<span class="ans">D4</span>). (Use the interactive map on a computer, or ask your teacher to print the color map.)</p>
+<h2 class="pb">3. Video 1 · Reading a point</h2>
+<div class="box key"><b>Key points</b><ul><li>Latitude first: look at N/S and count from the equator, then look at E/W and count from the prime meridian; where the two lines cross is the point (30°N, 31°E is Cairo).</li><li>Between two lines, estimate: 6°S is between the equator and 10°S, a little closer to 10°S.</li><li>Writing: 6°S, 107°E; a map app writes −6.2, 106.8, where a minus sign means south or west.</li></ul></div>
+<div id="quiz-v1"></div>
+<h3>A distress telegram (paper version)</h3>
+<p>In the early hours of 15 April 1912, the Titanic sent a telegram: “Position 41°46′N, 50°14′W”. (60 minutes = 1 degree)</p>
+<p>41°46′N is about ______°N, and 50°14′W is about ______°W. <span class="ans">about 41.8°N, about 50.2°W</span></p>
+<p>The wreck found on the sea floor in 1985 is at 41°44′N, 49°57′W. In which direction is it from the telegram position? ______ <span class="ans">east (slightly south), about 24 km</span></p>
+<h2 class="pb">4. Video 2 · Four common mistakes</h2>
+<div class="box key"><b>Key points</b><ul><li>Latitude and longitude swapped: latitude only goes up to 90°, so “latitude 107°” must be wrong.</li><li>North and south mixed up: 6°S written as 6°N is more than 1,300 km off. East and west mixed up: 107°E written as 107°W lands in the eastern Pacific.</li><li>Missing numbers: a record with no position is often put at 0°, 0° by computers (“Null Island” in the Gulf of Guinea).</li><li>After writing, ask three questions: Above 90°? North or south right? East or west right?</li></ul></div>
+<div id="quiz-v2"></div>
+<h3>Coordinate detective (paper version)</h3>
+<table class="tb"><tr><th>City</th><th>Coordinate a classmate wrote</th><th>The mistake</th><th>Corrected</th></tr>
+<tr><td>Cairo</td><td>30°S, 31°E</td><td><span class="ans">north and south mixed up</span></td><td><span class="ans">30°N, 31°E</span></td></tr>
+<tr><td>Rio de Janeiro</td><td>23°S, 43°E</td><td><span class="ans">east and west mixed up</span></td><td><span class="ans">23°S, 43°W</span></td></tr>
+<tr><td>Tokyo</td><td>140°N, 36°E</td><td><span class="ans">latitude and longitude swapped</span></td><td><span class="ans">36°N, 140°E</span></td></tr>
+<tr><td>Sydney</td><td>34°S, 151°W</td><td><span class="ans">east and west mixed up</span></td><td><span class="ans">34°S, 151°E</span></td></tr></table>
+<h2 class="pb">5. Video 3 · Checking your answer</h2>
+<div class="box key"><b>Key points</b><ul><li>Letters: N/S and E/W give the big block (N and E is Europe, Asia and northern Africa).</li><li>Neighbors: compare with a place you know (1°N, 104°E is northwest of Jakarta: Singapore).</li><li>Another tool: find it again on a globe, a flat map or a map app; only when both land in the same place is it right.</li></ul></div>
+<div id="quiz-v3"></div>
+<h3>Four postcards with no place names</h3>
+<table class="tb"><tr><th>Coordinate</th><th>City, country</th><th>Which way of checking I used</th></tr>
+<tr><td>64°N, 22°W</td><td><span class="ans">Reykjavík, Iceland</span></td><td></td></tr><tr><td>28°N, 85°E</td><td><span class="ans">Kathmandu, Nepal</span></td><td></td></tr><tr><td>13°S, 72°W</td><td><span class="ans">Cusco, Peru</span></td><td></td></tr><tr><td>19°S, 48°E</td><td><span class="ans">Antananarivo, Madagascar</span></td><td></td></tr></table>
+<h3>Observe and practice (in class): four points on my globe</h3>
+<table class="tb"><tr><th>Point</th><th>Near which country or city</th><th>Letters</th><th>Neighbors</th><th>Another tool</th></tr>
+<tr><td>① 55°N, 37°E</td><td><span class="ans">Moscow (Russia)</span></td><td>□</td><td>□</td><td>□</td></tr><tr><td>② 15°N, 32°E</td><td><span class="ans">Khartoum (Sudan)</span></td><td>□</td><td>□</td><td>□</td></tr><tr><td>③ 33°S, 71°W</td><td><span class="ans">Santiago (Chile)</span></td><td>□</td><td>□</td><td>□</td></tr><tr><td>④ 37°S, 175°E</td><td><span class="ans">Auckland (New Zealand)</span></td><td>□</td><td>□</td><td>□</td></tr></table>
+<h2>6. Think and write</h2>
+<div class="q"><p class="t">1. Retell: given “6°S, 107°E”, how do you find it on a globe step by step? How do you check it once you have found it?</p><div class="lines"><i></i><i></i><i></i><i></i></div>
+<div class="ans">Sample: look at S and count south from the equator to 6° (between 0° and 10°S, a little closer to 10°S); then look at E and count east from the prime meridian to 107°. The lines cross at Jakarta. Check: S and E put it in the south and east, among the islands of Southeast Asia; it is not far southeast of Singapore; find it again on a flat map.</div></div>
+<div class="q"><p class="t">2. Evaluate: a classmate says, “A phone finds any place with one tap, so learning to read the grid is useless.” Do you agree?</p><div class="lines"><i></i><i></i><i></i><i></i></div>
+<div class="ans">Sample: phones can be wrong too (the driver on the wrong side of the road, “Null Island”); with no signal or battery they cannot help; in books, old maps or when someone tells you a position you often have only numbers; reading the grid lets you check.</div></div>
+<h2>7. Scripture</h2>
+<div class="verse">And he made from one man every nation of mankind to live on all the face of the earth, having determined allotted periods and the boundaries of their dwelling place, that they should seek God, and perhaps feel their way toward him and find him. Yet he is actually not far from each one of us.</div>
+<div class="small" style="text-align:center">Acts 17:26–27 (ESV)</div>
+<div class="cols" style="margin-top:6pt"><div><div class="h">What the verse says</div><div class="lines"><i></i><i></i><i></i></div></div><div><div class="h">How we check it</div><div class="lines"><i></i><i></i><i></i></div></div><div><div class="h">So when I look for a place, I should…</div><div class="lines"><i></i><i></i><i></i></div></div></div>
+<h2>8. Wrap-up: answer the opening question again</h2>
+<p><b>Where is “−8.4, 115.2”? How do you know you have not got it wrong?</b> (Use: latitude first, estimate, check.)</p>
+<div class="lines"><i></i><i></i><i></i></div>
+<div class="ans">Answer: 8.4°S, 115.2°E, the island of Bali, Indonesia, about 1,000 km east of Jakarta.</div>
+<p><b>After class:</b> choose three places (your school, a big city, a place you would like to learn about). Give a family member only the latitude and longitude, ask them to find each on a globe, and help them check with the three ways. Do not write down where your home is.</p>
+<p><b>Get ready for the next lesson:</b> bring your globe. In Lesson 4 we will look at Matteo Ricci’s <i>Complete Map of the Myriad Countries of the World</i> and look for its grid lines.</p>
+<h2>Unit checklist</h2>
+<table class="chk">
+<tr><td style="width:18%"><b>G7.1.1</b> Core</td><td>Make a simple globe and locate four points with the grid; mark the equator, prime meridian, tropics and polar circles; explain how hemispheres are divided. (“Locate four points” is done in this lesson.)</td><td style="width:16%">□ Needs support<br>□ Achieved</td></tr>
+<tr><td><b>G7.1.2</b> Core</td><td>Use a scale to convert two distances; read contour lines for height and slope, and layer tints.</td><td>□ Needs support<br>□ Achieved</td></tr>
+<tr><td><b>G7.1.3</b> Synthesis</td><td>Use history and data to explain Earth’s shape and size, compare the uses of two kinds of maps, describe where the seven continents and four oceans are.</td><td>□ Needs support<br>□ Achieved</td></tr>
+<tr><td><b>G7.1.4</b> Project</td><td>Draw a map of your hometown or an imaginary campus; explain its legend, orientation and why you chose it; add one everyday use of digital maps or satellite navigation.</td><td>□ Needs support<br>□ Achieved</td></tr>
+</table>
+<p class="small" style="margin-top:10pt">Photos and maps: Carpathia taking in the lifeboats (1912), the Titanic’s bow (NOAA / Institute for Exploration, 2004), Singapore (NASA STS-50), Rio de Janeiro (NASA STS-65), Sydney (NASA Terra ASTER), ocean buoy (NASA, 2012), all public domain; Cairo satellite image Esri World Imagery (Esri, Maxar); Tokyo David Kernan (CC BY 4.0); Reykjavík Jakub Hałun (CC BY-SA 4.0); Kathmandu Vyacheslav Argenberg (CC BY 4.0); Cusco Diego Delso (CC BY-SA 4.0); Antananarivo Bernard Gagnon (CC BY-SA 3.0); Bali Jorge Franganillo (CC BY 2.0); central Jakarta map © OpenStreetMap contributors (ODbL). World maps from Natural Earth (public domain). Scripture quotations are from the ESV® Bible, © 2001 by Crossway, used by permission.</p>
+</div>
+<script>
+var QZ={"quiz-warm":[{"q":"An atlas index says “Jakarta, page 32, C4”. What does C4 mean?","o":["The square in column C, row 4 on that page’s map","Section C of page 4","Jakarta is beside highway C4","The map’s scale is C4"],"e":"An atlas draws a grid on the map and names one square with a letter and a number. Put the two together and you narrow it down to one small square."},{"q":"In a spreadsheet, are “B3” and “3B” the same cell?","o":["People agree to write the column first, then the row, so “3B” breaks the rule","Yes, the order does not matter","“3B” is to the right of “B3”","Neither is a cell"],"e":"When two numbers give a position, everyone has to agree on the order. Latitude and longitude have an agreed order too, and this lesson teaches it."},{"q":"You long-press a place on a phone map and see “−6.2, 106.8”. What does the minus sign tell you?","o":["The place is in the south latitudes (south of the equator)","The place is underground","The temperature is below zero","The number is wrong"],"e":"Review from Lesson 2: on a phone map, a negative latitude means south and a negative longitude means west."},{"q":"When you book a ride, the driver sometimes stops on the wrong side of the road. What is the most likely reason?","o":["Phone positions have errors, so the location is not always exact","The driver cannot read","It is easier to park there; nothing to do with location","The road is not on the map"],"e":"The numbers a phone gives can be off. So after you find a place, it is good to check it. The third video is all about this."},{"q":"You want to tell a friend far away where you are. Is sending just “106.8” enough?","o":["No. With one number you only know which line you are on","Yes, one number is enough","Yes, everyone knows it is longitude","No, you need three numbers"],"e":"With only the longitude you know which meridian you are on, and that line runs all the way from the North Pole to the South Pole. You also need the latitude."}],"quiz-v1":[{"q":"When you read a coordinate, what do you read first?","o":["Latitude","Longitude","Whichever is bigger","Either one"],"h":"Like a movie ticket: the row first, then the seat.","ok":"Right.","e":"Everyone agrees: latitude first, then longitude. A geography book writes “6°S, 107°E” and a phone writes “−6.2, 106.8”; latitude comes first in both."},{"q":"To find 30°N, 31°E, what is step one?","o":["Look at the latitude letter N: north of the equator","Count east from the prime meridian","Find Cairo first","Look at E first"],"h":"Which letter do you look at in step one of the four steps?","ok":"That’s right.","e":"Step one: N or S tells you which side of the equator. Step two: count north from the equator to 30°. Only then do you read the longitude."},{"q":"On a globe, between which two lines of latitude is 6°S? Which one is it closer to?","o":["Between the equator and 10°S, a little closer to 10°S","Between the equator and 10°N, closer to the equator","Between 10°S and 20°S","Exactly on 10°S"],"h":"6 is a little more than 5.","ok":"Good estimate.","e":"Split the space from 0° to 10° into ten small parts. 6° is the sixth part, past halfway, so it is a little closer to 10°S."},{"q":"A phone shows “−33.9, 18.4”. How is this written in a geography book?","o":["33.9°S, 18.4°E","33.9°N, 18.4°E","18.4°S, 33.9°E","33.9°S, 18.4°W"],"h":"The first number is latitude; the minus sign means south. The second number has no minus sign.","ok":"Right.","e":"Latitude first; a negative latitude is south and a positive longitude is east. This is Cape Town in South Africa, which you visited in the Lesson 2 captain game."},{"q":"Which of these is written in the right order?","o":["6°S, 107°E","107°E, 6°S","E107°, S6°","6°, 107°"],"h":"Latitude first, and the letter goes after the number.","ok":"Correct.","e":"Latitude first, longitude second, and each number needs its letter (or a minus sign). Leave out either and it is incomplete."}],"quiz-v2":[{"q":"Which of these coordinates cannot exist on Earth?","o":["95°N, 20°E","20°N, 95°E","60°S, 170°W","0°, 0°"],"h":"What is the largest possible latitude?","ok":"You found it.","e":"Latitude only goes up to 90° (the North and South Poles). 95°N does not exist; most likely latitude and longitude were swapped."},{"q":"Jakarta’s 6°S is written as 6°N. About how far does the point move?","o":["More than 1,300 km","A dozen kilometers","100,000 km","It does not move"],"h":"From 6° south of the equator to 6° north is 12° in all. Each degree of latitude is about 111 km.","ok":"Right.","e":"12 × 111 ≈ 1,330 km, so the point jumps from Jakarta into the South China Sea. One letter, more than a thousand kilometers off."},{"q":"What is “Null Island”?","o":["The patch of sea at 0°, 0°, where computers often put records with no position","A real small island west of Africa","A lighthouse on the prime meridian","The name of a country"],"h":"When a record has no position, what numbers does a computer often use?","ok":"Right.","e":"0°, 0° is open sea in the Gulf of Guinea. There is no island there, only a weather buoy. If a point lands there, suspect that the position is missing."},{"q":"After you write a coordinate, which three questions should you ask?","o":["Is the latitude above 90°? Is north or south right? Is east or west right?","Which country? How many people? What weather?","Which phone? Good signal? Enough battery?","How far from home? Which bus? How much is a ticket?"],"h":"They match the first three of the four mistakes.","ok":"Well remembered.","e":"The three questions guard against: latitude and longitude swapped, north and south mixed up, east and west mixed up."},{"q":"About how many degrees is “50°14′W” in the telegram? (60 minutes = 1 degree)","o":["About 50.2°W","About 50.14°W","About 51.4°W","About 64°W"],"h":"14 minutes is 14/60 of a degree.","ok":"Well converted.","e":"14 ÷ 60 ≈ 0.23, so 50°14′ is about 50.2°. The mark ′ means minutes, not a decimal point."},{"q":"About how many degrees is 41°46′N?","o":["About 41.8°N","About 41.46°N","About 46°N","About 42.6°N"],"h":"46 minutes is 46/60 of a degree, more than half.","ok":"Right.","e":"46 ÷ 60 ≈ 0.77, so 41°46′ is about 41.8°, a little farther north than 41.5°."}],"quiz-v3":[{"q":"What are the three ways of checking from the video?","o":["Check the letters, check the neighbors, use another tool","Check the color, the size and the shape","Ask a teacher, a classmate and a parent","Write it again, read it again, memorize it again"],"h":"Letters, a place you know, a different map.","ok":"Right.","e":"The letters give the big block; the neighbors compare it with a place you know; another tool finds it a second time."},{"q":"A point is N and W. Which continent does it most likely land in?","o":["North America","Australia","Asia","Antarctica"],"h":"North of the equator, west of the prime meridian.","ok":"Right.","e":"The north-and-west block is mostly North America (plus a small western part of Europe and Africa, and the Atlantic and Pacific Oceans)."},{"q":"Why find the place again with another tool?","o":["When both land in the same place, you know you have not got it wrong","Because the first tool is always wrong","To spend more time","Because the teacher says so"],"h":"Once, you might misread; twice…","ok":"Well said.","e":"Using another tool is like calling a second witness. When two witnesses agree, the result can be trusted."},{"q":"Singapore is at about 1°N. What does that tell you?","o":["It is almost on the equator","It is near the North Pole","It is in the Southern Hemisphere","It is on the prime meridian"],"h":"Where does latitude start counting from?","ok":"Right.","e":"1° of latitude is only about 111 km from the equator, so Singapore is almost on the equator."}]};
+
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+Object.keys(QZ).forEach(function(id){var el=document.getElementById(id);if(!el)return;var h='';QZ[id].forEach(function(it,i){
+  var L='ABCDE',os=it.o.map(function(o,k){return {o:o,k:k}});
+  var r=(i*7+3)%os.length;os=os.slice(r).concat(os.slice(0,r)); // 固定打乱, 正确答案不总在 A
+  if(id==='quiz-warm')os.push({o:'Not sure yet',k:-1});
+  var right=os.findIndex(function(x){return x.k===0});
+  h+='<div class="q"><div class="t">'+(i+1)+'. '+esc(it.q)+'</div><div class="opts">'+os.map(function(x,j){return '<span data-l="'+L[j]+'">'+esc(x.o)+'</span>'}).join('')+'</div><div class="ans">Answer: '+L[right]+'. '+esc(it.e)+'</div></div>'});
+  el.innerHTML=h});
+if(location.hash==='#teacher'){document.getElementById('tch').checked=true;document.body.classList.add('teacher')}
+function doPrint(){try{window.print()}catch(e){}}
+</script>
+</body></html>

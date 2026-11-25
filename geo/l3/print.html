@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>打印版 · 天地人地理 第一单元 第3课 · 用经纬网找地方</title>
+<style>
+@page{size:A4;margin:14mm 14mm 16mm}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Noto Serif SC","Songti SC","SimSun",serif;color:#1d1a16;font-size:10.5pt;line-height:1.65;background:#e9e4da}
+.sheet{max-width:210mm;margin:0 auto;background:#fff;padding:14mm}
+@media print{body{background:#fff}.sheet{padding:0;max-width:none}.noprint{display:none!important}}
+.noprint{position:sticky;top:0;background:#2F6680;color:#fff;padding:10px 16px;font-family:sans-serif;font-size:14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;z-index:5}
+.noprint button{font:inherit;border:0;border-radius:20px;padding:6px 16px;background:#fff;color:#2F6680;cursor:pointer}
+.noprint label{display:flex;gap:6px;align-items:center}
+h1{font-size:19pt;margin:0 0 2pt}
+h2{font-size:12.5pt;margin:14pt 0 5pt;padding-bottom:2pt;border-bottom:1.2pt solid #2F6680;color:#2F6680;break-after:avoid}
+h3{font-size:11pt;margin:9pt 0 3pt;break-after:avoid}
+.meta{font-size:9pt;color:#555;font-family:sans-serif;letter-spacing:.05em}
+.who{display:flex;gap:18pt;margin:8pt 0 4pt;font-size:10pt}.who span{flex:1;border-bottom:.6pt solid #333}
+.lines{margin:4pt 0}.lines i{display:block;height:20pt;border-bottom:.5pt solid #999}
+.q{margin:6pt 0;break-inside:avoid}
+.q .t{font-weight:700}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:1pt 14pt;margin:2pt 0 0 12pt}
+.opts span::before{content:attr(data-l) ". ";font-weight:700}
+.ans{display:none;color:#2F6680;font-size:9.5pt;margin-left:12pt}
+.teacher .ans{display:block}
+.box{border:.6pt solid #999;padding:6pt 9pt;border-radius:3pt;margin:5pt 0;break-inside:avoid}
+.key li{margin:1pt 0}
+.maps{display:grid;grid-template-columns:repeat(3,1fr);gap:6pt;margin:4pt 0}
+.maps svg{width:100%;height:auto;border:.5pt solid #bbb}
+.maps div{text-align:center;font-size:9pt;font-weight:700}
+.match td{padding:3pt 6pt;border-bottom:.5pt solid #ccc}.match{border-collapse:collapse;width:100%}
+.cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8pt}
+.cols .h{font-weight:700;font-size:9.5pt}
+.verse{text-align:center;font-size:13pt;margin:6pt 0 2pt}
+.small{font-size:9pt;color:#555}
+.chk td{padding:3pt 5pt;border:.5pt solid #bbb;vertical-align:top;font-size:9.5pt}.chk{border-collapse:collapse;width:100%}
+.pb{break-before:page}
+.grid4{display:grid;grid-template-columns:repeat(2,1fr);gap:4pt 14pt}.atl{position:relative;width:62%;margin:4pt 0}.atl img{width:100%;display:block}.atl .g{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(6,1fr)}.atl .g i{border:.6pt solid #2F6680}.tb td,.tb th{border:.5pt solid #999;padding:3pt 5pt;font-size:9.5pt}.tb{border-collapse:collapse;width:100%}.teacher span.ans{display:inline}
+</style><style>.teacher .hitc{background:#2F6680}</style></head>
+<body>
+<div class="noprint">
+  <b>打印本课</b>
+  <button onclick="doPrint()">打印 / 存为 PDF</button>
+  <label><input type="checkbox" id="tch" onchange="document.body.classList.toggle('teacher',this.checked)"> 附答案（教师用）</label>
+  <span id="tip" style="opacity:.85">如果没有弹出打印窗口：按 Ctrl+P（Mac 按 ⌘P），目标选“另存为 PDF”。</span>
+</div>
+<div class="sheet">
+<div class="meta">天地人地理 · 七年级 · 第一单元《地球与地图》· 第 3 课</div>
+<h1>用经纬网找地方</h1>
+<div class="who"><span>姓名：</span><span>班级：</span><span>日期：</span></div>
+<div class="box key"><b>课本页 · 本课要点</b>　钥句：<b>先纬后经，读完要核对。</b><ul><li>读一个点：看 N/S → 从赤道数纬线 → 看 E/W → 从本初子午线数经线；两线之间估一估。写法 6°S, 107°E ＝ 手机 −6.2, 106.8；60 分（′）= 1 度。</li><li>四种错：纬度经度写反（纬度不超过 90°）、南北写反、东西写反、漏写（被当成 0°, 0°“零岛”）。</li><li>三种核对：看字母、看邻居、换工具。</li></ul></div>
+<h2>一、开课问题（先写，课末再答一次）</h2>
+<p><b>朋友发来一串数字“−8.4, 115.2”，没有地名。不用手机地图，你能在地球仪上找到它吗？找到以后，你怎么知道自己没有找错？</b></p>
+<div class="lines"><i></i><i></i><i></i></div>
+<h2>二、热身</h2>
+<h3>1. 生活里的“坐标”（不计分）</h3><div id="quiz-warm"></div>
+<h3>2. 地图册的格子</h3>
+<p>雅加达市中心地图（列 A–F，行 1–6）。独立纪念碑在 C4。写出：伊斯蒂克拉尔清真寺在 ______（<span class="ans">D3</span>），雅加达主教座堂在 ______（<span class="ans">E3</span>），甘比尔火车站在 ______（<span class="ans">D4</span>）。（用电脑上的互动地图找，或请老师打印彩色地图。）</p>
+<h2 class="pb">三、视频一 · 怎样读出一个点</h2>
+<div class="box key"><b>要点</b><ul><li>先纬后经：先看 N/S、从赤道数纬线，再看 E/W、从本初子午线数经线，两线相交就是那个点（30°N, 31°E 是开罗）。</li><li>两条线之间要估一估：6°S 在赤道和 10°S 之间，稍靠近 10°S。</li><li>写法：6°S, 107°E；手机地图写 −6.2, 106.8，负号表示南纬或西经。</li></ul></div>
+<div id="quiz-v1"></div>
+<h3>收到求救电报（纸上版）</h3>
+<p>1912 年 4 月 15 日凌晨，泰坦尼克号发出电报：“位置 41°46′N, 50°14′W”。（60 分 = 1 度）</p>
+<p>41°46′N 约是 ______°N，50°14′W 约是 ______°W。<span class="ans">约 41.8°N，约 50.2°W</span></p>
+<p>1985 年在海底找到的沉船在 41°44′N, 49°57′W。它在电报位置的哪个方向？______ <span class="ans">东边（略偏南），约 24 千米</span></p>
+<h2 class="pb">四、视频二 · 常见的四种错</h2>
+<div class="box key"><b>要点</b><ul><li>纬度、经度写反：纬度最大只有 90°，“纬度 107°”一定错。</li><li>南北写反：6°S 写成 6°N，差一千三百多千米；东西写反：107°E 写成 107°W，跑到东太平洋。</li><li>漏写：资料没写位置，常被电脑当成 0°, 0°（几内亚湾的“零岛”）。</li><li>写完先问三句：超过 90° 没有？南北对吗？东西对吗？</li></ul></div>
+<div id="quiz-v2"></div>
+<h3>坐标侦探（纸上版）</h3>
+<table class="tb"><tr><th>城市</th><th>同学写的坐标</th><th>错在哪里</th><th>改正</th></tr>
+<tr><td>开罗</td><td>30°S, 31°E</td><td><span class="ans">南北写反</span></td><td><span class="ans">30°N, 31°E</span></td></tr>
+<tr><td>里约热内卢</td><td>23°S, 43°E</td><td><span class="ans">东西写反</span></td><td><span class="ans">23°S, 43°W</span></td></tr>
+<tr><td>东京</td><td>140°N, 36°E</td><td><span class="ans">纬度经度写反</span></td><td><span class="ans">36°N, 140°E</span></td></tr>
+<tr><td>悉尼</td><td>34°S, 151°W</td><td><span class="ans">东西写反</span></td><td><span class="ans">34°S, 151°E</span></td></tr></table>
+<h2 class="pb">五、视频三 · 怎样核对自己找对了</h2>
+<div class="box key"><b>要点</b><ul><li>看字母：N/S、E/W 定在哪一大块（N 和 E 是欧洲、亚洲、非洲北部）。</li><li>看邻居：和认识的地方比（1°N, 104°E 在雅加达西北，是新加坡）。</li><li>换工具：地球仪、平面地图、手机地图再找一遍，两次落在同一处才算对。</li></ul></div>
+<div id="quiz-v3"></div>
+<h3>四张没写地名的明信片</h3>
+<table class="tb"><tr><th>坐标</th><th>城市、国家</th><th>我用了哪种核对办法</th></tr>
+<tr><td>64°N, 22°W</td><td><span class="ans">雷克雅未克，冰岛</span></td><td></td></tr><tr><td>28°N, 85°E</td><td><span class="ans">加德满都，尼泊尔</span></td><td></td></tr><tr><td>13°S, 72°W</td><td><span class="ans">库斯科，秘鲁</span></td><td></td></tr><tr><td>19°S, 48°E</td><td><span class="ans">塔那那利佛，马达加斯加</span></td><td></td></tr></table>
+<h3>观察与实践（课内）：在我的地球仪上找四点</h3>
+<table class="tb"><tr><th>点</th><th>在哪个国家或城市附近</th><th>看字母</th><th>看邻居</th><th>换工具</th></tr>
+<tr><td>① 55°N, 37°E</td><td><span class="ans">莫斯科（俄罗斯）</span></td><td>□</td><td>□</td><td>□</td></tr><tr><td>② 15°N, 32°E</td><td><span class="ans">喀土穆（苏丹）</span></td><td>□</td><td>□</td><td>□</td></tr><tr><td>③ 33°S, 71°W</td><td><span class="ans">圣地亚哥（智利）</span></td><td>□</td><td>□</td><td>□</td></tr><tr><td>④ 37°S, 175°E</td><td><span class="ans">奥克兰（新西兰）</span></td><td>□</td><td>□</td><td>□</td></tr></table>
+<h2>六、想一想，写一写</h2>
+<div class="q"><p class="t">1. 复述：拿到“6°S, 107°E”，怎样一步一步在地球仪上找到它？找到以后怎样核对？</p><div class="lines"><i></i><i></i><i></i><i></i></div>
+<div class="ans">参考：先看 S，从赤道往南数到 6°（在 0° 和 10°S 之间，稍靠近 10°S）；再看 E，从本初子午线往东数到 107°。两线相交是雅加达。核对：S、E 说明在南边、东边，应在亚洲东南部海岛一带；在新加坡东南不远；再用平面地图找一遍。</div></div>
+<div class="q"><p class="t">2. 辨析：有同学说“手机一按就能定位，学看经纬网没用了。”你同意吗？</p><div class="lines"><i></i><i></i><i></i><i></i></div>
+<div class="ans">参考：手机也会定错（停在路对面、“零岛”）；没信号、没电时帮不上；读书、读古地图、听人报位置时只有数字；会看经纬网才能核对。</div></div>
+<h2>七、读经文</h2>
+<div class="verse">他从一本造出万族的人，住在全地上，并且预先定准他们的年限和所住的疆界，要叫他们寻求神，或者可以揣摩而得，其实他离我们各人不远。</div>
+<div class="small" style="text-align:center">使徒行传 17:26–27（和合本）</div>
+<div class="cols" style="margin-top:6pt"><div><div class="h">经文说了什么</div><div class="lines"><i></i><i></i><i></i></div></div><div><div class="h">要靠什么去查证</div><div class="lines"><i></i><i></i><i></i></div></div><div><div class="h">所以我找地方时应当……</div><div class="lines"><i></i><i></i><i></i></div></div></div>
+<h2>八、收束：再答一次开课问题</h2>
+<p><b>“−8.4, 115.2”在哪里？你怎么知道没有找错？</b>（用上：先纬后经、估一估、核对）</p>
+<div class="lines"><i></i><i></i><i></i></div>
+<div class="ans">答案：8.4°S, 115.2°E，印度尼西亚的巴厘岛，在雅加达东边约 1000 千米。</div>
+<p><b>课后实践：</b>选三个地方（学校、一座大城市、一个想去了解的地方），只把经纬度告诉家人，请他在地球仪上找，你用三种办法帮他核对。不写自己家的位置。</p>
+<p><b>为下一课准备：</b>把地球仪带来。第 4 课看利玛窦的《坤舆万国全图》，在上面找经纬线。</p>
+<h2>本单元应知应会清单</h2>
+<table class="chk">
+<tr><td style="width:18%"><b>G7.1.1</b> 核心</td><td>制作简易地球仪并用经纬网定位四点，标出赤道、本初子午线、回归线和极圈，说明半球划分依据。（本课完成“定位四点”）</td><td style="width:16%">□ 需支持<br>□ 达到</td></tr>
+<tr><td><b>G7.1.2</b> 核心</td><td>用比例尺换算两段距离，判读等高线的高低、坡的陡缓及分层设色。</td><td>□ 需支持<br>□ 达到</td></tr>
+<tr><td><b>G7.1.3</b> 综合</td><td>用史实与数据说明地球形状和大小，比较两种地图的用途，描述七大洲四大洋的分布。</td><td>□ 需支持<br>□ 达到</td></tr>
+<tr><td><b>G7.1.4</b> 作品</td><td>绘制家乡或虚构校园图，解释图例、方位与选图理由；附数字地图或卫星导航的一项生活用途。</td><td>□ 需支持<br>□ 达到</td></tr>
+</table>
+<p class="small" style="margin-top:10pt">照片与地图：卡帕西亚号收回的救生艇（1912 年）、泰坦尼克号船头（NOAA / Institute for Exploration，2004 年）、新加坡（NASA STS-50）、里约热内卢（NASA STS-65）、悉尼（NASA Terra ASTER）、海洋观测浮标（NASA，2012 年），以上公有领域；开罗卫星图 Esri World Imagery（Esri、Maxar）；东京 David Kernan（CC BY 4.0）；雷克雅未克 Jakub Hałun（CC BY-SA 4.0）；加德满都 Vyacheslav Argenberg（CC BY 4.0）；库斯科 Diego Delso（CC BY-SA 4.0）；塔那那利佛 Bernard Gagnon（CC BY-SA 3.0）；巴厘岛 Jorge Franganillo（CC BY 2.0）；雅加达市中心地图 © OpenStreetMap 贡献者（ODbL）。世界地图据 Natural Earth（公有领域）。经文：和合本。</p>
+</div>
+<script>
+var QZ={"quiz-warm":[{"q":"地图册的索引写着“雅加达　第 32 页 C4”。C4 是什么意思？","o":["那一页地图上，第 C 列、第 4 行的那一格","第 4 页的 C 段","雅加达在第 C 4 号公路边","地图的比例尺是 C4"],"e":"地图册在地图上画了格子，用一个字母、一个数字说出一格。两个信息合起来，就能缩到一小块。"},{"q":"电子表格里的“B3”和“3B”，是不是同一格？","o":["大家约好先写列再写行，写成“3B”就不合规矩了","是同一格，顺序无所谓","“3B”在“B3”的右边","都不是格子"],"e":"说位置的两个数字，大家要约好顺序。经纬度也有一个约好的顺序——这一课就学它。"},{"q":"手机地图上长按一个地方，出现“−6.2, 106.8”。前面那个负号告诉你什么？","o":["这个地方在南纬（赤道以南）","这个地方在地下","温度是零下","这个数字算错了"],"e":"复习第 2 课：手机地图里负的纬度表示南纬，负的经度表示西经。"},{"q":"叫网约车时，司机有时停在了路对面。最可能的原因是什么？","o":["手机定位有误差，给出的位置不一定准","司机不认识字","路对面更好停车，与定位无关","地图上没有这条路"],"e":"定位给出的数字也会有误差。所以找到一个地方以后，最好再核对一下——这一课的第三段视频专门讲。"},{"q":"你想告诉远方的朋友你在哪里，只发“106.8”够不够？","o":["不够，只有一个数，只知道在哪一条线上","够了，一个数就能找到","够了，因为大家都知道是经度","不够，要发三个数"],"e":"只有经度，只知道在哪一条经线上，这条线从北极一直通到南极。还要纬度才能说准。"}],"quiz-v1":[{"q":"读一个坐标，先读什么？","o":["纬度","经度","哪个大先读哪个","哪个都行"],"h":"就像电影票先写排、再写号。","ok":"对。","e":"大家约好“先纬后经”。地理书写“6°S, 107°E”，手机写“−6.2, 106.8”，都是纬度在前。"},{"q":"要找 30°N, 31°E，第一步做什么？","o":["看纬度的字母 N：在赤道北边","从本初子午线往东数","先找开罗","先看 E"],"h":"四步的第一步看哪个字母？","ok":"没错。","e":"第一步看 N 还是 S，确定在赤道哪一边；第二步从赤道往北数到 30°。然后才看经度。"},{"q":"6°S 在地球仪上的哪两条纬线之间？靠近哪一条？","o":["在赤道和 10°S 之间，稍靠近 10°S","在赤道和 10°N 之间，靠近赤道","在 10°S 和 20°S 之间","正好在 10°S 上"],"h":"6 比 5 大一点。","ok":"估得好。","e":"0° 到 10° 之间分成十小份，6° 在第六份，过了一半，所以稍靠近 10°S。"},{"q":"手机上的“−33.9, 18.4”，写成地理书的写法是哪一个？","o":["33.9°S, 18.4°E","33.9°N, 18.4°E","18.4°S, 33.9°E","33.9°S, 18.4°W"],"h":"第一个数是纬度；负号表示南纬。第二个数没有负号。","ok":"对。","e":"先纬后经；负的纬度是南纬，正的经度是东经。这是南非的开普敦，第 2 课船长游戏去过。"},{"q":"下面哪种写法顺序是对的？","o":["6°S, 107°E","107°E, 6°S","E107°, S6°","6°, 107°"],"h":"先纬后经，字母写在度数后面。","ok":"对了。","e":"纬度在前、经度在后，每个数后面都要写字母（或用负号），缺一样都不完整。"}],"quiz-v2":[{"q":"下面哪个坐标在地球上不可能存在？","o":["95°N, 20°E","20°N, 95°E","60°S, 170°W","0°, 0°"],"h":"纬度最大是多少度？","ok":"找到了。","e":"纬度最大只有 90°（北极和南极）。95°N 不存在——多半是把纬度和经度写反了。"},{"q":"雅加达的 6°S 写成了 6°N，点大约移了多远？","o":["一千三百多千米","十几千米","十万千米","没有移动"],"h":"从赤道南 6° 到赤道北 6°，一共 12°。每 1° 纬度大约 111 千米。","ok":"对。","e":"12 × 111 ≈ 1330 千米，点从雅加达跳到了南海里。一个字母，差了一千多千米。"},{"q":"“零岛”是什么？","o":["0°, 0° 那一片海，没写位置的资料常被电脑当成这里","非洲西边的一座真实小岛","本初子午线上的一座灯塔","一个国家的名字"],"h":"电脑遇到“没写位置”时，常把它当成什么数字？","ok":"对。","e":"0°, 0° 在几内亚湾的海面上，那里没有岛，只有一个气象浮标。看到点落在这里，就要怀疑资料漏写了位置。"},{"q":"写完坐标，先问自己哪三句话？","o":["纬度超过 90° 没有？南北写对了吗？东西写对了吗？","是哪个国家？有多少人？天气怎样？","用的是哪部手机？信号好吗？电够吗？","离家多远？要坐什么车？票多少钱？"],"h":"对应四种错里的前三种。","ok":"记住了。","e":"这三句话分别防住：经纬写反、南北写反、东西写反。"},{"q":"电报上的“50°14′W”大约是多少度？（60 分 = 1 度）","o":["约 50.2°W","约 50.14°W","约 51.4°W","约 64°W"],"h":"14 分是 1 度的 14/60。","ok":"换算得对。","e":"14 ÷ 60 ≈ 0.23，所以 50°14′ 约等于 50.2°。“′”是“分”，不是小数点。"},{"q":"41°46′N 大约是多少度？","o":["约 41.8°N","约 41.46°N","约 46°N","约 42.6°N"],"h":"46 分是 1 度的 46/60，比半度多。","ok":"对。","e":"46 ÷ 60 ≈ 0.77，所以 41°46′ 约等于 41.8°，比 41.5° 还要往北一点。"}],"quiz-v3":[{"q":"视频里说的三种核对办法是哪三种？","o":["看字母、看邻居、换工具","看颜色、看大小、看形状","问老师、问同学、问家长","再写一遍、再读一遍、再背一遍"],"h":"字母、认识的地方、另一种地图。","ok":"对。","e":"看字母定大块；看邻居和认识的地方比；换一种地图再找一遍。"},{"q":"一个点是 N 和 W，它大多落在哪个大洲？","o":["北美洲","澳大利亚","亚洲","南极洲"],"h":"赤道以北、本初子午线以西。","ok":"对。","e":"北纬加西经的那一块，大部分是北美洲（还有欧洲和非洲最西边的一小部分，以及大西洋、太平洋）。"},{"q":"为什么要换一种工具再找一遍？","o":["两次落在同一个地方，才说明没找错","因为第一种工具一定是错的","为了多用一点时间","因为老师要求"],"h":"一次可能看错，两次……","ok":"说得对。","e":"换一种工具，等于请另一个“证人”。两个证人说的一样，结果才可靠。"},{"q":"新加坡大约在 1°N。这说明什么？","o":["它几乎就在赤道上","它在北极附近","它在南半球","它在本初子午线上"],"h":"纬度从哪里开始数？","ok":"对。","e":"纬度 1°，离赤道只有大约 111 千米，新加坡几乎就在赤道上。"}]};
+
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+Object.keys(QZ).forEach(function(id){var el=document.getElementById(id);if(!el)return;var h='';QZ[id].forEach(function(it,i){
+  var L='ABCDE',os=it.o.map(function(o,k){return {o:o,k:k}});
+  var r=(i*7+3)%os.length;os=os.slice(r).concat(os.slice(0,r)); // 固定打乱，正确答案不总在 A
+  if(id==='quiz-warm')os.push({o:'还不确定',k:-1});
+  var right=os.findIndex(function(x){return x.k===0});
+  h+='<div class="q"><div class="t">'+(i+1)+'. '+esc(it.q)+'</div><div class="opts">'+os.map(function(x,j){return '<span data-l="'+L[j]+'">'+esc(x.o)+'</span>'}).join('')+'</div><div class="ans">答案：'+L[right]+'。'+esc(it.e)+'</div></div>'});
+  el.innerHTML=h});
+if(location.hash==='#teacher'){document.getElementById('tch').checked=true;document.body.classList.add('teacher')}
+function doPrint(){try{window.print()}catch(e){}}
+</script>
+</body></html>

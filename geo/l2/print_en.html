@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Print · Heaven·Earth·People Geography Unit 1 Lesson 2 · Drawing a Grid on the Earth</title>
+<style>
+@page{size:A4;margin:14mm 14mm 16mm}
+*{box-sizing:border-box}
+body{margin:0;font-family:Georgia,"Times New Roman","Liberation Serif","Noto Serif SC","Songti SC","SimSun",serif;color:#1d1a16;font-size:10.5pt;line-height:1.65;background:#e9e4da}
+.sheet{max-width:210mm;margin:0 auto;background:#fff;padding:14mm}
+@media print{body{background:#fff}.sheet{padding:0;max-width:none}.noprint{display:none!important}}
+.noprint{position:sticky;top:0;background:#2F6680;color:#fff;padding:10px 16px;font-family:sans-serif;font-size:14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;z-index:5}
+.noprint button{font:inherit;border:0;border-radius:20px;padding:6px 16px;background:#fff;color:#2F6680;cursor:pointer}
+.noprint label{display:flex;gap:6px;align-items:center}
+h1{font-size:19pt;margin:0 0 2pt}
+h2{font-size:12.5pt;margin:14pt 0 5pt;padding-bottom:2pt;border-bottom:1.2pt solid #2F6680;color:#2F6680;break-after:avoid}
+h3{font-size:11pt;margin:9pt 0 3pt;break-after:avoid}
+.meta{font-size:9pt;color:#555;font-family:sans-serif;letter-spacing:.05em}
+.who{display:flex;gap:18pt;margin:8pt 0 4pt;font-size:10pt}.who span{flex:1;border-bottom:.6pt solid #333}
+.lines{margin:4pt 0}.lines i{display:block;height:20pt;border-bottom:.5pt solid #999}
+.q{margin:6pt 0;break-inside:avoid}
+.q .t{font-weight:700}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:1pt 14pt;margin:2pt 0 0 12pt}
+.opts span::before{content:attr(data-l) ". ";font-weight:700}
+.ans{display:none;color:#2F6680;font-size:9.5pt;margin-left:12pt}
+.teacher .ans{display:block}
+.box{border:.6pt solid #999;padding:6pt 9pt;border-radius:3pt;margin:5pt 0;break-inside:avoid}
+.key li{margin:1pt 0}
+.maps{display:grid;grid-template-columns:repeat(3,1fr);gap:6pt;margin:4pt 0}
+.maps svg{width:100%;height:auto;border:.5pt solid #bbb}
+.maps div{text-align:center;font-size:9pt;font-weight:700}
+.match td{padding:3pt 6pt;border-bottom:.5pt solid #ccc}.match{border-collapse:collapse;width:100%}
+.cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8pt}
+.cols .h{font-weight:700;font-size:9.5pt}
+.verse{text-align:center;font-size:13pt;margin:6pt 0 2pt}
+.small{font-size:9pt;color:#555}
+.chk td{padding:3pt 5pt;border:.5pt solid #bbb;vertical-align:top;font-size:9.5pt}.chk{border-collapse:collapse;width:100%}
+.pb{break-before:page}
+</style><style>.teacher .hitc{background:#2F6680}</style></head>
+<body>
+<div class="noprint">
+  <b>Print this lesson</b>
+  <button onclick="doPrint()">Print / Save as PDF</button>
+  <label><input type="checkbox" id="tch" onchange="document.body.classList.toggle('teacher',this.checked)"> Show answers (teacher)</label>
+  <span id="tip" style="opacity:.85">If no print window appears, press Ctrl+P (⌘P on Mac) and choose “Save as PDF”.</span>
+</div>
+<div class="sheet">
+<div class="meta">Heaven·Earth·People Geography · Grade 7 · Unit 1 “Earth and Maps” · Lesson 2</div>
+<h1>Drawing a Grid on the Earth</h1>
+<div class="who"><span>Name:</span><span>Class:</span><span>Date:</span></div>
+<h2>1. Opening question (write now, answer again at the end)</h2>
+<p><b>On a round ball with no up, down, left or right, and no edges or corners, how can you tell someone where a place is?</b></p>
+<div class="lines"><i></i><i></i><i></i></div>
+<h2>2. Warm-up</h2>
+<h3>a. “Two numbers” in everyday life (not graded)</h3><div id="quiz-warm"></div>
+<h3>b. Find the seats</h3>
+<p>The theater has 9 rows of 12 seats. Rows are counted back from the screen, seats from left to right. Color in Row 5 Seat 8, Row 2 Seat 3, and Row 9 Seat 11.</p>
+<div id="seatgrid"></div>
+<h2 class="pb">3. Video 1 · Drawing a grid on the Earth (parallels and latitude)</h2>
+<div class="box key"><b>Key points</b><ul><li>The equator is Earth’s “fattest” circle, the 0° parallel. Parallels are circles parallel to the equator; they get shorter toward the poles and shrink to a point at each pole.</li><li>Latitude is counted from the equator up to 90° north (N) and 90° south (S). Jakarta is about 6°S, Beijing about 40°N.</li><li>Grid lines are drawn by people on globes and maps; you can’t see them on the ground.</li><li>In the Northern Hemisphere, Polaris’s height above the horizon is about equal to your latitude; in the Southern Hemisphere you can’t see Polaris.</li></ul></div>
+<div id="quiz-v1"></div>
+<h3>Observe and try (in class): a rubber-band globe</h3>
+<p>Put three rubber bands on an orange or ball: one round the “fattest” part (the equator) and one above and one below (parallels). Push the top one toward the “top”.</p>
+<p>Longest loop: ______________________　Pushed toward the top, the loop: ______________________</p>
+<p>Think: why do parallels get shorter toward the poles? What happens at a pole?</p><div class="lines"><i></i><i></i></div>
+<h2 class="pb">4. Video 2 · Lines from pole to pole (meridians and longitude)</h2>
+<div class="box key"><b>Key points</b><ul><li>Meridians are half-circles joining the poles; all are the same length and point north–south.</li><li>In 1884 the meridian through the Royal Observatory, Greenwich, London, was set as 0°, the prime meridian; east up to 180° is east longitude (E), west up to 180° is west longitude (W).</li><li>Two numbers, latitude + longitude, pin down a place: Jakarta is about 6°S, 107°E. Nearly 2,000 years ago, Ptolemy in Alexandria already listed thousands of places by latitude and longitude.</li></ul></div>
+<div id="quiz-v2"></div>
+<h3>Captain practice (paper version)</h3>
+<p>Start at 0°, 0°. Write how you would sail: which direction and how many degrees first, then which direction and how many degrees?</p>
+<p>To 34°S, 18°E (Cape Town): ________________________________________________</p>
+<p>Then to 19°N, 73°E (Mumbai): ________________________________________________</p>
+<h3>Observe and try (after class): which square is my city in?</h3>
+<p>Long-press your school or city center on a map app and read the coordinates (don’t record where your home is).</p>
+<p>My city: ____________　Latitude: __________　Longitude: __________</p>
+<p>City I want to visit: ____________　Latitude: __________　Longitude: __________</p>
+<h2 class="pb">5. Video 3 · Some special lines</h2>
+<div class="box key"><b>Key points</b><ul><li>The tropics are at about 23.5°: the point where the noon sun is overhead moves back and forth between them. Syene (Aswan) is near the Tropic of Cancer. Jakarta lies between them and has the sun overhead twice a year.</li><li>The polar circles are at about 66.5°: inside them there is polar day and polar night.</li><li>The equator divides the Northern and Southern Hemispheres; the circle of 20°W and 160°E divides the Eastern and Western (without cutting countries in Europe and Africa).</li></ul></div>
+<div id="quiz-v3"></div>
+<h3>Observe and try (after class): finish my globe</h3>
+<p>□ North and South Poles　□ Equator　□ Two tropics　□ Two polar circles　□ Prime meridian (0°)　□ Labels: my city and a city to visit　□ Photo taken</p>
+<h2>6. Think and write</h2>
+<div class="q"><p class="t">a. Retell: using movie-theater seats, explain to someone who hasn’t taken this lesson how the grid helps us say where a place is.</p><div class="lines"><i></i><i></i><i></i><i></i></div>
+<div class="ans">Sample: a theater uses two numbers, row and seat; the Earth uses latitude and longitude. Parallels count from 0° at the equator to 90° N and S; meridians count from 0° at the prime meridian to 180° E and W; where two lines cross is the place.</div></div>
+<div class="q"><p class="t">b. Evaluate: a classmate says, “The prime meridian divides the Eastern and Western Hemispheres.” Is he right? Name the two meridians usually used, and why.</p><div class="lines"><i></i><i></i><i></i><i></i></div>
+<div class="ans">Sample: not quite. We usually use the circle of 20°W and 160°E: the prime meridian would cut through Britain, France and some West African countries, while 20°W and 160°E run mostly over the ocean.</div></div>
+<h2>7. Scripture</h2>
+<div class="verse">And God said, “Let there be lights in the expanse of the heavens to separate the day from the night. And let them be for signs and for seasons, and for days and years.”</div>
+<div class="small" style="text-align:center">Genesis 1:14 (ESV)</div>
+<div class="cols" style="margin-top:6pt"><div><div class="h">What the verse says</div><div class="lines"><i></i><i></i><i></i></div></div><div><div class="h">How we check it</div><div class="lines"><i></i><i></i><i></i></div></div><div><div class="h">So when I draw grid lines, I should…</div><div class="lines"><i></i><i></i><i></i></div></div></div>
+<h2>8. Wrap-up: answer the opening question again</h2>
+<p><b>On a round ball with no up, down, left or right, and no edges or corners, how can you tell someone where a place is?</b>(Use: latitude, longitude, equator, prime meridian)</p>
+<div class="lines"><i></i><i></i><i></i></div>
+<p><b>Get ready for the next lesson:</b>Bring your finished globe; in Lesson 3 we’ll use it to find unfamiliar places.</p>
+<h2>Unit checklist: what you should know and do</h2>
+<table class="chk">
+<tr><td style="width:18%"><b>G7.1.1</b> Core</td><td>Make a simple globe and locate four points with the grid; mark the equator, prime meridian, tropics and polar circles; explain how hemispheres are divided. (Mostly covered this lesson)</td><td style="width:16%">□ Need help<br>□ Achieved</td></tr>
+<tr><td><b>G7.1.2</b> Core</td><td>Use a scale to convert two distances; read contour lines for height and slope, and layer tints.</td><td>□ Need help<br>□ Achieved</td></tr>
+<tr><td><b>G7.1.3</b> Synthesis</td><td>Use history and data to explain Earth’s shape and size, compare the uses of two kinds of maps, describe where the seven continents and four oceans are.</td><td>□ Need help<br>□ Achieved</td></tr>
+<tr><td><b>G7.1.4</b> Project</td><td>Draw a map of your hometown or an imaginary campus; explain its legend, orientation and why you chose it; add one everyday use of digital maps or satellite navigation.</td><td>□ Need help<br>□ Achieved</td></tr>
+</table>
+<p class="small" style="margin-top:10pt">Scripture quotations are from the ESV® Bible, © 2001 by Crossway.</p>
+</div>
+<script>
+var QZ={"quiz-warm":[{"q":"A movie ticket says “Row 7, Seat 12”. Why does it need two numbers?","o":["With only the row or only the seat number, you can’t find one exact seat","Because the theater is big","Because prices differ","To look nice"],"e":"One number only gives a whole row or a whole column; two numbers crossing give one exact spot."},{"q":"The teacher says, “Group 3, fourth student, please stand.” How do you know who it is?","o":["Group and seat: one across, one down","The group only","The name only","By the voice"],"e":"One across and one down: two pieces of information together pin down a position."},{"q":"Long-press a place on a phone map and a pair of numbers appears, like “−6.2, 106.8”. What is it usually?","o":["That place’s latitude and longitude","Its phone number","Its temperature","Its house number"],"e":"These are coordinates, and they’re what this lesson is about. A minus sign means south latitude or west longitude."},{"q":"Standing on the equator, can you see a line painted on the ground?","o":["No. Grid lines are drawn by people on maps and globes","Yes, there’s a red line on the ground","Yes, it’s a river","Only at night"],"e":"People drew the grid lines to describe locations clearly. Some places put up a monument and paint a line for visitors, but that was added later by people."},{"q":"Why is the classroom globe tilted?","o":["Earth’s axis really is tilted (about 23.5°), and the globe copies it","To look nice","It can’t stand straight","It was made wrong"],"e":"The tilted axis is linked to the tropics and the seasons. Video 3 explains it."}],"quiz-v1":[{"q":"What is the latitude of the equator?","o":["0°","90°","23.5°","180°"],"h":"Where does latitude start counting?","ok":"Right.","e":"The equator is where latitude starts: 0°. From here we count up to 90° north and 90° south."},{"q":"How does the length of the parallels change?","o":["The equator is longest; they get shorter toward the poles and shrink to a point","All parallels are the same length","They get longer toward the poles","Only the equator has length"],"h":"Remember the rubber-band globe.","ok":"That’s right.","e":"A ball gets “thinner” toward its ends, so parallels get shorter toward the poles."},{"q":"Which letter usually marks north latitude on maps?","o":["N","S","E","W"],"h":"N = North.","ok":"Right.","e":"North latitude is N, south latitude is S."},{"q":"Jakarta is about 6°S and Beijing about 40°N. Which city is closer to the equator?","o":["Jakarta","Beijing","Equally close","Can’t tell"],"h":"Compare the latitude numbers (ignore north or south).","ok":"Right.","e":"The smaller the latitude number, the closer to the equator."},{"q":"Standing in Beijing (about 40°N) facing due north, about how high is Polaris above the horizon?","o":["About 40°","About 90°","About 0°","You can’t see it"],"h":"Try it in the Polaris game.","ok":"Well said.","e":"In the Northern Hemisphere, Polaris’s height is about equal to your latitude. Sailors long ago used this to find their latitude."}],"quiz-v2":[{"q":"Where does the prime meridian (0° longitude) pass?","o":["The Royal Observatory, Greenwich, London","Beijing, China","The equator","The North Pole"],"h":"It was agreed at a meeting in Washington in 1884.","ok":"Right.","e":"In 1884, delegates from many countries agreed that the meridian through Greenwich would be 0°."},{"q":"What is true of meridians?","o":["They join the two poles, are all the same length, and point north–south","They are parallel to the equator","They get longer toward the poles","There is only one"],"h":"Where are meridians drawn from and to?","ok":"That’s right.","e":"Meridians are half-circles joining the poles; every one is the same length and points due north and south."},{"q":"Which letter marks east longitude?","o":["E","W","N","S"],"h":"E = East.","ok":"Right.","e":"East longitude is E, west longitude is W, each up to 180°."},{"q":"At least how many numbers do you need to pin down a place on Earth?","o":["Two: latitude and longitude","One","Three","Four"],"h":"Think of the movie ticket.","ok":"Right.","e":"Latitude tells which circle, longitude tells which line; where they cross is one point."},{"q":"Nearly 2,000 years ago, Ptolemy listed thousands of places by latitude and longitude. Which city did he live in?","o":["Alexandria, Egypt","Chang’an, China","Rome, Italy","Athens, Greece"],"h":"The same city as Eratosthenes in Lesson 1.","ok":"Right.","e":"Ptolemy wrote his Geography in Alexandria."}],"quiz-v3":[{"q":"At about what latitude are the Tropics of Cancer and Capricorn?","o":["23.5°","66.5°","0°","45°"],"h":"The farthest north and south the noon sun is directly overhead.","ok":"Right.","e":"Through the year, the point where the noon sun is overhead moves back and forth between the two tropics (about 23.5°)."},{"q":"What happens inside the polar circles?","o":["Polar day and polar night","It’s hot all year","The sun is overhead every day","There are no seasons"],"h":"Think of Norway’s “midnight sun”.","ok":"That’s right.","e":"Inside the polar circles (about 66.5°) there are days when the sun never sets and days when it never rises."},{"q":"What divides the Northern and Southern Hemispheres?","o":["The equator","The prime meridian","The Tropic of Cancer","The Arctic Circle"],"h":"The 0° parallel.","ok":"Right.","e":"North of the equator is the Northern Hemisphere; south of it, the Southern."},{"q":"Which two meridians do geographers usually use to divide the Eastern and Western Hemispheres?","o":["20°W and 160°E","The prime meridian and 180°","20°E and 160°W","The equator and the prime meridian"],"h":"This circle runs mostly over the sea.","ok":"Right.","e":"Using 20°W and 160°E avoids cutting countries in Europe and Africa in two."},{"q":"Which two hemispheres is 30°N, 100°E in?","o":["Northern and Eastern","Southern and Eastern","Northern and Western","Southern and Western"],"h":"Is 100°E between 20°W and 160°E?","ok":"Correct.","e":"North latitude means the Northern Hemisphere; 100°E lies between 20°W and 160°E, so it’s the Eastern Hemisphere."},{"q":"Which two hemispheres is 20°S, 80°W in?","o":["Southern and Western","Southern and Eastern","Northern and Western","Northern and Eastern"],"h":"80°W is farther west than 20°W.","ok":"Correct.","e":"South latitude means the Southern Hemisphere; 80°W is west of 20°W, so it’s the Western Hemisphere."}]};
+
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+Object.keys(QZ).forEach(function(id){var el=document.getElementById(id);if(!el)return;var h='';QZ[id].forEach(function(it,i){
+  var L='ABCDE',os=it.o.map(function(o,k){return {o:o,k:k}});
+  var r=(i*7+3)%os.length;os=os.slice(r).concat(os.slice(0,r)); // 固定打乱, 正确答案不总在 A
+  if(id==='quiz-warm')os.push({o:'Not sure yet',k:-1});
+  var right=os.findIndex(function(x){return x.k===0});
+  h+='<div class="q"><div class="t">'+(i+1)+'. '+esc(it.q)+'</div><div class="opts">'+os.map(function(x,j){return '<span data-l="'+L[j]+'">'+esc(x.o)+'</span>'}).join('')+'</div><div class="ans">Answer: '+L[right]+'. '+esc(it.e)+'</div></div>'});
+  el.innerHTML=h});
+(function(){var h='<table style="border-collapse:collapse;margin:4pt 0"><tr><td></td>';for(var c=1;c<=12;c++)h+='<td style="font-size:8pt;text-align:center;width:16pt">'+c+'</td>';h+='</tr>';for(var r=1;r<=9;r++){h+='<tr><td style="font-size:8pt;padding-right:4pt">'+'Row '+r+'</td>';for(var c=1;c<=12;c++){var hit=(r==5&&c==8)||(r==2&&c==3)||(r==9&&c==11);h+='<td style="border:.5pt solid #999;height:13pt" class="'+(hit?'hitc':'')+'"></td>'}h+='</tr>'}document.getElementById('seatgrid').innerHTML=h+'</table><p class="small">↑ The screen is in front of row 1</p>'})();
+if(location.hash==='#teacher'){document.getElementById('tch').checked=true;document.body.classList.add('teacher')}
+function doPrint(){try{window.print()}catch(e){}}
+</script>
+</body></html>

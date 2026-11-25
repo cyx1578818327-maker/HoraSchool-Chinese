@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>打印版 · 天地人地理 第一单元 第2课 · 给地球画上格子</title>
+<style>
+@page{size:A4;margin:14mm 14mm 16mm}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Noto Serif SC","Songti SC","SimSun",serif;color:#1d1a16;font-size:10.5pt;line-height:1.65;background:#e9e4da}
+.sheet{max-width:210mm;margin:0 auto;background:#fff;padding:14mm}
+@media print{body{background:#fff}.sheet{padding:0;max-width:none}.noprint{display:none!important}}
+.noprint{position:sticky;top:0;background:#2F6680;color:#fff;padding:10px 16px;font-family:sans-serif;font-size:14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;z-index:5}
+.noprint button{font:inherit;border:0;border-radius:20px;padding:6px 16px;background:#fff;color:#2F6680;cursor:pointer}
+.noprint label{display:flex;gap:6px;align-items:center}
+h1{font-size:19pt;margin:0 0 2pt}
+h2{font-size:12.5pt;margin:14pt 0 5pt;padding-bottom:2pt;border-bottom:1.2pt solid #2F6680;color:#2F6680;break-after:avoid}
+h3{font-size:11pt;margin:9pt 0 3pt;break-after:avoid}
+.meta{font-size:9pt;color:#555;font-family:sans-serif;letter-spacing:.05em}
+.who{display:flex;gap:18pt;margin:8pt 0 4pt;font-size:10pt}.who span{flex:1;border-bottom:.6pt solid #333}
+.lines{margin:4pt 0}.lines i{display:block;height:20pt;border-bottom:.5pt solid #999}
+.q{margin:6pt 0;break-inside:avoid}
+.q .t{font-weight:700}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:1pt 14pt;margin:2pt 0 0 12pt}
+.opts span::before{content:attr(data-l) ". ";font-weight:700}
+.ans{display:none;color:#2F6680;font-size:9.5pt;margin-left:12pt}
+.teacher .ans{display:block}
+.box{border:.6pt solid #999;padding:6pt 9pt;border-radius:3pt;margin:5pt 0;break-inside:avoid}
+.key li{margin:1pt 0}
+.maps{display:grid;grid-template-columns:repeat(3,1fr);gap:6pt;margin:4pt 0}
+.maps svg{width:100%;height:auto;border:.5pt solid #bbb}
+.maps div{text-align:center;font-size:9pt;font-weight:700}
+.match td{padding:3pt 6pt;border-bottom:.5pt solid #ccc}.match{border-collapse:collapse;width:100%}
+.cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8pt}
+.cols .h{font-weight:700;font-size:9.5pt}
+.verse{text-align:center;font-size:13pt;margin:6pt 0 2pt}
+.small{font-size:9pt;color:#555}
+.chk td{padding:3pt 5pt;border:.5pt solid #bbb;vertical-align:top;font-size:9.5pt}.chk{border-collapse:collapse;width:100%}
+.pb{break-before:page}
+</style><style>.teacher .hitc{background:#2F6680}</style></head>
+<body>
+<div class="noprint">
+  <b>打印本课</b>
+  <button onclick="doPrint()">打印 / 存为 PDF</button>
+  <label><input type="checkbox" id="tch" onchange="document.body.classList.toggle('teacher',this.checked)"> 附答案（教师用）</label>
+  <span id="tip" style="opacity:.85">如果没有弹出打印窗口：按 Ctrl+P（Mac 按 ⌘P），目标选“另存为 PDF”。</span>
+</div>
+<div class="sheet">
+<div class="meta">天地人地理 · 七年级 · 第一单元《地球与地图》· 第 2 课</div>
+<h1>给地球画上格子</h1>
+<div class="who"><span>姓名：</span><span>班级：</span><span>日期：</span></div>
+<h2>一、开课问题（先写，课末再答一次）</h2>
+<p><b>在一个圆球上，没有上下左右，也没有边和角，你怎样告诉别人一个地方在哪里？</b></p>
+<div class="lines"><i></i><i></i><i></i></div>
+<h2>二、热身</h2>
+<h3>1. 生活里的“两个数字”（不计分）</h3><div id="quiz-warm"></div>
+<h3>2. 找座位</h3>
+<p>影厅有 9 排，每排 12 个座位。排号从银幕往后数，座号从左往右数。在下面的格子里，把“5 排 8 号”“2 排 3 号”“9 排 11 号”涂上颜色。</p>
+<div id="seatgrid"></div>
+<h2 class="pb">三、视频一 · 给地球画上格子（纬线与纬度）</h2>
+<div class="box key"><b>要点</b><ul><li>赤道是地球最“胖”的一圈，0° 纬线；纬线是和赤道平行的圆，越往两极越短，到极点缩成一个点。</li><li>纬度从赤道往北数到 90°（北纬 N），往南数到 90°（南纬 S）。雅加达约南纬 6°，北京约北纬 40°。</li><li>经纬线是人画在地球仪和地图上的，地上看不见。</li><li>在北半球，北极星离地平线的高度约等于当地纬度；在南半球看不到北极星。</li></ul></div>
+<div id="quiz-v1"></div>
+<h3>观察与实践（课内）：橡皮筋地球仪</h3>
+<p>在橘子或皮球上套三根橡皮筋：最“胖”处一根（赤道），上下各一根（纬线）。把上面那根往“顶”上推。</p>
+<p>哪根圈最长：______________________　越往顶上推，圈：______________________</p>
+<p>想一想：纬线为什么越往两极越短？到了极点会怎样？</p><div class="lines"><i></i><i></i></div>
+<h2 class="pb">四、视频二 · 从北极到南极的线（经线与经度）</h2>
+<div class="box key"><b>要点</b><ul><li>经线是连接南北极的半圆，条条一样长，指示南北方向。</li><li>1884 年定经过英国伦敦格林尼治天文台的经线为 0°，叫本初子午线；往东到 180° 是东经 E，往西到 180° 是西经 W。</li><li>纬度 + 经度两个数说准一个地方：雅加达约南纬 6°、东经 107°。将近两千年前，托勒密已在亚历山大城用经纬度列出几千个地方。</li></ul></div>
+<div id="quiz-v2"></div>
+<h3>船长练习（纸上版）</h3>
+<p>从 0°、0° 出发。写出你会怎样开：先往哪个方向开多少度，再往哪个方向开多少度？</p>
+<p>到南纬 34°、东经 18°（开普敦）：________________________________________________</p>
+<p>再到北纬 19°、东经 73°（孟买）：________________________________________________</p>
+<h3>观察与实践（课后）：我的城市在哪一格</h3>
+<p>用手机地图长按学校或城市中心，读出经纬度（不要记录自己家的位置）。</p>
+<p>我的城市：____________　纬度：__________　经度：__________</p>
+<p>想去的城市：____________　纬度：__________　经度：__________</p>
+<h2 class="pb">五、视频三 · 几条特别的线</h2>
+<div class="box key"><b>要点</b><ul><li>南北回归线约 23.5°：正午太阳直射点在两条线之间来回。赛伊尼（阿斯旺）在北回归线附近。雅加达在两线之间，一年两次太阳直射。</li><li>南北极圈约 66.5°：圈内有极昼和极夜。</li><li>以赤道分南北半球；以 20°W 和 160°E 组成的圈分东西半球（不切开欧洲、非洲的国家）。</li></ul></div>
+<div id="quiz-v3"></div>
+<h3>观察与实践（课后）：完成我的地球仪</h3>
+<p>□ 北极、南极　□ 赤道　□ 南北回归线　□ 南北极圈　□ 本初子午线（0°）　□ 我的城市、想去的城市两张标签　□ 拍照保存</p>
+<h2>六、想一想，写一写</h2>
+<div class="q"><p class="t">1. 复述：用电影院座位的比方，讲给没上过这节课的人听：经纬网怎样帮人说清一个地方在哪里？</p><div class="lines"><i></i><i></i><i></i><i></i></div>
+<div class="ans">参考：影厅用排和号两个数字定座位；地球用纬度和经度。纬线从赤道 0° 往南北各数到 90°，经线从本初子午线 0° 往东西各数到 180°，两线相交就是那个位置。</div></div>
+<div class="q"><p class="t">2. 辨析：有同学说“东西半球的分界就是本初子午线”。他说得对吗？说出通常用哪两条经线、为什么。</p><div class="lines"><i></i><i></i><i></i><i></i></div>
+<div class="ans">参考：不完全对。通常用 20°W 和 160°E 组成的圈：本初子午线会切开英国、法国和西非一些国家，20°W 与 160°E 大多经过海洋。</div></div>
+<h2>七、读经文</h2>
+<div class="verse">神说：“天上要有光体，可以分昼夜，作记号，定节令、日子、年岁。”</div>
+<div class="small" style="text-align:center">创世记 1:14（和合本）</div>
+<div class="cols" style="margin-top:6pt"><div><div class="h">经文说了什么</div><div class="lines"><i></i><i></i><i></i></div></div><div><div class="h">要靠什么去查证</div><div class="lines"><i></i><i></i><i></i></div></div><div><div class="h">所以我画经纬线时应当……</div><div class="lines"><i></i><i></i><i></i></div></div></div>
+<h2>八、收束：再答一次开课问题</h2>
+<p><b>在一个圆球上，没有上下左右，也没有边和角，你怎样告诉别人一个地方在哪里？</b>（用上：纬度、经度、赤道、本初子午线）</p>
+<div class="lines"><i></i><i></i><i></i></div>
+<p><b>为下一课准备：</b>把做好的地球仪带来，第 3 课用它找陌生的地方。</p>
+<h2>本单元应知应会清单</h2>
+<table class="chk">
+<tr><td style="width:18%"><b>G7.1.1</b> 核心</td><td>制作简易地球仪并用经纬网定位四点，标出赤道、本初子午线、回归线和极圈，说明半球划分依据。（本课学习大部分）</td><td style="width:16%">□ 需支持<br>□ 达到</td></tr>
+<tr><td><b>G7.1.2</b> 核心</td><td>用比例尺换算两段距离，判读等高线的高低、坡的陡缓及分层设色。</td><td>□ 需支持<br>□ 达到</td></tr>
+<tr><td><b>G7.1.3</b> 综合</td><td>用史实与数据说明地球形状和大小，比较两种地图的用途，描述七大洲四大洋的分布。</td><td>□ 需支持<br>□ 达到</td></tr>
+<tr><td><b>G7.1.4</b> 作品</td><td>绘制家乡或虚构校园图，解释图例、方位与选图理由；附数字地图或卫星导航的一项生活用途。</td><td>□ 需支持<br>□ 达到</td></tr>
+</table>
+<p class="small" style="margin-top:10pt">经文：和合本（公有领域）。</p>
+</div>
+<script>
+var QZ={'quiz-warm':[
+  {q:'电影票上写着“7排12号”。为什么要写两个数字？',o:['只知道排或只知道号，都找不到一个确定的座位','因为影厅很大','因为票价不同','为了好看'],e:'一个数字只能说出一整排或一整列，两个数字交在一起，才是一个确定的点。'},
+  {q:'老师说：“第3组第4个同学站起来。”你靠什么知道是谁？',o:['组和座位：一横一竖两个信息','只靠组','只靠名字','靠声音'],e:'一横一竖，两个信息合起来，就能说准一个位置。'},
+  {q:'在手机地图上长按一个地方，会出现一串数字，比如“−6.2, 106.8”。这通常是什么？',o:['那个地方的纬度和经度','那里的电话号码','那里的温度','那里的门牌号'],e:'这就是经纬度。这一课我们就学它。负数表示南纬或西经。'},
+  {q:'站在赤道上，你能在地上看到一条画好的线吗？',o:['不能，经纬线是人画在地图和地球仪上的','能，地上有一条红线','能，是一条河','只有晚上能看到'],e:'经纬线是人为了说清位置画的。有些地方会立纪念碑、画一条线给游客看，但那是人后来画的。'},
+  {q:'教室里的地球仪为什么是斜着放的？',o:['地球的地轴本来就是倾斜的（约23.5°），地球仪照着做','为了好看','放不稳','做错了'],e:'地轴倾斜，和回归线、季节都有关系。视频三会讲到。'}
+],'quiz-v1':[
+  {q:'赤道是几度纬线？',o:['0°','90°','23.5°','180°'],h:'纬度从哪里开始数？',ok:'对。',e:'赤道是纬度的起点，0°。从这里往北、往南各数到 90°。'},
+  {q:'纬线的长短有什么变化？',o:['赤道最长，越往两极越短，到极点缩成一个点','所有纬线一样长','越往两极越长','只有赤道有长度'],h:'回想橡皮筋地球仪。',ok:'没错。',e:'球越往两头越“瘦”，所以纬线越往两极越短。'},
+  {q:'地图上常用哪个字母表示北纬？',o:['N','S','E','W'],h:'北 = North。',ok:'对。',e:'北纬 N，南纬 S。'},
+  {q:'雅加达约在南纬 6°，北京约在北纬 40°。哪个城市离赤道更近？',o:['雅加达','北京','一样近','无法知道'],h:'比一比纬度的数字（不管南北）。',ok:'对。',e:'纬度数字越小，离赤道越近。'},
+  {q:'站在北京（约北纬 40°）面朝正北，北极星离地平线大约多高？',o:['约 40°','约 90°','约 0°','看不到'],h:'回到“看北极星”的游戏试一试。',ok:'说得对。',e:'在北半球，北极星的高度大约等于当地的纬度。这是古人和航海者测纬度的办法。'}
+],'quiz-v2':[
+  {q:'本初子午线（0° 经线）经过哪里？',o:['英国伦敦的格林尼治天文台','中国北京','赤道','北极点'],h:'1884 年在华盛顿开会定下的。',ok:'对。',e:'1884 年，各国代表同意以经过格林尼治天文台的经线为 0°。'},
+  {q:'经线有什么特点？',o:['连接南北两极，每一条一样长，指示南北方向','和赤道平行','越往两极越长','只有一条'],h:'经线从哪里画到哪里？',ok:'没错。',e:'经线是连接南北极的半圆，条条一样长，都指着正南正北。'},
+  {q:'东经用哪个字母表示？',o:['E','W','N','S'],h:'东 = East。',ok:'对。',e:'东经 E，西经 W，各到 180°。'},
+  {q:'要说准地球上一个地方的位置，至少需要几个数？',o:['两个：纬度和经度','一个','三个','四个'],h:'想想电影票。',ok:'对。',e:'纬度说出在哪一圈，经度说出在哪一条，两个数交在一起就是一个点。'},
+  {q:'将近两千年前，用经度纬度列出几千个地方的托勒密，生活在哪座城市？',o:['埃及的亚历山大城','中国的长安','意大利的罗马','希腊的雅典'],h:'和第一课的埃拉托色尼在同一座城。',ok:'对。',e:'托勒密在亚历山大城写下《地理学》。'}
+],'quiz-v3':[
+  {q:'南北回归线大约在多少度？',o:['23.5°','66.5°','0°','45°'],h:'正午太阳直射的最北、最南。',ok:'对。',e:'一年里，正午太阳直射点在两条回归线（约 23.5°）之间来回移动。'},
+  {q:'在极圈以内，会出现什么现象？',o:['极昼和极夜','一年四季都很热','太阳每天都从头顶直射','没有季节'],h:'想想挪威的“午夜太阳”。',ok:'没错。',e:'极圈（约 66.5°）以内，有太阳整天不落的极昼，也有整天不升起的极夜。'},
+  {q:'南北半球以什么为界？',o:['赤道','本初子午线','北回归线','北极圈'],h:'0° 纬线。',ok:'对。',e:'赤道以北是北半球，以南是南半球。'},
+  {q:'地理上通常用哪两条经线划分东西半球？',o:['西经 20° 和东经 160°','本初子午线和 180° 经线','东经 20° 和西经 160°','赤道和本初子午线'],h:'这个圈大多从海上经过。',ok:'对。',e:'用 20°W 和 160°E，可以不把欧洲、非洲的国家切开。'},
+  {q:'北纬 30°、东经 100° 在哪两个半球？',o:['北半球、东半球','南半球、东半球','北半球、西半球','南半球、西半球'],h:'东经 100° 在 20°W 和 160°E 之间吗？',ok:'判断正确。',e:'北纬在北半球；东经 100° 在 20°W 到 160°E 之间，属于东半球。'},
+  {q:'南纬 20°、西经 80° 在哪两个半球？',o:['南半球、西半球','南半球、东半球','北半球、西半球','北半球、东半球'],h:'西经 80° 比西经 20° 更往西。',ok:'判断正确。',e:'南纬在南半球；西经 80° 在 20°W 以西，属于西半球。'}
+]};
+
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+Object.keys(QZ).forEach(function(id){var el=document.getElementById(id);if(!el)return;var h='';QZ[id].forEach(function(it,i){
+  var L='ABCDE',os=it.o.map(function(o,k){return {o:o,k:k}});
+  var r=(i*7+3)%os.length;os=os.slice(r).concat(os.slice(0,r)); // 固定打乱，正确答案不总在 A
+  if(id==='quiz-warm')os.push({o:'还不确定',k:-1});
+  var right=os.findIndex(function(x){return x.k===0});
+  h+='<div class="q"><div class="t">'+(i+1)+'. '+esc(it.q)+'</div><div class="opts">'+os.map(function(x,j){return '<span data-l="'+L[j]+'">'+esc(x.o)+'</span>'}).join('')+'</div><div class="ans">答案：'+L[right]+'。'+esc(it.e)+'</div></div>'});
+  el.innerHTML=h});
+(function(){var h='<table style="border-collapse:collapse;margin:4pt 0"><tr><td></td>';for(var c=1;c<=12;c++)h+='<td style="font-size:8pt;text-align:center;width:16pt">'+c+'</td>';h+='</tr>';for(var r=1;r<=9;r++){h+='<tr><td style="font-size:8pt;padding-right:4pt">'+r+'排</td>';for(var c=1;c<=12;c++){var hit=(r==5&&c==8)||(r==2&&c==3)||(r==9&&c==11);h+='<td style="border:.5pt solid #999;height:13pt" class="'+(hit?'hitc':'')+'"></td>'}h+='</tr>'}document.getElementById('seatgrid').innerHTML=h+'</table><p class="small">↑ 银幕在第 1 排前面</p>'})();
+if(location.hash==='#teacher'){document.getElementById('tch').checked=true;document.body.classList.add('teacher')}
+function doPrint(){try{window.print()}catch(e){}}
+</script>
+</body></html>

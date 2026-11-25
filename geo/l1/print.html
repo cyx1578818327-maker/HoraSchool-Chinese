@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>打印版 · 天地人地理 第一单元 第1课 · 同一个地方，许多张地图</title>
+<style>
+@page{size:A4;margin:14mm 14mm 16mm}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Noto Serif SC","Songti SC","SimSun",serif;color:#1d1a16;font-size:10.5pt;line-height:1.65;background:#e9e4da}
+.sheet{max-width:210mm;margin:0 auto;background:#fff;padding:14mm}
+@media print{body{background:#fff}.sheet{padding:0;max-width:none}.noprint{display:none!important}}
+.noprint{position:sticky;top:0;background:#2F6680;color:#fff;padding:10px 16px;font-family:sans-serif;font-size:14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;z-index:5}
+.noprint button{font:inherit;border:0;border-radius:20px;padding:6px 16px;background:#fff;color:#2F6680;cursor:pointer}
+.noprint label{display:flex;gap:6px;align-items:center}
+h1{font-size:19pt;margin:0 0 2pt}
+h2{font-size:12.5pt;margin:14pt 0 5pt;padding-bottom:2pt;border-bottom:1.2pt solid #2F6680;color:#2F6680;break-after:avoid}
+h3{font-size:11pt;margin:9pt 0 3pt;break-after:avoid}
+.meta{font-size:9pt;color:#555;font-family:sans-serif;letter-spacing:.05em}
+.who{display:flex;gap:18pt;margin:8pt 0 4pt;font-size:10pt}.who span{flex:1;border-bottom:.6pt solid #333}
+.lines{margin:4pt 0}.lines i{display:block;height:20pt;border-bottom:.5pt solid #999}
+.q{margin:6pt 0;break-inside:avoid}
+.q .t{font-weight:700}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:1pt 14pt;margin:2pt 0 0 12pt}
+.opts span::before{content:attr(data-l) ". ";font-weight:700}
+.ans{display:none;color:#2F6680;font-size:9.5pt;margin-left:12pt}
+.teacher .ans{display:block}
+.box{border:.6pt solid #999;padding:6pt 9pt;border-radius:3pt;margin:5pt 0;break-inside:avoid}
+.key li{margin:1pt 0}
+.maps{display:grid;grid-template-columns:repeat(3,1fr);gap:6pt;margin:4pt 0}
+.maps svg{width:100%;height:auto;border:.5pt solid #bbb}
+.maps div{text-align:center;font-size:9pt;font-weight:700}
+.match td{padding:3pt 6pt;border-bottom:.5pt solid #ccc}.match{border-collapse:collapse;width:100%}
+.cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8pt}
+.cols .h{font-weight:700;font-size:9.5pt}
+.verse{text-align:center;font-size:13pt;margin:6pt 0 2pt}
+.small{font-size:9pt;color:#555}
+.chk td{padding:3pt 5pt;border:.5pt solid #bbb;vertical-align:top;font-size:9.5pt}.chk{border-collapse:collapse;width:100%}
+.pb{break-before:page}
+</style></head>
+<body>
+<div class="noprint">
+  <b>打印本课</b>
+  <button onclick="doPrint()">打印 / 存为 PDF</button>
+  <label><input type="checkbox" id="tch" onchange="document.body.classList.toggle('teacher',this.checked)"> 附答案（教师用）</label>
+  <span id="tip" style="opacity:.85">如果没有弹出打印窗口：按 Ctrl+P（Mac 按 ⌘P），目标选“另存为 PDF”。</span>
+</div>
+<div class="sheet">
+<div class="meta">天地人地理 · 七年级 · 第一单元《地球与地图》· 第 1 课</div>
+<h1>同一个地方，许多张地图</h1>
+<div class="who"><span>姓名：</span><span>班级：</span><span>日期：</span></div>
+
+<h2>一、开课问题（先写，课末再答一次）</h2>
+<p class="t"><b>同一个地方，为什么能画出不同的地图？</b></p>
+<div class="lines"><i></i><i></i><i></i></div>
+
+<h2>二、热身</h2>
+<h3>1. 生活里的地图（不计分，不会就选“还不确定”）</h3>
+<div id="quiz-warm"></div>
+<h3>2. 同一所学校，三张地图</h3>
+<p class="small">三张图画的是同一所虚构的学校。看图后，在每个需要后面的括号里填“甲”“乙”或“丙”。</p>
+<div class="maps" id="maps"></div>
+<table class="match">
+<tr><td>新同学小林第一天来学校，要从校门走到图书馆。</td><td>（　　）<span class="ans">甲</span></td></tr>
+<tr><td>下大雨了，总务老师想知道雨水会往哪个方向流。</td><td>（　　）<span class="ans">乙</span></td></tr>
+<tr><td>学校想数一数校园里一共有多少棵大树。</td><td>（　　）<span class="ans">丙</span></td></tr>
+</table>
+
+<h2 class="pb">三、视频一 · 地球是什么形状</h2>
+<div class="box key"><b>要点</b><ul>
+<li>古希腊人用观察证明大地是球形：月食时地球的影子边缘总是圆弧；往南走能看到北方看不见的星星；远去的船，船身先消失。</li>
+<li>东汉张衡说“浑天如鸡子”：天像蛋壳，地像蛋黄。</li></ul></div>
+<div id="quiz-v1"></div>
+<h3>观察与实践（课内）：手电筒、皮球和盘子</h3>
+<p>用手电筒照一个球，再照一个圆盘子（正对着照、从侧边照），看墙上影子的形状。</p>
+<p>球的影子：______________________　　盘子的影子：______________________</p>
+<p>想一想：如果大地是一张扁扁的圆盘，月食时会不会有时看到一条细细的影子？</p>
+<div class="lines"><i></i><i></i></div>
+
+<h2>四、视频二 · 地球有多大</h2>
+<div class="box key"><b>要点</b><ul>
+<li>约公元前 240 年，埃拉托色尼比较夏至正午赛伊尼与亚历山大城的日影：角度约 7.2°，即一圈的 1/50；两城距离 × 50 ≈ 地球周长。</li>
+<li>今天测得：地球平均半径约 6371 千米，赤道一圈约 4 万千米。麦哲伦船队 1519—1522 年完成第一次环球航行。</li></ul></div>
+<div id="quiz-v2"></div>
+<h3>观察与实践（课后，晴天中午）：中午量影子</h3>
+<p>把筷子竖直立在纸上，量筷子高和影子长。<b>不要直视太阳</b>；到外面空地做请家长陪同。</p>
+<p>城市：____________　日期时间：____________　筷子高：______厘米　影子长：______厘米　影子长 ÷ 筷子高 = ______</p>
+<p>想一想：同一天中午，雅加达和北京的同学，谁的影子更短？为什么？</p>
+<div class="lines"><i></i><i></i></div>
+
+<h2 class="pb">五、视频三 · 把球摊平</h2>
+<div class="box key"><b>要点</b><ul>
+<li>球面不能不撕裂、不拉伸地摊平，所以每一张平面世界地图都有变形。</li>
+<li>墨卡托地图（1569）保住方向、放大高纬度面积：格陵兰岛看起来和非洲差不多大，实际非洲约是它的 14 倍。等面积地图保住面积、牺牲形状。</li>
+<li>取舍由用途决定。一张好地图至少有：方向、比例尺、图例。</li></ul></div>
+<div id="quiz-v3"></div>
+<h3>观察与实践（课后）：橘子皮世界地图</h3>
+<p>在橘子上画“赤道”和一块大陆，剥下整块皮压平，观察大陆怎么变了。</p>
+<p>哪里裂开了：______________________　大陆怎么变了：______________________</p>
+<p>想一想：如果不许撕开橘子皮，你只能怎么办？</p>
+<div class="lines"><i></i><i></i></div>
+
+<h2>六、想一想，写一写</h2>
+<div class="q"><p class="t">1. 复述：讲给没上过这节课的人听——埃拉托色尼是怎样量出地球大小的？（至少讲到井、影子、角度、两城的距离）</p><div class="lines"><i></i><i></i><i></i><i></i></div>
+<div class="ans">参考：夏至中午赛伊尼阳光直射井底（太阳在头顶）；同时亚历山大城木杆有影子，角度约 7.2° = 一圈的 1/50；所以两城距离 = 周长的 1/50；5000 斯塔迪亚 × 50 ≈ 25 万斯塔迪亚。</div></div>
+<div class="q"><p class="t">2. 辨析：有同学说“墨卡托地图把格陵兰岛画得那么大，是一张错的地图，应该扔掉。”你同意吗？用“用途”来回答。</p><div class="lines"><i></i><i></i><i></i><i></i></div>
+<div class="ans">参考：每张平面世界地图都有变形，要问“适合什么用途”。墨卡托地图保住方向，适合航海；放大了高纬度面积，比较面积应换等面积地图。</div></div>
+
+<h2>七、读经文</h2>
+<div class="verse">地和其中所充满的，世界和住在其间的，都属耶和华。</div>
+<div class="small" style="text-align:center">诗篇 24:1（和合本）</div>
+<div class="cols" style="margin-top:6pt">
+<div><div class="h">经文说了什么</div><div class="lines"><i></i><i></i><i></i></div></div>
+<div><div class="h">要靠什么去查证</div><div class="lines"><i></i><i></i><i></i></div></div>
+<div><div class="h">所以我画地图时应当……</div><div class="lines"><i></i><i></i><i></i></div></div>
+</div>
+
+<h2>八、收束：再答一次开课问题</h2>
+<p class="t"><b>同一个地方，为什么能画出不同的地图？</b>（比一比：你的答案里有没有“变形”“取舍”“用途”？）</p>
+<div class="lines"><i></i><i></i><i></i></div>
+<p><b>为下一课准备：</b>带一张身边的地图（手机地图截图、地铁图、导览图都可以），想一想它为什么用途而画、舍去了什么。不要用显示家庭住址的截图。</p>
+
+<h2>本单元应知应会清单（第一单元 · 地球与地图）</h2>
+<table class="chk">
+<tr><td style="width:18%"><b>G7.1.1</b> 核心</td><td>制作简易地球仪并用经纬网定位四点，标出赤道、本初子午线、回归线和极圈，说明半球划分依据。</td><td style="width:16%">□ 需支持<br>□ 达到</td></tr>
+<tr><td><b>G7.1.2</b> 核心</td><td>用比例尺换算两段距离，判读等高线的高低、坡的陡缓及分层设色。</td><td>□ 需支持<br>□ 达到</td></tr>
+<tr><td><b>G7.1.3</b> 综合</td><td>用史实与数据说明地球形状和大小（本课开头），比较两种地图的用途（本课开头），描述七大洲四大洋的分布。</td><td>□ 需支持<br>□ 达到</td></tr>
+<tr><td><b>G7.1.4</b> 作品</td><td>绘制家乡或虚构校园图，解释图例、方位与选图理由；附数字地图或卫星导航的一项生活用途。</td><td>□ 需支持<br>□ 达到</td></tr>
+</table>
+<p class="small" style="margin-top:10pt">校园图为本课绘制的虚构教学图。经文：和合本（公有领域）。</p>
+</div>
+<script>
+var QZ={'quiz-warm':[
+  {q:'打开手机地图，屏幕上那个一闪一闪的小蓝点，通常表示什么？',o:['你自己现在的位置','最近的公交车站','地图上最大的城市','天上卫星的位置'],e:'手机靠卫星定位知道你在哪里，再把你画成地图上的一个点。地图总要先回答一个问题：“我在哪儿？”'},
+  {q:'早上起床，太阳从哪个方向升起来？',o:['东边','西边','南边','北边'],e:'太阳东升西落。没有指南针的时候，看太阳就能大致认方向。'},
+  {q:'给第一次来你家的朋友画一张路线图，最需要画出什么？',o:['路口和转弯处显眼的地方，比如便利店、红绿灯','沿路的每一棵树','每一户人家的门牌号','路边停着的汽车'],e:'好的路线图不是画得越多越好，而是留下“找路要用的东西”，把其他的舍去。记住这个想法，这一课会一直用到。'},
+  {q:'地铁线路图上，有两段路画得一样长。实际的距离也一样长吗？',o:['不一定。线路图主要告诉你站的顺序和在哪里换乘','一定一样长','一定是画得长的那段更远','地铁图上的距离都是乘以 1000 的'],e:'地铁图为了看得清楚，故意不按真实距离画——它保住了“顺序”，舍去了“距离”。'},
+  {q:'教室里的地球仪和墙上的世界地图，哪一个更接近地球真实的样子？',o:['地球仪','墙上的世界地图','两个完全一样','都不像'],e:'地球仪是球形的，和地球形状一样。那墙上的平面地图有什么问题呢？看完视频三你就知道了。'}
+],'quiz-v1':[
+  {q:'古希腊学者举过一条证据说明大地是球形。下面哪一条是对的？',o:['月食时，地球投在月亮上的影子边缘总是圆弧','白天太阳从东边升起，西边落下','冬天冷，夏天热','站在高山上能看得更远'],h:'想一想：哪一个现象能直接看出地球的“形状”？',ok:'正是。',e:'只有球体在任何方向上投下的影子都是圆的。你刚才可以用手电筒和盘子试一试。'},
+  {q:'站在海边，看一艘船慢慢开向远方。最先看不见的是哪一部分？',o:['船身（下面的部分）','桅杆的顶端','整艘船同时一起变小消失','船头的旗子'],h:'如果海面是弯的，哪一部分会先被“挡住”？',ok:'对。',e:'海面是弯的，船开远了，下面的船身先被弯曲的海面挡住，高高的桅杆最后才不见。'},
+  {q:'人往南走，会看到在北方看不见的星星。这为什么能说明大地是弯的？',o:['地面是弯的，走过去以后，原来被大地挡住的那一片天空露出来了','南方的天空更晴朗','星星会跟着季节搬家','南方离星星更近'],h:'想象你站在一个大球上，往前走，头顶的天空会怎样变化？',ok:'理解得很好。',e:'如果大地是平的，不管走到哪里，看到的星空都应该一样。'},
+  {q:'东汉的张衡说“浑天如鸡子”，他是把天地比作什么？',o:['一个鸡蛋：天像蛋壳包在外面，地像里面的蛋黄','一口锅倒扣在桌上','一张铺开的大地毯','一座四方的房子'],h:'“鸡子”就是鸡蛋。',ok:'对。',e:'这个比方和今天的认识不完全一样，但古人已经在认真地追问天地的样子。'}
+],'quiz-v2':[
+  {q:'大约公元前 240 年，用影子和几何测算出地球周长的学者是谁？',o:['埃拉托色尼','麦哲伦','墨卡托','利玛窦'],h:'麦哲伦是航海家，墨卡托是制图家，利玛窦把世界地图带到中国。',ok:'对。',e:'埃拉托色尼在埃及的亚历山大城工作，比较了两座城夏至正午的日影。'},
+  {q:'夏至中午，赛伊尼城的阳光能直直照到深井的井底。这说明什么？',o:['太阳正在头顶正上方','那天特别热','那口井特别浅','赛伊尼离太阳最近'],h:'阳光要怎样照，才能照到又深又窄的井底？',ok:'没错。',e:'只有太阳在正头顶，阳光才是直上直下的，能照到井底，竖着的杆子也几乎没有影子。'},
+  {q:'今天测得的地球平均半径大约是多少？',o:['约 6371 千米','约 637 千米','约 63 710 千米','约 40 000 千米'],h:'有一个选项其实是赤道的周长，不是半径。',ok:'对。',e:'平均半径约 6371 千米，赤道一圈约 4 万千米。记住大概的量级就好。'},
+  {q:'赤道一圈约 4 万千米。一辆汽车每小时开 100 千米，不停地开，绕赤道一圈大约要多久？',o:['约 400 小时（差不多 17 天）','约 40 小时','约 4 小时','约 4000 小时'],h:'40 000 ÷ 100 = ？',ok:'算对了。',e:'40 000 ÷ 100 = 400 小时，大约 17 天不停地开。这样想，地球是不是变得具体了？'}
+],'quiz-v3':[
+  {q:'为什么每一张平面世界地图都有变形？',o:['球面不可能不撕裂、不拉伸地摊成平面','制图的人不够认真','古代测量工具不够精确','纸张太小，画不下整个地球'],h:'回想一下那张橘子皮。',ok:'说到点子上了。',e:'这是几何上的限制，不是技术问题。所以制图的人只能选择保住什么（方向、面积或形状），牺牲什么。'},
+  {q:'在墨卡托地图上，格陵兰岛看起来和非洲差不多大。实际上非洲大约是格陵兰岛的多少倍？',o:['约 14 倍','差不多一样大','约 2 倍','约 100 倍'],h:'回到上面看看那三个大数字。',ok:'对。',e:'墨卡托地图越靠近两极放得越大。它适合航海（保住方向），不适合比较面积。'},
+  {q:'你想比较俄罗斯和整个非洲哪个面积大，应该选哪种地图？',o:['等面积地图','墨卡托地图','哪种都一样','地铁线路图'],h:'哪种地图保住了“面积”？',ok:'选对了。',e:'比较面积，就要用保住面积的地图。在墨卡托地图上，俄罗斯会显得比真实大很多。'},
+  {q:'一张好地图至少要让读者知道哪三样？',o:['方向、比例尺、图例','颜色、标题、作者','经度、纬度、海拔','国家、城市、河流'],h:'哪边是北？1 厘米代表多远？符号是什么意思？',ok:'对，这是地图的三要素。',e:'方向、比例尺、图例——下节课开始，我们会一样一样练。'}
+]};
+// 同一所虚构学校的三张地图（viewBox 0 0 600 440）：导览图 / 地形图 / 俯视影像
+// campusMap(kind, uid, font) → SVG 内部字符串；课程页与视频共用
+function campusMap(kind, uid, font) {
+  var F = font || 'sans-serif', id = function (s) { return 'cm' + uid + s };
+  var STREAM = 'M600,262 C540,268 500,300 452,322 C400,346 352,352 300,372 C236,396 150,404 0,424';
+  var PATH = 'M300,440 L300,226 M300,226 L220,226 L220,148 M300,226 L430,226 L430,148 M300,226 L300,196 M236,312 L300,312 M300,312 L408,312';
+  var B = { teach: [120, 84, 170, 64], lib: [372, 84, 118, 64], hall: [380, 282, 116, 58], dorm: [40, 120, 58, 120] };
+  var TRACK = [70, 262, 170, 116];
+  var hill = function (rx, ry) { return '<ellipse cx="512" cy="74" rx="' + rx + '" ry="' + ry + '" transform="rotate(-12 512 74)"/>' };
+  var trees = [[30, 52], [52, 44], [44, 70], [318, 40], [336, 30], [330, 58], [520, 186], [544, 200], [532, 222], [560, 176], [262, 384], [520, 400], [548, 392], [60, 210], [118, 196], [250, 110], [356, 168], [500, 250], [176, 252], [578, 330], [22, 300], [470, 140], [584, 120]];
+  trees = trees.filter(function (p) { return ![B.teach, B.lib, B.hall, B.dorm, TRACK].some(function (b) { return p[0] > b[0] - 12 && p[0] < b[0] + b[2] + 12 && p[1] > b[1] - 12 && p[1] < b[1] + b[3] + 12 }) });
+  var cars = [[332, 404, 0], [350, 404, 0], [368, 404, 0], [386, 404, 0]];
+  function north(c) { return '<g transform="translate(566,46)"><circle r="20" fill="' + (c === '#fff' ? 'rgba(0,0,0,.25)' : 'rgba(255,255,255,.7)') + '"/><path d="M0,-15 L6,5 L0,1 L-6,5 Z" fill="' + c + '"/><text y="-24" font-size="13" text-anchor="middle" fill="' + c + '" font-family="' + F + '" font-weight="700">北</text></g>' }
+  function scale(c) { return '<g transform="translate(24,414)" font-family="' + F + '" font-size="11" fill="' + c + '"><rect width="40" height="5" fill="' + c + '"/><rect x="40" width="40" height="5" fill="none" stroke="' + c + '"/><text y="-5">0</text><text x="72" y="-5">40 米</text></g>' }
+  var s = '';
+  if (kind === 'A') { // ---------- 导览图 ----------
+    s += '<defs><filter id="' + id('sh') + '" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="2" dy="3" stdDeviation="2" flood-color="#5a4325" flood-opacity=".25"/></filter></defs>';
+    s += '<rect width="600" height="440" fill="#F7F2E7"/>';
+    s += '<rect x="10" y="12" width="580" height="414" rx="18" fill="#FBF8F1" stroke="#D9CDB2" stroke-width="3"/>';
+    s += '<g fill="#DCE8CC">' + '<rect x="24" y="26" width="80" height="70" rx="10"/><rect x="300" y="24" width="60" height="50" rx="10"/><rect x="500" y="160" width="76" height="90" rx="12"/><rect x="460" y="372" width="110" height="44" rx="10"/>' + '</g>';
+    s += '<path d="' + STREAM + '" fill="none" stroke="#BCD6E0" stroke-width="16" stroke-linecap="round"/><path d="' + STREAM + '" fill="none" stroke="#9CC2D2" stroke-width="2"/>';
+    s += '<path d="' + PATH + '" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="' + PATH + '" fill="none" stroke="#E2D6BD" stroke-width="1.5" stroke-linejoin="round"/>';
+    s += '<rect x="286" y="364" width="28" height="22" fill="#EADFC6" stroke="#B8A57E"/>'; // 桥
+    s += '<path d="M300,430 L300,226 L430,226 L430,152" fill="none" stroke="#C9A24A" stroke-width="4" stroke-dasharray="9 7" stroke-linecap="round"/>';
+    s += '<g fill="#C9A24A"><path d="M300,330 l-7,12 h14 Z"/><path d="M300,262 l-7,12 h14 Z"/><path d="M380,226 l-12,-7 v14 Z"/><path d="M430,190 l-7,12 h14 Z"/></g>';
+    var bld = function (b, col, name, icon) { return '<g filter="url(#' + id('sh') + ')"><rect x="' + b[0] + '" y="' + b[1] + '" width="' + b[2] + '" height="' + b[3] + '" rx="6" fill="' + col + '"/></g>' + icon + '<text x="' + (b[0] + b[2] / 2) + '" y="' + (b[1] + b[3] / 2 + 13) + '" font-size="15" font-weight="700" text-anchor="middle" fill="#fff" font-family="' + F + '">' + name + '</text>' };
+    var ic = function (x, y, d) { return '<g transform="translate(' + x + ',' + y + ')" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + d + '</g>' };
+    s += bld(B.teach, '#6F9AAE', '教学楼', ic(197, 96, '<path d="M-10,8 V-2 L0,-8 L10,-2 V8 Z"/><path d="M-4,8 V2 H4 V8"/>'));
+    s += bld(B.lib, '#A0503A', '图书馆', ic(431, 96, '<path d="M0,-6 C-4,-9 -10,-9 -12,-8 V6 C-10,5 -4,5 0,8 C4,5 10,5 12,6 V-8 C10,-9 4,-9 0,-6 Z M0,-6 V8"/>'));
+    s += bld(B.hall, '#B08A3E', '食堂', ic(438, 294, '<path d="M-11,0 H11 C11,6 6,10 0,10 C-6,10 -11,6 -11,0 Z"/><path d="M-4,-4 C-6,-7 -2,-8 -4,-11 M3,-4 C1,-7 5,-8 3,-11"/>'));
+    s += bld(B.dorm, '#8C8FA8', '宿舍', '');
+    s += '<g filter="url(#' + id('sh') + ')"><rect x="' + TRACK[0] + '" y="' + TRACK[1] + '" width="' + TRACK[2] + '" height="' + TRACK[3] + '" rx="56" fill="#C9775F"/></g><rect x="' + (TRACK[0] + 18) + '" y="' + (TRACK[1] + 18) + '" width="' + (TRACK[2] - 36) + '" height="' + (TRACK[3] - 36) + '" rx="38" fill="#8FB277"/><text x="155" y="326" font-size="15" font-weight="700" text-anchor="middle" fill="#fff" font-family="' + F + '">操场</text>';
+    trees.forEach(function (p) { s += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="7" fill="#A9C58E" stroke="#8CAD70"/>' });
+    s += '<g transform="translate(300,424)"><path d="M0,-30 C-11,-30 -16,-21 -16,-15 C-16,-5 0,8 0,8 C0,8 16,-5 16,-15 C16,-21 11,-30 0,-30 Z" fill="#B5452F"/><circle cy="-16" r="6" fill="#fff"/></g><text x="324" y="414" font-size="13" fill="#5a4a36" font-family="' + F + '" font-weight="700">校门 · 你在这里</text>';
+    s += '<g transform="translate(24,346)" font-family="' + F + '" font-size="11.5" fill="#4a3f33"><rect x="-6" y="-14" width="112" height="56" rx="6" fill="#fff" opacity=".85"/><path d="M2,-2 h18" stroke="#C9A24A" stroke-width="3" stroke-dasharray="5 4"/><text x="26" y="2">步行路线</text><rect x="2" y="10" width="18" height="10" fill="#DCE8CC"/><text x="26" y="19">草地</text><path d="M2,32 h18" stroke="#BCD6E0" stroke-width="6"/><text x="26" y="36">小溪</text></g>';
+    s += north('#2A2621') + scale('#2A2621');
+  } else if (kind === 'B') { // ---------- 地形图（分层设色 + 等高线） ----------
+    s += '<defs><radialGradient id="' + id('hs') + '" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>';
+    var bands = [['#CFE0C0', 'M0,440 L0,330 C120,300 260,320 380,280 C470,250 540,230 600,200 L600,440 Z'], ['#DCE3B8', 'M0,300 C110,268 230,262 330,236 C430,210 520,190 600,160 L600,0 L0,0 Z'], ['#E8E0B0', 'M60,230 C150,196 260,190 350,160 C430,132 500,120 600,104 L600,0 L120,0 C90,80 70,150 60,230 Z'], ['#EFD9A6', 'M250,150 C320,120 380,96 450,84 C510,74 560,70 600,64 L600,0 L280,0 C270,50 260,100 250,150 Z'], ['#E7C690', hill(78, 46).replace('<ellipse', '').replace('/>', '')]];
+    s += '<rect width="600" height="440" fill="#CFE0C0"/>';
+    bands.slice(1, 4).forEach(function (b) { s += '<path d="' + b[1] + '" fill="' + b[0] + '"/>' });
+    s += '<g fill="#E7C690">' + hill(84, 50) + '</g><g fill="#DDB27A">' + hill(44, 26) + '</g>';
+    s += '<rect width="600" height="440" fill="url(#' + id('hs') + ')"/>';
+    s += '<g fill="none" stroke="#9C7B4F" stroke-width="1.4"><path d="M0,330 C120,300 260,320 380,280 C470,250 540,230 600,200"/><path d="M0,300 C110,268 230,262 330,236 C430,210 520,190 600,160"/><path d="M60,230 C150,196 260,190 350,160 C430,132 500,120 600,104"/><path d="M250,150 C320,120 380,96 450,84 C510,74 560,70 600,64"/>' + hill(84, 50) + hill(44, 26) + '</g>';
+    s += '<g fill="none" stroke="#9C7B4F" stroke-width=".6" opacity=".7"><path d="M0,316 C115,284 245,290 355,258 C450,230 530,210 600,180"/><path d="M30,265 C130,232 245,226 340,198 C430,170 510,155 600,132"/><path d="M160,190 C240,158 320,140 400,120 C470,102 530,92 600,84"/></g>';
+    s += '<g font-family="' + F + '" font-size="12" fill="#7a5f3a" font-weight="700"><text x="40" y="314">10</text><text x="70" y="282">15</text><text x="130" y="210">20</text><text x="300" y="134">25</text><text x="500" y="54">30</text></g>';
+    s += '<g transform="translate(512,74)"><path d="M0,-7 L7,5 H-7 Z" fill="#5a3f22"/></g><text x="524" y="80" font-size="12" fill="#5a3f22" font-family="' + F + '">32.6</text>';
+    s += '<path d="' + STREAM + '" fill="none" stroke="#3E7CA6" stroke-width="4" stroke-linecap="round"/>';
+    s += '<g fill="#3E7CA6"><path d="M0,0 L-10,-5 L-10,5 Z" transform="translate(470,314) rotate(155)"/><path d="M0,0 L-10,-5 L-10,5 Z" transform="translate(330,362) rotate(162)"/><path d="M0,0 L-10,-5 L-10,5 Z" transform="translate(150,408) rotate(172)"/></g>';
+    s += '<g fill="none" stroke="#7d7466" stroke-width="1.2" stroke-dasharray="3 2">';
+    [B.teach, B.lib, B.hall, B.dorm].forEach(function (b) { s += '<rect x="' + b[0] + '" y="' + b[1] + '" width="' + b[2] + '" height="' + b[3] + '"/>' });
+    s += '<rect x="' + TRACK[0] + '" y="' + TRACK[1] + '" width="' + TRACK[2] + '" height="' + TRACK[3] + '" rx="56"/></g>';
+    s += '<g transform="translate(24,330)" font-family="' + F + '" font-size="11.5" fill="#4a3f33"><rect x="-6" y="-14" width="132" height="74" rx="6" fill="#fff" opacity=".8"/><path d="M2,-2 h18" stroke="#9C7B4F" stroke-width="1.6"/><text x="26" y="2">等高线（米）</text><path d="M2,16 h18" stroke="#3E7CA6" stroke-width="3"/><text x="26" y="20">小溪 · 流向</text><path d="M11,26 L17,36 H5 Z" fill="#5a3f22"/><text x="26" y="38">最高点</text><rect x="2" y="44" width="9" height="9" fill="#CFE0C0"/><rect x="11" y="44" width="9" height="9" fill="#E7C690"/><text x="26" y="53">低 → 高</text></g>';
+    s += north('#2A2621') + scale('#2A2621');
+  } else { // ---------- 俯视影像 ----------
+    s += '<defs><filter id="' + id('gr') + '" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="3" seed="8"/><feColorMatrix values="0 0 0 0 .26  0 0 0 0 .33  0 0 0 0 .17  0 0 0 .55 -.1"/><feComposite in2="SourceGraphic" operator="in"/></filter>' +
+      '<filter id="' + id('cn') + '" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="2"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .48  0 0 0 0 .44  0 0 0 .35 -.05"/><feComposite in2="SourceGraphic" operator="in"/></filter>' +
+      '<radialGradient id="' + id('tr') + '" cx="38%" cy="34%" r="70%"><stop offset="0" stop-color="#8FA868"/><stop offset=".6" stop-color="#55703A"/><stop offset="1" stop-color="#34481F"/></radialGradient>' +
+      '<linearGradient id="' + id('wt') + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5E7F86"/><stop offset="1" stop-color="#3E5A60"/></linearGradient>' +
+      '<linearGradient id="' + id('rf') + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A9AAAD"/><stop offset="1" stop-color="#7C7E83"/></linearGradient>' +
+      '<linearGradient id="' + id('rr') + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A86A55"/><stop offset="1" stop-color="#7E4A3A"/></linearGradient>' +
+      '<filter id="' + id('ds') + '" x="-20%" y="-20%" width="150%" height="160%"><feDropShadow dx="5" dy="6" stdDeviation="2" flood-color="#000" flood-opacity=".45"/></filter></defs>';
+    s += '<rect width="600" height="440" fill="#6E7E4C"/><rect width="600" height="440" fill="#6E7E4C" filter="url(#' + id('gr') + ')"/>';
+    s += '<path d="M480,0 C470,60 520,140 600,150 L600,0 Z" fill="#7C7A4A" opacity=".55"/>';
+    s += '<path d="' + STREAM + '" fill="none" stroke="#4A5F45" stroke-width="22" stroke-linecap="round" opacity=".6"/><path d="' + STREAM + '" fill="none" stroke="url(#' + id('wt') + ')" stroke-width="12" stroke-linecap="round"/>';
+    s += '<path d="' + PATH + '" fill="none" stroke="#B9B2A3" stroke-width="12" stroke-linejoin="round"/><path d="' + PATH + '" fill="none" stroke="#B9B2A3" stroke-width="12" filter="url(#' + id('cn') + ')"/>';
+    s += '<rect x="318" y="392" width="92" height="28" fill="#8E8B85"/>';
+    cars.forEach(function (c, i) { s += '<rect x="' + (c[0] - 6) + '" y="' + (c[1] - 3) + '" width="12" height="18" rx="3" fill="' + ['#C8C8C8', '#3B4E6E', '#B5452F', '#E8E6DF'][i] + '"/><rect x="' + (c[0] - 4) + '" y="' + (c[1] + 1) + '" width="8" height="5" fill="#2a2f36" opacity=".7"/>' });
+    s += '<rect x="286" y="362" width="28" height="24" fill="#9E9A92"/>';
+    var roof = function (b, fill) { return '<g filter="url(#' + id('ds') + ')"><rect x="' + b[0] + '" y="' + b[1] + '" width="' + b[2] + '" height="' + b[3] + '" fill="url(#' + id(fill) + ')"/></g><path d="M' + b[0] + ',' + (b[1] + b[3] / 2) + ' h' + b[2] + '" stroke="#fff" stroke-opacity=".25"/><rect x="' + (b[0] + 10) + '" y="' + (b[1] + 8) + '" width="14" height="10" fill="#6c6e72" opacity=".7"/>' };
+    s += roof(B.teach, 'rf') + roof(B.lib, 'rr') + roof(B.hall, 'rf') + roof(B.dorm, 'rf');
+    s += '<g filter="url(#' + id('ds') + ')"><rect x="' + TRACK[0] + '" y="' + TRACK[1] + '" width="' + TRACK[2] + '" height="' + TRACK[3] + '" rx="56" fill="#A65440"/></g>';
+    for (var k = 1; k < 4; k++) s += '<rect x="' + (TRACK[0] + k * 4.5) + '" y="' + (TRACK[1] + k * 4.5) + '" width="' + (TRACK[2] - k * 9) + '" height="' + (TRACK[3] - k * 9) + '" rx="' + (56 - k * 4) + '" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width=".8"/>';
+    s += '<rect x="' + (TRACK[0] + 18) + '" y="' + (TRACK[1] + 18) + '" width="' + (TRACK[2] - 36) + '" height="' + (TRACK[3] - 36) + '" rx="38" fill="#5E8A3C"/><path d="M155,' + (TRACK[1] + 18) + ' V' + (TRACK[1] + TRACK[3] - 18) + '" stroke="#fff" stroke-opacity=".6"/><circle cx="155" cy="320" r="10" fill="none" stroke="#fff" stroke-opacity=".6"/>';
+    trees.forEach(function (p, i) { var r = 9 + (i * 7 % 5); s += '<circle cx="' + (p[0] + 4) + '" cy="' + (p[1] + 5) + '" r="' + r + '" fill="#1E2A12" opacity=".45"/><circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + r + '" fill="url(#' + id('tr') + ')"/><circle cx="' + (p[0] - r * .3) + '" cy="' + (p[1] - r * .35) + '" r="' + (r * .35) + '" fill="#A4BC7A" opacity=".5"/>' });
+    s += north('#fff');
+  }
+  return s
+}
+
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+Object.keys(QZ).forEach(function(id){var el=document.getElementById(id);if(!el)return;var h='';QZ[id].forEach(function(it,i){
+  var L='ABCDE',os=it.o.map(function(o,k){return {o:o,k:k}});
+  var r=(i*7+3)%os.length;os=os.slice(r).concat(os.slice(0,r)); // 固定打乱，正确答案不总在 A
+  if(id==='quiz-warm')os.push({o:'还不确定',k:-1});
+  var right=os.findIndex(function(x){return x.k===0});
+  h+='<div class="q"><div class="t">'+(i+1)+'. '+esc(it.q)+'</div><div class="opts">'+os.map(function(x,j){return '<span data-l="'+L[j]+'">'+esc(x.o)+'</span>'}).join('')+'</div><div class="ans">答案：'+L[right]+'。'+esc(it.e)+'</div></div>'});
+  el.innerHTML=h});
+document.getElementById('maps').innerHTML=['A','B','C'].map(function(k,i){return '<div><svg viewBox="0 0 600 440">'+campusMap(k,'pr'+i,'Noto Sans SC, sans-serif')+'</svg>'+['甲 · 导览图','乙 · 地形图','丙 · 俯视影像'][i]+'</div>'}).join('');
+if(location.hash==='#teacher'){document.getElementById('tch').checked=true;document.body.classList.add('teacher')}
+function doPrint(){try{window.print()}catch(e){}}
+</script>
+</body></html>
