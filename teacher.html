@@ -45,7 +45,7 @@ td.c{text-align:center;padding:5px}
 .sum{white-space:pre-wrap;line-height:1.8;font-size:14px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
 .essay{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:12px}
 .essay .q{font-size:13px;color:var(--muted);margin-bottom:6px;line-height:1.6}
-.essay .t{white-space:pre-wrap;line-height:2;font-size:16px;text-indent:0}
+.essay .t{white-space:pre-wrap;line-height:1.9;font-size:16px;text-indent:0}
 .essay .n{font-size:12px;color:var(--muted);text-align:right;margin-top:4px}
 .panel textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:10px;background:var(--card);padding:10px 12px;line-height:1.7}
 .hist{font-size:13px;color:var(--muted)}.hist a{color:inherit;cursor:pointer;text-decoration:underline;margin-right:10px}
@@ -53,23 +53,29 @@ td.c{text-align:center;padding:5px}
 @media (max-width:640px){header{padding:10px 16px}.panel{padding:18px 16px 60px}main{padding:14px 16px 60px}}
 @media print{header,.bar,.stats,.wrap,.noprint{display:none!important}.dr{position:static;background:none}.panel{width:auto;height:auto;box-shadow:none;padding:0}body{background:#fff}}
 </style></head><body>
-<header><h1>老师端<small>必修二 · 互动课作业</small></h1><span class="sp"></span><span id="who" class="tag"></span>
+<header><h1>老师端<small>Hora 学堂 · 学生作业</small></h1><span class="sp"></span><span id="who" class="tag"></span>
 <button class="btn" id="reload" hidden>刷新</button><button class="btn" id="logout" hidden>退出</button></header>
 <main id="app"></main>
-<script src="assets/config.js"></script>
+<script>window.SUBMIT_URL="https://script.google.com/macros/s/AKfycbypx8xahOQdJRToKhBOf-Sqwj7BihMAqTJC3loAuKi7tf8mG47c6WoMhqymsYqKexkKzA/exec";</script>
 <script>
 const ORDER=["il1","il2","il3","il4","afg1","afg2","afg3","afg4","afg5"];
 const SHORT={il1:"众神的争论",il2:"老王出城",il3:"夜入敌营",il4:"归还与葬礼",afg1:"蜀山兀",afg2:"宫中一日",afg3:"楚人一炬",afg4:"后人哀之",afg5:"全文复习"};
 const GRP={il:"伊利亚特",afg:"阿房宫赋"};
+const SUBJ=r=>{const l=String(r.lesson);return /^hist-/.test(l)?"历史":/^geo-/.test(l)?"地理":/^ex-/.test(l)?"出埃及记":"语文"};
+const SUBJS=["语文","历史","地理","出埃及记"];
+const lnum=l=>{const m=String(l).match(/(\d+)$/);return m?+m[1]:0};
+const lord=l=>{const i=ORDER.indexOf(l);return i>=0?i:100+lnum(l)};
+const grpOf=l=>GRP[String(l).replace(/\d+$/,"")]||"";
 const $=s=>document.querySelector(s);
 function h(t,a,...c){const e=document.createElement(t);for(const k in a||{}){const v=a[k];if(v==null||v===false)continue;if(k.startsWith("on"))e.addEventListener(k.slice(2),v);else if(k==="class")e.className=v;else e.setAttribute(k,v)}for(const x of c.flat())if(x!=null&&x!==false)e.append(x.nodeType?x:String(x));return e}
 const LS={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
-let KEY=LS.get("afg-tkey")||"",ROWS=[],ST={cls:"",lesson:"",q:"",view:"grid",latest:true};
+let KEY=LS.get("afg-tkey")||"",ROWS=[],ST={subj:"",cls:"",lesson:"",q:"",view:"grid",latest:true};
 const URL0=window.SUBMIT_URL||"";
 const fmt=t=>{const d=new Date(t);return isNaN(d)?String(t):`${d.getMonth()+1}月${d.getDate()}日 ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`};
-const lvl=p=>p>=90?"hi":p>=80?"md":"lo";
+const lvl=p=>p===""||p==null?"":(+p>=90?"hi":+p>=80?"md":"lo");
+const pctTxt=p=>p===""||p==null?"已交":(+p||0)+"%";
 const hanLen=s=>(s.match(/[一-鿿]/g)||[]).length;
-const lname=r=>SHORT[r.lesson]||r.course||r.lesson;
+const lname=r=>SHORT[r.lesson]||String(r.course||r.lesson).replace(/^[^·]*·/,"").replace(/（英文版）$/,"");
 const skey=r=>(r.cls||"")+"\u0001"+r.name;
 
 function login(msg){$("#reload").hidden=$("#logout").hidden=true;$("#who").textContent="";
@@ -86,38 +92,42 @@ async function load(){if(!URL0)return "还没有设置表格网址。";
   catch(e){return "连不上 Google 表格，请检查网络或部署设置。"}}
 
 function filtered(){let rs=ROWS.slice().sort((a,b)=>b.t-a.t);
-  if(ST.cls)rs=rs.filter(r=>r.cls===ST.cls);if(ST.lesson)rs=rs.filter(r=>r.lesson===ST.lesson);
+  if(ST.subj)rs=rs.filter(r=>SUBJ(r)===ST.subj);if(ST.cls)rs=rs.filter(r=>r.cls===ST.cls);if(ST.lesson)rs=rs.filter(r=>r.lesson===ST.lesson);
   if(ST.q){const q=ST.q.trim();rs=rs.filter(r=>(r.name+r.cls).includes(q))}return rs}
 function latestOf(rs){const m=new Map();for(const r of rs){const k=skey(r)+"\u0002"+r.lesson;if(!m.has(k))m.set(k,r)}return [...m.values()]}
 
 function render(){$("#reload").hidden=$("#logout").hidden=false;$("#who").textContent=`共 ${ROWS.length} 份`;
-  const classes=[...new Set(ROWS.map(r=>r.cls).filter(Boolean))].sort();
-  const lessons=[...new Set(ROWS.map(r=>r.lesson))].sort((a,b)=>(ORDER.indexOf(a)+1||99)-(ORDER.indexOf(b)+1||99));
+  if(!ST.subj&&ROWS.length){const r0=ROWS.slice().sort((a,b)=>b.t-a.t)[0];ST.subj=SUBJ(r0)}
+  const inS=ROWS.filter(r=>!ST.subj||SUBJ(r)===ST.subj);
+  const classes=[...new Set(inS.map(r=>r.cls).filter(Boolean))].sort();
+  const lessons=[...new Set(inS.map(r=>r.lesson))].sort((a,b)=>lord(a)-lord(b));
+  const names={};inS.forEach(r=>{names[r.lesson]=names[r.lesson]||lname(r)});
   const sel=(v,opts,ph,on)=>{const s=h("select",{onchange:e=>on(e.target.value)},h("option",{value:""},ph),opts.map(([k,t])=>{const o=h("option",{value:k},t);if(k===v)o.selected=true;return o}));return s};
   const seg=h("div",{class:"seg"},[["grid","总览"],["list","逐份"]].map(([k,t])=>h("button",{class:ST.view===k?"on":null,onclick:()=>{ST.view=k;render()}},t)));
   const q=h("input",{type:"search",placeholder:"搜索姓名",value:ST.q});q.addEventListener("input",()=>{ST.q=q.value;draw()});
   const bar=h("div",{class:"bar"},sel(ST.cls,classes.map(c=>[c,c]),"全部班级",v=>{ST.cls=v;render()}),
-    sel(ST.lesson,lessons.map(l=>[l,(GRP[l.replace(/\d+$/,"")]||"")+" · "+(SHORT[l]||l)]),"全部课时",v=>{ST.lesson=v;render()}),q,h("span",{class:"sp"}),seg);
+    sel(ST.lesson,lessons.map(l=>[l,(grpOf(l)?grpOf(l)+" · ":"")+names[l]]),"全部课时",v=>{ST.lesson=v;render()}),q,h("span",{class:"sp"}),seg);
+  const tabs=h("div",{class:"seg",style:"margin-bottom:12px"},SUBJS.map(k=>{const n=ROWS.filter(r=>SUBJ(r)===k).length;return h("button",{class:ST.subj===k?"on":null,onclick:()=>{ST.subj=k;ST.lesson="";ST.cls="";render()}},k+(n?" "+n:""))}));
   const body=h("div",{id:"body"});
-  $("#app").replaceChildren(bar,h("div",{class:"stats",id:"stats"}),body);draw()}
+  $("#app").replaceChildren(tabs,bar,h("div",{class:"stats",id:"stats"}),body);draw()}
 
 function draw(){const rs=filtered(),lt=latestOf(rs);const studs=new Set(lt.map(skey));
-  const wr=lt.reduce((n,r)=>n+parseW(r).length,0);const avg=lt.length?Math.round(lt.reduce((n,r)=>n+(+r.pct||0),0)/lt.length):0;
-  $("#stats").replaceChildren(...[[studs.size,"名学生"],[lt.length,"份作业（最新）"],[avg+"%","平均正确率"],[wr,"篇写一写"]].map(([b,s])=>h("div",{class:"stat"},h("b",{},b),h("span",{},s))));
+  const wr=lt.reduce((n,r)=>n+parseW(r).length,0);const sc=lt.filter(r=>r.pct!==""&&r.pct!=null);const avg=sc.length?Math.round(sc.reduce((n,r)=>n+(+r.pct||0),0)/sc.length)+"%":"—";
+  $("#stats").replaceChildren(...[[studs.size,"名学生"],[lt.length,"份作业（最新）"],[avg,"平均正确率"],[wr,"篇写一写"]].map(([b,s])=>h("div",{class:"stat"},h("b",{},b),h("span",{},s))));
   const body=$("#body");if(!rs.length){body.replaceChildren(h("div",{class:"empty"},ROWS.length?"没有符合条件的作业。":"还没有学生交作业。学生在课程里点「交给老师」后，就会出现在这里。"));return}
   ST.view==="grid"?grid(body,lt):list(body,rs)}
 
-function grid(body,lt){const ls=[...new Set(lt.map(r=>r.lesson))].sort((a,b)=>(ORDER.indexOf(a)+1||99)-(ORDER.indexOf(b)+1||99));
+function grid(body,lt){const ls=[...new Set(lt.map(r=>r.lesson))].sort((a,b)=>lord(a)-lord(b));const nm={};lt.forEach(r=>{nm[r.lesson]=nm[r.lesson]||lname(r)});
   const by=new Map();for(const r of lt){const k=skey(r);if(!by.has(k))by.set(k,{cls:r.cls,name:r.name,m:{}});by.get(k).m[r.lesson]=r}
   const studs=[...by.values()].sort((a,b)=>(a.cls||"").localeCompare(b.cls||"","zh")||a.name.localeCompare(b.name,"zh"));
-  const tb=h("table",{},h("thead",{},h("tr",{},h("th",{},"学生"),ls.map(l=>h("th",{class:"l"},SHORT[l]||l,h("span",{class:"sub"},GRP[l.replace(/\d+$/,"")]||""))))),
+  const tb=h("table",{},h("thead",{},h("tr",{},h("th",{},"学生"),ls.map(l=>h("th",{class:"l",style:"white-space:normal;max-width:120px"},nm[l],h("span",{class:"sub"},grpOf(l)||("第"+lnum(l)+"课")))))),
     h("tbody",{},studs.map(s=>h("tr",{},h("td",{class:"nm"},s.name,s.cls?h("small",{},s.cls):null),ls.map(l=>{const r=s.m[l];if(!r)return h("td",{class:"c"},h("span",{class:"none"},"—"));
-      const n=parseW(r).length;return h("td",{class:"c"},h("span",{class:"cell "+lvl(+r.pct),title:fmt(r.t),onclick:()=>detail(r)},(+r.pct||0)+"%",h("small",{},(r.done?"完成":"未完")+(n?" · 写"+n:"")+(r.note?" · 已批":""))))})))));
+      const n=parseW(r).length;return h("td",{class:"c"},h("span",{class:"cell "+lvl(r.pct),title:fmt(r.t),onclick:()=>detail(r)},pctTxt(r.pct),h("small",{},(r.done?"完成":"未完")+(n?" · 写"+n:"")+(r.note?" · 已批":""))))})))));
   body.replaceChildren(h("div",{class:"wrap"},tb))}
 
 function list(body,rs){const tb=h("table",{class:"list"},h("thead",{},h("tr",{},["时间","班级","姓名","课时","正确率","完成","写一写","批语"].map(t=>h("th",{},t)))),
   h("tbody",{},rs.map(r=>h("tr",{onclick:()=>detail(r)},h("td",{},fmt(r.t)),h("td",{},r.cls||""),h("td",{},r.name),h("td",{},lname(r)),
-    h("td",{},h("span",{class:"cell "+lvl(+r.pct)},(+r.pct||0)+"%")),h("td",{},r.done?"✓":""),h("td",{},parseW(r).length||""),h("td",{},r.note?"✓":"")))));
+    h("td",{},h("span",{class:"cell "+lvl(r.pct)},pctTxt(r.pct))),h("td",{},r.done?"✓":""),h("td",{},parseW(r).length||""),h("td",{},r.note?"✓":"")))));
   body.replaceChildren(h("div",{class:"wrap"},tb))}
 
 function parseW(r){if(r._w)return r._w;try{r._w=JSON.parse(r.writing||"[]")}catch(e){r._w=[]}return r._w}
@@ -130,8 +140,8 @@ function detail(r){const hist=ROWS.filter(x=>skey(x)===skey(r)&&x.lesson===r.les
   const sumTxt=String(r.summary||"").replace(/\n?写一写：[\s\S]*$/,"");
   const dr=h("div",{class:"dr",onclick:e=>{if(e.target===dr)dr.remove()}},h("div",{class:"panel"},
     h("div",{class:"noprint",style:"display:flex;gap:8px;justify-content:flex-end"},h("button",{class:"btn",onclick:()=>print()},"打印"),h("button",{class:"btn",onclick:()=>dr.remove()},"关闭")),
-    h("h2",{},r.name),h("div",{class:"meta"},`${r.cls||""} · ${GRP[String(r.lesson).replace(/\d+$/,"")]||""} ${lname(r)} · ${fmt(r.t)} 提交`),
-    h("div",{class:"chips"},h("span",{class:"cell "+lvl(+r.pct)},"正确率 "+(+r.pct||0)+"%"),h("span",{class:"tag"},"首次正确率 "+(+r.fp||0)+"%"),h("span",{class:"tag"},"用时 "+(+r.min||0)+" 分钟"),h("span",{class:"tag"},r.done?"本课时完成":"未完成")),
+    h("h2",{},r.name),h("div",{class:"meta"},[r.cls,SUBJ(r)+" "+grpOf(r.lesson)+" "+lname(r),fmt(r.t)+" 提交"].filter(Boolean).join(" · ")),
+    h("div",{class:"chips"},r.pct===""?null:h("span",{class:"cell "+lvl(r.pct)},"正确率 "+(+r.pct||0)+"%"),r.fp===""?null:h("span",{class:"tag"},"首次正确率 "+(+r.fp||0)+"%"),h("span",{class:"tag"},"用时 "+(+r.min||0)+" 分钟"),h("span",{class:"tag"},r.done?"本课时完成":"未完成")),
     hist.length>1?h("div",{class:"hist"},`这一课时共交了 ${hist.length} 次：`,hist.map(x=>x===r?h("b",{style:"margin-right:10px"},fmt(x.t)):h("a",{onclick:()=>{dr.remove();detail(x)}},fmt(x.t)))):null,
     ws.length?h("div",{class:"sec"},h("h3",{},"写一写"),ws.map(w=>h("div",{class:"essay"},w.q?h("div",{class:"q"},w.q):null,h("div",{class:"t"},w.text),h("div",{class:"n"},hanLen(w.text)+" 字")))):null,
     h("div",{class:"sec"},h("h3",{},"学习记录"),h("div",{class:"sum"},sumTxt||"（无）")),
