@@ -50,7 +50,7 @@ function bgmDuck(on){if(bgmG&&AC)try{bgmG.gain.cancelScheduledValues(AC.currentT
 let lastPt={x:innerWidth/2,y:innerHeight/2};addEventListener("pointerdown",e=>{lastPt={x:e.clientX,y:e.clientY};if(S.name)bgmStart()},{passive:true});
 function floatTxt(t,pt=lastPt){const f=h("div",{class:"gain",style:`left:${pt.x}px;top:${pt.y-14}px`},t);document.body.append(f);setTimeout(()=>f.remove(),1100)}
 const COMBO={3:"渐入佳境",5:"势如破竹",8:"胸有成竹",12:"所向披靡",20:"一字千金"};
-function reward(ok,first){if(ok){S.streak++;S.best=Math.max(S.best,S.streak);const g=first?10:5;S.pts+=g;SFX.ok();floatTxt(`+${g} 片瓦`);
+function reward(ok,first){if(ok){S.streak++;S.best=Math.max(S.best,S.streak);const g=first?10:5;S.pts+=g;SFX.ok();floatTxt(`+${g} ${PTS()}`);
   const c=COMBO[S.streak];if(c){SFX.combo();const el=h("div",{class:"combo"},h("small",{},`连对 ${S.streak} 题`),h("b",{},c));document.body.append(el);setTimeout(()=>el.remove(),1900)}}
   else{S.streak=0;SFX.no()}updHud()}
 
