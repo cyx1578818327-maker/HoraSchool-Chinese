@@ -136,7 +136,7 @@ function showPalace(msg){if(LX.album){if(!window.IL_ALBUM){return}
     tabs.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.l===cur))};
   Ls.forEach((L,i)=>tabs.append(h("button",{"data-l":L,onclick:ev=>{ev.stopPropagation();cur=L;draw()}},"第"+"一二三四"[i]+"课时 ",h("small",{},albGot(L).length+"/"+Object.keys(IL_ALBUM[L].c).length))));
   const box=h("div",{class:"alb",onclick:ev=>ev.stopPropagation()},h("button",{class:"aclose",onclick:()=>m.remove()},"×"),
-    h("div",{class:"ahead"},h("div",{class:"meander"}),h("h2",{},"荷马的修饰语卡册"),h("p",{},`已收集 ${tot} / ${all} 张　·　点一张卡，翻到背面看它的来历`),h("div",{class:"meander"})),tabs,grid);
+    h("div",{class:"ahead"},h("div",{class:"meander"}),h("h2",{},LX.albumTitle||"荷马的修饰语卡册"),h("p",{},`已收集 ${tot} / ${all} 张　·　点一张卡，翻到背面看它的来历`),h("div",{class:"meander"})),tabs,grid);
   const m=h("div",{class:"modal albm",onclick:()=>m.remove()},box);document.body.append(m);draw();return}const m=h("div",{class:"modal",onclick:()=>m.remove()},h("div",{class:"bigpal"},palaceLayers(),h("p",{},msg||`你已经建起 ${S.built.length} 处。点任意处关闭。`)));document.body.append(m)}
 
 /* ---------- HUD 与骨架 ---------- */
@@ -150,8 +150,7 @@ function hud(){const pct=S.q?Math.round(S.pos/S.q.length*100):0;
       h("button",{class:"chip btnc",title:"音效和朗读",onclick:e=>{S.snd=!S.snd;save();e.currentTarget.classList.toggle("off",!S.snd)}},"声"),
       S.name&&!TV?h("button",{class:"chip btnc strong",onclick:openSubmit},"交给老师"):null))}
 const CAST=LESSON.cast||{du:{name:"杜牧",faces:{jj:"du_jj",gk:"du_gk"},role:"作者，今天当你的先生"},fan:{name:"小樊",faces:{kx:"fan_kx",yh:"fan_yh",jy:"fan_jy"},role:"你的同学，会提问，也会犯错"}};
-const FACE={du:CAST.du.faces,fan:CAST.fan.faces};
-const NAME={du:CAST.du.name,fan:CAST.fan.name};
+const FACE={},NAME={};for(const k in CAST){FACE[k]=CAST[k].faces;NAME[k]=CAST[k].name}
 const AV=w=>IMG[Object.values(FACE[w])[0]];
 function frame(){const ui=$("#ui");ui.innerHTML="";ui.append(hud());const sc=curScene();
   if(!LX.album&&S.built.length&&sc.bg!==LX.buildScene&&S.pos>3){ui.append(h("button",{class:"minipal",title:"看看你建的阿房宫",onclick:()=>showPalace()},palaceLayers(),h("span",{},LX.palLabel)))}
