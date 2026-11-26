@@ -1140,7 +1140,7 @@ window.addEventListener('message',function(e){var m=e.data||{};if(m.lp!=='t'&&m.
   w.querySelectorAll('input').forEach(function(inp){var k=inp.dataset.k;inp.value=LS.get(k)||'';inp.placeholder=EN?inp.dataset.phEn:inp.dataset.ph;inp.addEventListener('input',function(){LS.set(k,inp.value.trim());syncSoon()})})})();
 
 /* ---------- 交给老师：答案自动同步到老师的网站 ---------- */
-var API=LS.get('api')||(function(){var h=location.hostname;if(/\.workers\.dev$/.test(h)){var p=h.split('.');p[0]='exodus-api';return 'https://'+p.join('.')}return ''})();
+var API=LS.get('api')||(function(){var h=location.hostname;if(/github\.io$/.test(h))return 'https://exodus-api.hora-school.workers.dev';if(/\.workers\.dev$/.test(h)){var p=h.split('.');p[0]='exodus-api';return 'https://'+p.join('.')}return ''})();
 if(!API){var ws=document.querySelector('#who .whot small');if(ws)ws.textContent=L('每一部分做完，才能进入下一部分。从这个网址打开时，答案只保存在本机；要交给老师，请用老师给的网址。','Each part opens after you finish the one before. From this link, answers stay on this device; use your teacher’s link to send them.')}
 var SID=LS.get('sid');if(!SID){SID='s'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);LS.set('sid',SID)}
 var syncEl=el('span','sync');(function(){var pc=document.getElementById('pcount'),wr=el('span','pmid');pc.parentNode.insertBefore(wr,pc);wr.appendChild(pc);wr.appendChild(syncEl)})();
@@ -1157,11 +1157,30 @@ function syncSoon(ms){clearTimeout(syncT);syncT=setTimeout(syncNow,ms==null?5000
 document.addEventListener('input',function(){syncSoon()});
 document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')syncNow()});
 setTimeout(syncNow,1500);
+/* GitHub 版：答案同时交到 Hora 学堂的 Google 表格（可读摘要） */
+(function(){if(typeof snapshot!=='function')return;
+var LAB={open:'开课问题（上课前）',close:'收束（上完课再答）',w1:'想一想 · 复述',w2:'想一想 · 辨析',m1:'读经文 · 经文说了什么',m2:'读经文 · 要回到哪里查看',m3:'读经文 · 所以我该怎样做',h1:'课后实践 · 谁听了',h2:'课后实践 · 家人怎么说',descWhy:'第一视角 · 写一句',shineWhy:'山下迎接摩西 · 写一句',askWhy:'审问亚伦 · 写一句',exw0:'综合练习 · 简答 1',exw1:'综合练习 · 简答 2'};
+function writing(d){var out=[];Object.keys(d).sort().forEach(function(k){var v=String(d[k]||'').trim(),m=k.match(/^s(\d+)_(\d+)_(\d+)$/);if(!v)return;
+  if(m&&typeof STUDY!=='undefined'){var q=(STUDY[+m[1]]||[])[+m[2]];if(q){var f=(q.f||[])[+m[3]]||{};out.push({id:k,q:'查经'+(+m[1]+1)+' · '+(q.read||'')+' · '+q.q+(f.l?' — '+f.l:''),text:v})}return}
+  if(LAB[k])out.push({id:k,q:LAB[k],text:v})});return out}
+function quizSum(d){var s=[];Object.keys(d).forEach(function(k){if(k.indexOf('qr:quiz-')===0){try{var r=JSON.parse(d[k]);var ok=r.filter?r.filter(function(x){return x==='ok'}).length:0;s.push(k.slice(8)+' '+ok+'/'+(r.length||0))}catch(e){}}});return s.join('，')}
+var last='',lastT=0,tm=null;
+function gsend(force){if(!window.HORA)return;var name=LS.get('name')||'',cls=LS.get('cls')||'';if(!name)return;
+  var d=snapshot(),w=writing(d),prog=MAXR+1,tot=SCR.length,ex=d.exSub==='1'?+d.exScore:null;
+  var sum='进度 '+prog+'/'+tot+' 屏'+(ex!=null?'；综合练习选择题 '+ex+'/15':'')+(quizSum(d)?'；小测 '+quizSum(d):'');
+  var key=JSON.stringify([sum,w]);if(key===last)return;if(!force&&Date.now()-lastT<90000){clearTimeout(tm);tm=setTimeout(function(){gsend(true)},90000-(Date.now()-lastT));return}
+  last=key;lastT=Date.now();window.HORA({name:name,cls:cls,done:prog>=tot,pct:ex!=null?Math.round(ex/15*100):'',summary:sum,writing:w})}
+document.addEventListener('input',function(){clearTimeout(tm);tm=setTimeout(function(){gsend(false)},20000)});
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')gsend(true)});
+document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('#nextBtn,#exam .exbar .btn'))setTimeout(function(){gsend(false)},1500)});
+setTimeout(function(){gsend(true)},4000);
+})();
+
 
 (function(){var h=(location.hash||'').slice(1),i=SCR.findIndex(function(s){return s.id===h});if(i<0){var v=parseInt(LS.get('step')||'0',10);i=isNaN(v)?0:v}try{history.scrollRestoration='manual'}catch(e){}go(i,true);window.addEventListener('load',function(){window.scrollTo(0,0)});setTimeout(function(){window.scrollTo(0,0)},60)})();
 window.addEventListener('hashchange',function(){var h=location.hash.slice(1),i=SCR.findIndex(function(s){return s.id===h});if(i>=0&&i!==CUR)go(i)});
 })();
 
 </script>
-<script src="../../hora.js" data-subject="出埃及记" data-lesson="ex-l18" data-course="出埃及记·第18课 会幕的指示"></script></body>
+<script src="../../hora.js" data-subject="出埃及记" data-lesson="ex-l18" data-course="出埃及记·第18课 会幕的指示" data-auto="1"></script></body>
 </html>

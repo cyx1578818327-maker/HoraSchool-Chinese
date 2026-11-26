@@ -100,6 +100,7 @@
   }
 
   function init() {
+    if (me.dataset && me.dataset.auto) return;   // 页面自己会自动交（出埃及记 18 课以后）
     css();
     var rec = document.getElementById("mRec");
     var b = h("button", { "class": "hora-fab", type: "button" }, CFG.label);
