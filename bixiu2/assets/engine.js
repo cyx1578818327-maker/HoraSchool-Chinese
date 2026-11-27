@@ -186,7 +186,7 @@ function render(){stopAu();if(gameStop){gameStop();gameStop=null}
   const c=it.cam||b.cam;if(c)applyCam(c);else if(fresh||!["ask","fix","read","write","pair","recite","test","testcheck","info","end"].includes(b.t))applyCam(curCam(),fresh?0:1.6);
   cardStart=Date.now();if(b.t==="testcheck")return vTestCheck(it);
   const {stage,dlg}=frame();
-  const V={sort:vSort,say:vSay,read:vRead,ask:vAsk,fix:vAsk,pair:vPair,order:vOrder,write:vWrite,recite:vRecite,end:vEnd,info:vInfo,hot:vHot,punct:vPunct,map6:vMap6,chop:vChop,cover:vCover,route:vRoute,canal:vCanal,walk:vWalk,find:vFind,zoom:vZoom,scratch:vScratch,slider:vSlider,tour:vTour,cloze:vCloze,dictate:vDictate,fulltext:vFull,case:vCase,ifswitch:vIf,mirror:vMirror,take:vTake,spend:vSpend,balance:vBalance,anger:vAnger,fires:vFires,burn:vBurn,halfrelay:vHalfRelay,carts:vCarts,thunder:vThunder,wait:vWait,flip:vFlip,cut:vCut,outline:vOutline,compose:vCompose,check:vCheck,task:vTask,pick:vPick,reveal:vReveal,score:vScore,lead:vLead};
+  const V={sort:vSort,say:vSay,read:vRead,ask:vAsk,fix:vAsk,pair:vPair,order:vOrder,write:vWrite,recite:vRecite,end:vEnd,info:vInfo,hot:vHot,punct:vPunct,map6:vMap6,chop:vChop,cover:vCover,route:vRoute,canal:vCanal,walk:vWalk,find:vFind,zoom:vZoom,scratch:vScratch,slider:vSlider,tour:vTour,cloze:vCloze,dictate:vDictate,fulltext:vFull,case:vCase,ifswitch:vIf,mirror:vMirror,take:vTake,spend:vSpend,balance:vBalance,anger:vAnger,fires:vFires,burn:vBurn,halfrelay:vHalfRelay,carts:vCarts,thunder:vThunder,wait:vWait,flip:vFlip,cut:vCut,outline:vOutline,compose:vCompose,check:vCheck,task:vTask,pick:vPick,reveal:vReveal,score:vScore,lead:vLead,film:vFilm};
   V[b.t](stage,dlg,b,it);setTimeout(()=>dlg.querySelector("button.go:not([disabled])")?.focus({preventScroll:true}),60)}
 function vSay(stage,dlg,b){if(b.ov)addOv(b.ov);if(b.fx==="spin"){SC.el.classList.add("spin");stage.append(h("div",{class:"spincmp"},h("i"),h("span",{},"东？西？")));SFX.whoosh()}speaker(dlg,b.who,b.face,b.text,{next})}
 function vInfo(stage,dlg,b){stage.append(h("div",{class:"card"+(b.big?" tk infobig":"")},b.eyebrow?h("div",{class:"eyebrow"},b.eyebrow):null,h("h2",{},b.title),...(b.paras||[]).map(p=>h("p",{},p))));speaker(dlg,b.who||"du",b.face||"jj",b.say||"准备好了就继续。",{next,au:!!b.voiced})}
@@ -854,6 +854,15 @@ function vReveal(stage,dlg,b){let i=0;const items=b.items.map((it,k)=>h("div",{c
   const step=()=>{if(i<items.length){items[i].classList.remove("hid");items[i].classList.add("in");const it=b.items[i];i++;
       speaker(dlg,it.who||b.who||"du",it.face||b.face||"jj",it.say||it.t,{next:i<items.length?step:(b.after?()=>speaker(dlg,b.who||"du",b.afterFace||"kx",b.after,{next}):next),nextLabel:i<items.length?"下一条 ▸":"继续 ▸"})}else next()};
   if(b.say)speaker(dlg,b.who||"du",b.face||"jj",b.say,{next:step,nextLabel:"显示答案 ▸"});else step()}
+
+function vFilm(stage,dlg,b){const base="assets/film/";
+  const open=async()=>{try{stopAu();bgmStop()}catch(e){}
+    try{if(!window.FILM||!FILM.play)await new Promise((r,j)=>{const x=document.createElement("script");x.src=base+"film.js";x.onload=r;x.onerror=j;document.body.append(x)});
+      if(!FILM.defs[b.src])await new Promise((r,j)=>{const x=document.createElement("script");x.src=base+b.src+".js";x.onload=r;x.onerror=j;document.body.append(x)})}catch(e){alert("动画加载失败，请刷新页面再试。");return}
+    const pl=FILM.play(b.src,base+b.src+".mp3",{title:b.title,nextLabel:"看完了，下一步",onNext:()=>{try{bgmStart()}catch(e){}next()},onClose:()=>{}});setTimeout(()=>{const g=document.querySelector(".fbig");g&&g.click()},60)};
+  const pv=b.poster&&IMG[b.poster]?h("div",{class:"flmpv",onclick:open},h("img",{src:IMG[b.poster],alt:""}),h("b",{},"▶")):null;
+  stage.append(tkCard("film",{},[h("div",{class:"eyebrow"},b.eyebrow||"讲解动画"),h("h2",{},b.title),pv,h("p",{class:"tkl"},b.note||("约 "+b.mins+" 分钟 · 苏轼讲 · 看完有抢答"))]));
+  speaker(dlg,b.who||"du",b.face||"jj",b.say||"请看我准备的一段动画。",{next:open,nextLabel:"▶ 播放动画"})}
 function vScore(stage,dlg,b){const sc=scGet();const mx=Math.max(0,...GRP.map(g=>sc[g.n]||0));
   const clr=h("button",{class:"ghost small",onclick:()=>{if(clr.dataset.ok){scPut({});sbDraw&&sbDraw();render();return}clr.dataset.ok="1";clr.textContent="再点一次，确认清零"}},"三组分数清零");
   stage.append(h("div",{class:"card tk score"},h("div",{class:"eyebrow"},b.eyebrow||"今天的分数"),h("h2",{},b.title||"哪个组领先？"),
