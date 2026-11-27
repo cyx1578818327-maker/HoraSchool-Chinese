@@ -4,7 +4,7 @@ const LESSON={id:"sk1",course:"宋词·课堂1",title:"大江东去",sub:"课堂
  cast:{du:{name:"苏轼",faces:{jj:"sushi_jj",kx:"sushi_kx",gk:"sushi_gk"},role:"北宋词人，今天亲自给你们讲这首词"},fan:{name:"小樊",faces:{kx:"fan_kx",yh:"fan_yh",jy:"fan_jy"},role:"伴学，和你们一起学，有时会答错"}},
  voice:{du:"su",fan:"fan",read:"suread"},
  buildScene:"none",album:false,pal:"E1",palName:"英雄谱",palLabel:"英雄谱",seal:"词",ptsName:"浪花",
- groups:[{n:"赤壁组",m:["李羽璇","江凯勒","方以乐"]},{n:"黄州组",m:["江雅歌","周伊夏","何一"]},{n:"北固组",m:["江约牧","邱宇翔","单伟恩"]}],scoreKey:"songci",lecturer:"du",buddy:"fan",lecturerRole:"主讲",buddyRole:"伴学",
+ groups:[{n:"赤壁组",m:["李羽璇","江凯勒","方以乐"]},{n:"黄州组",m:["江雅歌","周伊夏","何一"]},{n:"北固组",m:["江约牧","邱宇翔","单伟恩"]}],scoreKey:"songci",lecturer:"du",buddy:"fan",lecturerRole:"主讲",buddyRole:"伴学",standing:{du:{jj:"sushi_l_jj",kx:"sushi_l_kx",gk:"sushi_l_gk"},fan:{kx:"fan_l_kx",yh:"fan_l_yh",jy:"fan_l_jy"}},
  passText:"第一课时完成",endTitle:"第一课时完成",flash:"E3",
  intro:"课堂投屏用：苏轼讲解，助教点「下一步」、组织小组和点名。左上角是三组计分板，点组名加 1 分。",
  fx0:{}};

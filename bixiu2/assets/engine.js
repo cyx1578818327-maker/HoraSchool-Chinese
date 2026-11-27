@@ -809,7 +809,7 @@ const GRP=LX.groups||null;const SCK="afg-class-score-"+(LX.scoreKey||"x");
 function scGet(){try{return JSON.parse(localStorage.getItem(SCK)||"{}")||{}}catch(e){return {}}}
 function scPut(o){try{localStorage.setItem(SCK,JSON.stringify(o))}catch(e){}}
 function lectureSides(){const mk=(who,cls,role)=>{const img=h("img",{alt:NAME[who]});const el=h("div",{class:"side "+cls},img,h("div",{class:"sidenm"},h("b",{},NAME[who]),h("small",{},role)));el._img=img;el._who=who;return el};
-  const Lw=LX.lecturer||"du",Bw=LX.buddy||"fan";const a=mk(Lw,"sideL",LX.lecturerRole||"主讲"),b=FACE[Bw]?mk(Bw,"sideB",LX.buddyRole||"伴学"):null;
+  const Lw=LX.lecturer||"du",Bw=LX.buddy||"fan";const a=mk(Lw,"sideL",LX.lecturerRole||"主讲"),b=FACE[Bw]?mk(Bw,"sideB",LX.buddyRole||"伴学"):null;[a,b].forEach(el=>{if(el&&LX.standing&&LX.standing[el._who])el.classList.add("full")});
   const set=(el,who,face)=>{const st=LX.standing&&LX.standing[who];const f=(st&&(st[face]||Object.values(st)[0]))||FACE[who][face]||Object.values(FACE[who])[0];if(IMG[f])el._img.src=IMG[f]};
   set(a,Lw,"jj");if(b)set(b,Bw,Object.keys(FACE[Bw])[0]);
   window.__onSpeak=(who,face)=>{[a,b].forEach(el=>{if(!el)return;const on=el._who===who;el.classList.toggle("on",on);if(on)set(el,who,face)})};
