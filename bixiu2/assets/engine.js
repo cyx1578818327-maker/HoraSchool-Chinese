@@ -40,7 +40,7 @@ const SFX={ok:()=>tone([784,1175],{gap:.08,dur:.45}),no:()=>tone([294,220],{gap:
  whoosh:()=>{if(!S.snd)return;nz({f:900,q:.7,dur:.9,vol:.18,a:.35})},
  tick:()=>{if(!S.snd)return;osc(1400,{vol:.05,dur:.05})}};
 const BGM_SCALE={night:[147,165,196,220,247,294,330,392],day:[196,220,247,294,330,392,440,494],palace:[220,247,277,330,370,440,494,554]};
-function bgmStart(){if(!S.bgm||bgmTimer)return;try{const c=ac();bgmG=c.createGain();bgmG.gain.value=0;bgmG.connect(c.destination);bgmG.gain.linearRampToValueAtTime(.55,c.currentTime+3);
+function bgmStart(){if(!S.bgm||bgmTimer||window.__bgmHold)return;try{const c=ac();bgmG=c.createGain();bgmG.gain.value=0;bgmG.connect(c.destination);bgmG.gain.linearRampToValueAtTime(.55,c.currentTime+3);
   const dl=c.createDelay();dl.delayTime.value=.42;const fb=c.createGain();fb.gain.value=.35;const lp=c.createBiquadFilter();lp.type="lowpass";lp.frequency.value=1800;dl.connect(fb).connect(lp).connect(dl);dl.connect(bgmG);bgmG._dl=dl;
   const pad=f=>{const o=c.createOscillator(),g=c.createGain();o.type="sine";o.frequency.value=f;g.gain.value=.012;o.connect(g).connect(bgmG);o.start();return o};bgmG._pads=[pad(73.4),pad(110)];
   const play=()=>{const sc=BGM_SCALE[bgmMode]||BGM_SCALE.day;const f=sc[Math.floor(Math.random()*sc.length)];const vol=.05;pluck(f,{vol,dur:2.6,dest:bgmG});pluck(f,{vol:vol*.5,dur:2.6,dest:dl});
@@ -186,7 +186,7 @@ function render(){stopAu();if(gameStop){gameStop();gameStop=null}
   const c=it.cam||b.cam;if(c)applyCam(c);else if(fresh||!["ask","fix","read","write","pair","recite","test","testcheck","info","end"].includes(b.t))applyCam(curCam(),fresh?0:1.6);
   cardStart=Date.now();if(b.t==="testcheck")return vTestCheck(it);
   const {stage,dlg}=frame();
-  const V={sort:vSort,say:vSay,read:vRead,ask:vAsk,fix:vAsk,pair:vPair,order:vOrder,write:vWrite,recite:vRecite,end:vEnd,info:vInfo,hot:vHot,punct:vPunct,map6:vMap6,chop:vChop,cover:vCover,route:vRoute,canal:vCanal,walk:vWalk,find:vFind,zoom:vZoom,scratch:vScratch,slider:vSlider,tour:vTour,cloze:vCloze,dictate:vDictate,fulltext:vFull,case:vCase,ifswitch:vIf,mirror:vMirror,take:vTake,spend:vSpend,balance:vBalance,anger:vAnger,fires:vFires,burn:vBurn,halfrelay:vHalfRelay,carts:vCarts,thunder:vThunder,wait:vWait,flip:vFlip};
+  const V={sort:vSort,say:vSay,read:vRead,ask:vAsk,fix:vAsk,pair:vPair,order:vOrder,write:vWrite,recite:vRecite,end:vEnd,info:vInfo,hot:vHot,punct:vPunct,map6:vMap6,chop:vChop,cover:vCover,route:vRoute,canal:vCanal,walk:vWalk,find:vFind,zoom:vZoom,scratch:vScratch,slider:vSlider,tour:vTour,cloze:vCloze,dictate:vDictate,fulltext:vFull,case:vCase,ifswitch:vIf,mirror:vMirror,take:vTake,spend:vSpend,balance:vBalance,anger:vAnger,fires:vFires,burn:vBurn,halfrelay:vHalfRelay,carts:vCarts,thunder:vThunder,wait:vWait,flip:vFlip,cut:vCut,outline:vOutline,compose:vCompose,check:vCheck};
   V[b.t](stage,dlg,b,it);setTimeout(()=>dlg.querySelector("button.go:not([disabled])")?.focus({preventScroll:true}),60)}
 function vSay(stage,dlg,b){if(b.ov)addOv(b.ov);if(b.fx==="spin"){SC.el.classList.add("spin");stage.append(h("div",{class:"spincmp"},h("i"),h("span",{},"东？西？")));SFX.whoosh()}speaker(dlg,b.who,b.face,b.text,{next})}
 function vInfo(stage,dlg,b){stage.append(h("div",{class:"card"},h("h2",{},b.title),...(b.paras||[]).map(p=>h("p",{},p))));speaker(dlg,"du","jj",b.say||"准备好了就继续。",{next,au:false})}
@@ -202,11 +202,11 @@ function vRead(stage,dlg,b){const box=h("div",{class:"scroll"});const els=b.line
   dlg.innerHTML="";dlg.className="dlg du";dlg.append(h("img",{class:"av",src:AV("du"),alt:NAME.du}),h("div",{class:"tx"},h("div",{class:"nm"},NAME.du),h("p",{},"先听我读，跟着在心里读。")),h("div",{class:"dbtn"},h("button",{class:"ghost",onclick:play},"↻ 重播"),go));setTimeout(play,300)}
 function vAsk(stage,dlg,b,it){const a=it.a||b.a;const A=ATOMS[a];const st=atomStat(a);const isFix=b.t==="fix"&&!it.rep&&!it.test;
   const vk=isFix?"f0":(it.test||it.rep)?pickV(a,false):(b.v||pickV(a,!st.n));const Q=makeQ(a,vk);
-  const card=h("div",{class:"card ask"+(it.test?" test":"")},h("div",{class:"eyebrow"},it.test?`过关检测 ${it.ti||""}`:it.rep?"换个问法，再来一次":isFix?NAME.fan+"说得对吗？":"想一想"));
+  const card=h("div",{class:"card ask"+(it.test?" test":"")},h("div",{class:"eyebrow"},it.test?`过关检测 ${it.ti||""}`:it.rep?"换个问法，再来一次":isFix?NAME[A.who||"fan"]+"说得对吗？":"想一想"));
   const lineIdx=A.s?P1.findIndex(l=>l.includes(A.s.slice(0,4))):-1;
   card.append(h("h2",{class:"q"},...boldParts(Q.q)));const fb=h("div",{class:"fb"});let done=false;
   const fin=(choice,ok)=>{if(done)return;done=true;afterAsk(it,a,vk,ok,Date.now()-cardStart);
-    speaker(dlg,ok&&isFix?"fan":"du",ok?(isFix?"kx":"jj"):"gk",(ok?(isFix?"对哦，我说错了！":"答对了。")+" ":"再想想。")+Q.e,{next,au:false});
+    speaker(dlg,ok&&isFix?(A.who||"fan"):"du",ok?(isFix?"kx":"jj"):"gk",(ok?(isFix?"对哦，我说错了！":"答对了。")+" ":"再想想。")+Q.e,{next,au:false});
     if(!ok&&!it.test)fb.append(h("p",{class:"muted small"},"这个字词过几题会换个问法再来。"))};
   if(Q.t==="fill"){const inp=h("input",{class:"fillin",maxlength:3,"aria-label":"填字","data-a":window.__T?Q.a:null,placeholder:TV?"答案："+Q.a:null});const sb=h("button",{class:"btn",onclick:()=>{const v=inp.value.trim();if(!v)return;const ok=v===Q.a;inp.disabled=sb.disabled=true;inp.classList.add(ok?"right":"wrong");if(!ok)fb.append(h("p",{},`应填：${Q.a}`));fin(v,ok)}},"提交");
     inp.addEventListener("keydown",e=>{if(e.key==="Enter")sb.click()});card.append(h("div",{class:"row"},inp,sb),fb);stage.append(card);setTimeout(()=>inp.focus({preventScroll:true}),80)}
@@ -215,7 +215,7 @@ function vAsk(stage,dlg,b,it){const a=it.a||b.a;const A=ATOMS[a];const st=atomSt
     order.forEach((o,j)=>ops.append(h("button",{class:"opt","data-k":j+1,"data-c":(window.__T||TV)&&right(o)?"1":null,onclick:()=>{if(done)return;[...ops.children].forEach((bt,k)=>{bt.disabled=true;if(right(order[k]))bt.classList.add("right")});if(!right(o))ops.children[j].classList.add("wrong");fin(o.t,right(o))}},h("b",{},"ABCD"[j]),o.t)));
     card.append(ops,fb);stage.append(card)}
   if(lineIdx>=0)card.insertBefore(h("button",{class:"ghost small listen",onclick:()=>playAu("p"+lineIdx)},"▶ 听这一句"),card.children[1]);
-  if(isFix)speaker(dlg,"fan",/对吧/.test(A.claim)?"kx":"yh",A.claim,{noNext:true,au:false,extra:[]}),AUD["c_"+a]&&setTimeout(()=>playAu("c_"+a),250);
+  if(isFix)speaker(dlg,A.who||"fan",/对吧/.test(A.claim)?"kx":"yh",A.claim,{noNext:true,au:false,extra:[]}),AUD["c_"+a]&&setTimeout(()=>playAu("c_"+a),250);
   else speaker(dlg,"du","jj",it.test?"不看书，凭你记住的来答。":it.rep?"刚才这个没记牢，换个问法。":"你来答。",{noNext:true,au:false})}
 
 /* ---------- 互动：书房点一点 ---------- */
@@ -353,7 +353,7 @@ function vSort(stage,dlg,b){const items=shuffle(b.items.map((x,i)=>Object.assign
   const pool=h("div",{class:"spool"});const bins=b.bins.map((t,k)=>{const lst=h("div",{class:"blist"});const bx=h("button",{class:"sbin",onclick:()=>{
       if(!sel){toast("先点一张卡片");return}const it=sel.it,bt=sel.bt;
       if(it.b===k){const dn=h("span",{class:"scard done"},...[...bt.childNodes].map(n=>n.cloneNode(true)));bt.remove();lst.append(dn);got++;SFX.ok();sel=null;
-        if(got===items.length){const ok=miss<=1;logQ({k:b.id,type:"sort",ok,miss});reward(ok,true);speaker(dlg,"du",ok?"jj":"gk",(ok?(miss?"分对了，只错了 1 次。":"全分对了！"):`分完了，错了 ${miss} 次。`)+b.ex,{next,au:false})}}
+        if(got===items.length){const ok=miss<=1;logQ({k:b.id,type:"sort",ok,miss});reward(ok,true);revealAll(b.reveal);speaker(dlg,"du",ok?"jj":"gk",(ok?(miss?"分对了，只错了 1 次。":"全分对了！"):`分完了，错了 ${miss} 次。`)+b.ex,{next,au:false})}}
       else{miss++;SFX.no();bt.classList.add("shake");setTimeout(()=>bt.classList.remove("shake"),400);if(it.h)toast(it.h)}}},h("b",{},t),lst);return bx});
   items.forEach(it=>{const bt=h("button",{class:"scard"+(it.img?" wimg":""),"data-c":TV?String(it.b):null},it.img&&IMG[it.img]?h("img",{src:IMG[it.img],alt:""}):null,h("span",{},it.t));
     bt.addEventListener("click",e=>{e.stopPropagation();if(bt.classList.contains("done"))return;pool.querySelectorAll(".scard").forEach(x=>x.classList.remove("sel"));bt.classList.add("sel");sel={it,bt}});pool.append(bt)});
@@ -365,14 +365,14 @@ function vPair(stage,dlg,b){const L=shuffle(b.pairs.map((p,i)=>({t:p[0],i}))),R=
     if(side==="L"){cl.querySelectorAll(".pitem").forEach(x=>x.classList.remove("sel"));bt.classList.add("sel");sel={o,bt};return}
     if(!sel){toast("先点左边");return}
     if(sel.o.i===o.i){sel.bt.classList.add("done");bt.classList.add("done");sel.bt.classList.remove("sel");got++;SFX.ok();floatTxt("✓");sel=null;
-      if(got===b.pairs.length){const ok=miss<=1;logQ({k:b.id,type:"pair",ok,miss});reward(ok,true);speaker(dlg,"fan","kx",ok?`全连对了！${miss?"只错了 1 次。":"一次都没错！"}${b.doneText||"这些比喻把宫殿写活了。"}`:`连完了，错了 ${miss} 次。再读读那几句原文。`,{next,au:false})}}
+      if(got===b.pairs.length){const ok=miss<=1;logQ({k:b.id,type:"pair",ok,miss});reward(ok,true);revealAll(b.reveal);speaker(dlg,"fan","kx",ok?`全连对了！${miss?"只错了 1 次。":"一次都没错！"}${b.doneText||"这些比喻把宫殿写活了。"}`:`连完了，错了 ${miss} 次。再读读那几句原文。`,{next,au:false})}}
     else{miss++;bt.classList.add("shake");SFX.no();setTimeout(()=>bt.classList.remove("shake"),400)}}},o.t);
   L.forEach(o=>cl.append(mk(o,"L")));R.forEach(o=>cr.append(mk(o,"R")));card.append(h("div",{class:"pgrid"},cl,cr));stage.append(card);
   speaker(dlg,"fan","kx","先点左边一个，再点右边和它配对的！",{noNext:true,au:false})}
 function vOrder(stage,dlg,b){const pool=shuffle(b.items);const seq=[];let done=false;const top=h("ol",{class:"seq"}),bot=h("div",{class:"opts long"});
   const card=h("div",{class:"card slim"},h("div",{class:"eyebrow"},"排一排"),h("h2",{class:"q"},b.q),top,bot);
   const sb=h("button",{class:"btn primary",disabled:true,onclick:()=>{done=true;sb.disabled=true;const ok=seq.every((t,i)=>t===b.items[i]);[...top.children].forEach((li,i)=>li.classList.add(seq[i]===b.items[i]?"right":"wrong"));
-    logQ({k:b.id,type:"order",ok});reward(ok,true);applyCam({x:50,y:50,z:1},2);speaker(dlg,"du",ok?"jj":"gk",(ok?"顺序对了。":"顺序不对。")+b.ex,{next,au:false})}},"提交");
+    logQ({k:b.id,type:"order",ok});reward(ok,true);revealAll(b.reveal);applyCam({x:50,y:50,z:1},2);speaker(dlg,"du",ok?"jj":"gk",(ok?"顺序对了。":"顺序不对。")+b.ex,{next,au:false})}},"提交");
   const draw=()=>{top.innerHTML="";seq.forEach(t=>top.append(h("li",{},t)));bot.innerHTML="";pool.filter(t=>!seq.includes(t)).forEach(t=>bot.append(h("button",{class:"opt",onclick:()=>{if(done)return;seq.push(t);const i=b.items.indexOf(t);if(b.cams&&i===seq.length-1){applyCam(b.cams[i],1.2);SFX.whoosh()}if(b.flashes&&i===seq.length-1&&IMG[b.flashes[i]]){const f=h("div",{class:"flashimg"},h("img",{src:IMG[b.flashes[i]],alt:""}));document.body.append(f);SFX.whoosh();setTimeout(()=>f.remove(),1300)}draw()}},t)));sb.disabled=seq.length<b.items.length};
   card.append(h("div",{class:"row"},h("button",{class:"btn",onclick:()=>{if(!done){seq.length=0;draw()}}},"重来"),sb));stage.append(card);draw();speaker(dlg,"du","jj",b.tip||"按顺序点下面的句子。排对一项，镜头就飞到那里。",{noNext:true,au:false})}
 const hanLen=t=>(t.match(/[一-鿿A-Za-z0-9]/g)||[]).length;
@@ -465,13 +465,23 @@ async function packCode(){const o={c:LESSON.id,n:S.name,k:S.cls,st:S.start,se:Da
 function summary(code){const a=accStat();const first=S.log.filter(l=>l.a&&l.first&&!l.rep&&!l.test);const fp=first.length?Math.round(first.filter(l=>l.ok).length/first.length*100):0;
   const weak=Object.entries(S.at).filter(([k,v])=>v.wr>0&&ATOMS[k]).sort((x,y)=>y[1].wr-x[1].wr).slice(0,8).map(([k,v])=>{const A=ATOMS[k];return (A.k==="w"?`${A.c}（${A.s.slice(0,6)}）`:(A.v[0].q||"").slice(0,10)+"…")+`×${v.wr}`}).join("、");
   const rc=Object.entries(S.rc).map(([k,r])=>r.dict?`第${"①②③④"[r.para]}段${r.step>=3?"":"（未完成）"} ${r.best}%${r.miss?"，错漏："+r.miss.slice(0,20):""}`:`${r.step>=4?"四步完成":"第"+(r.step+1)+"步"}，默写最好 ${r.best}%`).join("；");
-  const wr=Object.values(S.wr).filter(t=>t&&t.trim()).map(t=>"· "+t.trim().replace(/\s+/g," ").slice(0,60)).join("\n");
-  return `进度：${S.done?"本课时完成":`第 ${S.pos+1}/${S.q?S.q.length:0} 步（${curScene().chap||""}）`}${BEATS.some(x=>x.t==="test")?"；过关检测 "+(S.test.pass?S.test.pass.score+"%":"未过"):""}；正确率 ${a.pct}%（${a.n}题）；首次正确率 ${fp}%；用时 ${Math.round(S.tm/60000)} 分钟；${LX.palName} ${S.built.length}/${Object.keys(REGIONS).length}\n${S.full!=null?"全文默写 "+S.full+"%；":""}背诵/默写：${rc||"未做"}\n错得多的：${weak||"无"}${wr?"\n写一写：\n"+wr:""}\n——以下是详细记录，供分析用——\n${code}`}
+  const wr=Object.entries(S.wr).filter(([k,t])=>k!=="xs_title"&&t&&t.trim()).map(([k,t])=>t).map(t=>"· "+t.trim().replace(/\s+/g," ").slice(0,60)).join("\n");
+  return `进度：${S.done?"本课时完成":`第 ${S.pos+1}/${S.q?S.q.length:0} 步（${curScene().chap||""}）`}${BEATS.some(x=>x.t==="test")?"；过关检测 "+(S.test.pass?S.test.pass.score+"%":"未过"):""}；正确率 ${a.pct}%（${a.n}题）；首次正确率 ${fp}%；用时 ${Math.round(S.tm/60000)} 分钟；${LX.palName} ${S.built.length}/${Object.keys(REGIONS).length}\n${S.full!=null?"全文默写 "+S.full+"%；":""}${BEATS.some(x=>x.t==="recite"||x.t==="dictate")?"背诵/默写："+(rc||"未做")+"\n":""}错得多的：${weak||"无"}${wr?"\n写一写：\n"+wr:""}\n——以下是详细记录，供分析用——\n${code}`}
 function showGate(a){const m=h("div",{class:"modal",onclick:e=>{if(e.target===m)m.remove()}},h("div",{class:"card"},h("h2",{},`正确率 ${a.pct}%，还不能交`),h("p",{},`一共答了 ${a.n} 题，答对 ${a.ok} 题。要达到 80% 才能交给老师。`),
   h("p",{class:"muted"},"往下继续学，错过的题会换个问法再出现，答对了正确率就会上来。"),h("div",{class:"row"},h("button",{class:"btn primary",onclick:()=>m.remove()},"继续学"))));document.body.append(m)}
 async function openSubmit(){const a=accStat();if(a.n>=10&&a.pct<80){showGate(a);return}if(window.SUBMIT_URL)return directSubmit(a);const code=await packCode();const who=S.cls?`${S.name}（${S.cls}）`:S.name;
   const mk=r=>FORM+"&"+FORM_F.course+"="+encodeURIComponent(LESSON.course)+"&"+FORM_F.name+"="+encodeURIComponent(who)+"&"+FORM_F.rec+"="+encodeURIComponent(r);
   const rec=summary(code);let url=mk(rec);if(url.length>7800){const head=rec.split("——以下是详细记录")[0];url=mk(head+"——详细记录太长，已省略——")}
+  const full=BEATS.some(x=>x.t==="compose")?xsFull():"";
+  if(full){const st1=h("div",{class:"substep on"}),st2=h("div",{class:"substep"}),st3=h("div",{class:"substep"});
+    const cp=h("button",{class:"btn primary",onclick:async()=>{let ok=false;try{await navigator.clipboard.writeText(full);ok=true}catch(e){}if(!ok){const t=h("textarea",{style:"position:fixed;opacity:0"});t.value=full;document.body.append(t);t.select();try{ok=document.execCommand("copy")}catch(e){}t.remove()}
+      if(ok){cp.textContent="✓ 已复制全文";st2.classList.add("on")}else{toast("复制没成功，请在下面的框里全选后复制");box.style.display="block";box.select()}}},"① 复制全文");
+    const box=h("textarea",{class:"cpbox",readonly:"",style:"display:none"});box.value=full;
+    st1.append(cp,h("small",{class:"muted"},`　题目和正文，共 ${hanLen(full)} 字`),box);
+    st2.append(h("a",{class:"btn primary",href:url,target:"_blank",rel:"noopener",onclick:()=>{S.subAt=Date.now();save();st3.classList.add("on")}},"② 打开作业表单 →"),h("p",{class:"small"},"姓名、课程、提纲和自评已经填好了。"));
+    st3.append(h("b",{},"③ 在“作业记录”一栏的最后，按住（或右键）选“粘贴”，把全文贴进去，再点“提交”。"),h("p",{class:"muted small"},"看到“已记录您的回复”，就交好了。"));
+    const m=h("div",{class:"modal",onclick:e=>{if(e.target===m)m.remove()}},h("div",{class:"card"},h("h2",{},"交给老师"),h("p",{},"小小说比较长，要分三步交："),st1,st2,st3,
+      h("p",{class:"muted small"},"可以交好几次，老师看最新的一次。"),h("div",{class:"row"},h("button",{class:"btn",onclick:()=>m.remove()},"关闭"))));document.body.append(m);return}
   const step2=h("div",{class:"substep"},h("b",{},"② 在表单最下面点“提交”。"),"看到“已记录您的回复”，就交好了。");
   const m=h("div",{class:"modal",onclick:e=>{if(e.target===m)m.remove()}},h("div",{class:"card"},h("h2",{},"交给老师"),h("p",{},"你的进度、成绩、错题和写一写都已经自动填进表单，不用自己填。"),
     h("div",{class:"row"},h("a",{class:"btn primary big",href:url,target:"_blank",rel:"noopener",onclick:()=>{S.subAt=Date.now();save();step2.classList.add("on")}},"① 打开作业表单 →")),step2,
@@ -485,8 +495,8 @@ async function postRec(body){
   catch(e){try{await fetch(window.SUBMIT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body});return "sent"}catch(e2){return "fail"}}}
 async function directSubmit(a){const code=await packCode();
   const first=S.log.filter(l=>l.a&&l.first&&!l.rep&&!l.test);const fp=first.length?Math.round(first.filter(l=>l.ok).length/first.length*100):0;
-  const writing=BEATS.filter(b=>(b.t==="write"||b.t==="compose")&&S.wr[b.id]&&S.wr[b.id].trim()).map(b=>({id:b.id,q:b.q||b.title||"",text:S.wr[b.id].trim()}));
-  Object.keys(S.wr).forEach(k=>{if(S.wr[k]&&S.wr[k].trim()&&!writing.some(w=>w.id===k))writing.push({id:k,q:"",text:S.wr[k].trim()})});
+  const writing=BEATS.filter(b=>["write","compose","outline","check"].includes(b.t)&&S.wr[b.id]&&S.wr[b.id].trim()).filter((b,i,a)=>a.findIndex(x=>x.id===b.id)===i).map(b=>({id:b.id,q:b.t==="compose"?"小小说全文":b.q||b.title||"",text:b.t==="compose"?xsFull():S.wr[b.id].trim()}));
+  Object.keys(S.wr).forEach(k=>{if(k!=="xs_title"&&S.wr[k]&&S.wr[k].trim()&&!writing.some(w=>w.id===k))writing.push({id:k,q:"",text:S.wr[k].trim()})});
   const rec={v:1,lesson:LESSON.id,course:LESSON.course,cls:S.cls||"",name:S.name,done:!!S.done,pct:a.pct,fp,min:Math.round(S.tm/60000),
     summary:summary(code).split("——以下是详细记录")[0].trim(),writing,code,sid:sid()};
   const body=JSON.stringify(rec);
@@ -729,6 +739,70 @@ function vFull(stage,dlg,b){const sc=[0,1,2,3].map(i=>{const r=S.rc["d"+(i+1)];r
   const tot=Math.round(sc.reduce((a,v,i)=>a+v*len[i],0)/len.reduce((a,v)=>a+v,0));S.full=tot;save();
   const card=h("div",{class:"card fullcard"},h("div",{class:"eyebrow"},"全文"),h("h2",{},"阿房宫赋 · 杜牧"),...PARA.map((L,i)=>h("p",{class:"fullp",style:`animation-delay:${i*0.8}s`},h("b",{},`${"①②③④"[i]} ${sc[i]}%　`),L.map(g=>P1[g]).join(""))),h("div",{class:"fulltot"},`全文默写 ${tot}%`));stage.append(card);
   SFX.done();speaker(dlg,"du","gk",tot>=90?"整篇《阿房宫赋》，你写下来了。":"写完了。没到九成的段落，可以回去再练。",{next,au:false})}
+
+/* ---------- 小小说写作：删一删 / 列提纲 / 写作区 / 自评清单 ---------- */
+const XSK="afg-xs-shared"+(TV?"-t":"");
+function xsGet(){try{return JSON.parse(localStorage.getItem(XSK)||"{}")}catch(e){return {}}}
+function xsPut(o){try{localStorage.setItem(XSK,JSON.stringify(Object.assign(xsGet(),o)))}catch(e){}}
+function revealAll(r){if(!r)return;(Array.isArray(r)?r:[r]).forEach(x=>buildRegion(x))}
+function vCut(stage,dlg,b){let miss=0,done=false;const cut=new Set();const need=b.sents.map((s,i)=>s.keep?null:i).filter(x=>x!=null);
+  const box=h("div",{class:"cutp"});const cnt=h("small",{class:"muted"});const upd=()=>{cnt.textContent=`已划掉 ${cut.size} 句 · 要划掉 ${need.length} 句`};
+  const card=h("div",{class:"card cutc"},h("div",{class:"eyebrow"},b.eyebrow||"删一删"),h("h2",{class:"q"},b.q),box,h("div",{class:"row"},cnt));
+  b.sents.forEach((s,i)=>{const sp=h("span",{class:"cs","data-c":(window.__T||TV)&&!s.keep?"1":null,onclick:()=>{if(done)return;
+      if(s.keep){miss++;SFX.no();sp.classList.add("shake");setTimeout(()=>sp.classList.remove("shake"),400);toast(s.h||"这一句要留下。");return}
+      if(cut.has(i)){cut.delete(i);sp.classList.remove("cut")}else{cut.add(i);sp.classList.add("cut");SFX.ok()}upd();
+      if(cut.size===need.length){done=true;const ok=miss<=1;logQ({k:b.id,type:"cut",ok,miss});reward(ok,true);revealAll(b.reveal);box.classList.add("fin");
+        card.append(h("div",{class:"explain"},h("b",{},"删完以后　"),b.after));speaker(dlg,"du",ok?"kx":"gk",(ok?(miss?"删对了，只误点了 1 次。":"删得干净！"):`删完了，误点了 ${miss} 次。`)+b.ex,{next,au:false})}}},s.t);box.append(sp)});
+  stage.append(card);upd();speaker(dlg,b.who||"du",b.face||"jj",b.tip||"点一下多余的句子，就把它划掉；划错了，再点一下就恢复。",{noNext:true,au:false})}
+function olText(o,fs){return fs.map(f=>`${f.label}：${(o[f.k]||"").trim()}`).join("\n")}
+function vOutline(stage,dlg,b){const sh=xsGet();S.ol=Object.assign({},sh.ol||{},S.ol||{});const grid=h("div",{class:"olgrid"});const st=h("small",{class:"muted"});
+  const sb=h("button",{class:"btn primary"},b.btn||"提纲写好了");
+  const upd=()=>{const left=b.fields.filter(f=>hanLen(S.ol[f.k]||"")<f.min);sb.disabled=!!left.length&&!TV&&!PROJ;st.textContent=left.length?`还有 ${left.length} 格没写够（${left.map(f=>f.label).join("、")}）`:`${b.fields.length} 格都写好了 ✓`};
+  b.fields.forEach((f,i)=>{const ta=h(f.long?"textarea":"input",{class:"olin",placeholder:f.ph||"",rows:f.long?"2":null,"aria-label":f.label});ta.value=S.ol[f.k]||"";
+    ta.addEventListener("input",()=>{S.ol[f.k]=ta.value;S.wr[b.id]=olText(S.ol,b.fields);save();xsPut({ol:S.ol});upd()});
+    grid.append(h("label",{class:"olrow"},h("span",{class:"oln"},String(i+1)),h("span",{class:"oll"},h("b",{},f.label),f.hint?h("small",{},f.hint):null),ta))});
+  if(PROJ)grid.querySelectorAll(".olin").forEach(x=>x.placeholder="学生在自己的设备上填写");
+  sb.onclick=()=>{S.wr[b.id]=olText(S.ol,b.fields);xsPut({ol:S.ol});logQ({k:b.id,type:"outline",ok:null});if(!S.fx[b.id]){S.fx[b.id]=1;S.pts+=10;floatTxt("+10 "+PTS());updHud()}save();sb.disabled=true;speaker(dlg,"du","kx",b.done||"提纲存好了。",{next,au:false})};
+  stage.append(h("div",{class:"card olc"},h("div",{class:"eyebrow"},b.eyebrow||"列提纲"),h("h2",{class:"q"},b.q),grid,h("div",{class:"row"},st,sb)));upd();
+  speaker(dlg,"du","jj",b.tip||"每一格写几个字就行，不用写成完整的句子。",{noNext:true,au:false})}
+function xsFull(){const bb=BEATS.find(x=>x.t==="compose");if(!bb)return "";const t=(S.wr.xs_title||"").trim();return (t?`《${t}》\n\n`:"")+(S.wr[bb.id]||"").replace(/\s+$/,"")}
+function vCompose(stage,dlg,b){const sh=xsGet();S.ol=Object.assign({},sh.ol||{},S.ol||{});
+  if(!S.wr.xs_title&&sh.title)S.wr.xs_title=sh.title;if(!(S.wr[b.id]||"").trim()&&sh.body)S.wr[b.id]=sh.body;
+  if(PROJ){let left=(b.minutes||22)*60;const clk=h("div",{class:"xsclk big"},"22:00");const tick=setInterval(()=>{left=Math.max(0,left-1);clk.textContent=`${String(Math.floor(left/60)).padStart(2,"0")}:${String(left%60).padStart(2,"0")}`;if(!left)clearInterval(tick)},1000);gameStop=()=>clearInterval(tick);
+    stage.append(h("div",{class:"card"},h("div",{class:"eyebrow"},"写作时间"),h("h2",{},"学生在自己的设备上写作"),clk,h("p",{class:"muted"},"写到一半时，可以请同桌交换读一读开头和第一段。")));speaker(dlg,"du","jj","安静地写。写满三百字才能点「写完了」。",{next,au:false});return}
+  window.__bgmHold=1;bgmStop();document.body.classList.add("xsw");
+  const ti=h("input",{class:"xstitle",placeholder:"题目（写完还可以再改）",maxlength:"30","aria-label":"题目"});ti.value=S.wr.xs_title||S.ol.title||"";
+  const ta=h("textarea",{class:"xsta","aria-label":"正文",placeholder:"从这里开始写。每段开头空两格，按回车会自动空好。"});
+  ta.value=(S.wr[b.id]||"").trim()?S.wr[b.id]:"　　"+((S.wr.w_kaitou||"").trim());
+  const cnt=h("b",{class:"xscnt"});const done=h("button",{class:"btn primary"},"写完了");const tip=h("small",{class:"muted xstip"});
+  const persist=()=>{S.wr.xs_title=ti.value;S.wr[b.id]=ta.value;save();xsPut({title:ti.value,body:ta.value})};
+  const min=b.min||300;const upd=()=>{const n=hanLen(ta.value);cnt.textContent=`${n} 字`;cnt.className="xscnt"+(n>1500?" over":n>=600?" good":"");done.disabled=n<min&&!TV;
+    tip.textContent=n<min?`写满 ${min} 字才能点「写完了」，还差 ${min-n} 字`:n>1500?"超过 1500 字了，想想哪里可以删":n<600?"可以先停；课后接着写到 600 字以上更好":"字数合适"};
+  ta.addEventListener("input",()=>{persist();upd()});ti.addEventListener("input",persist);
+  ta.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing&&e.keyCode!==229){e.preventDefault();ta.setRangeText("\n　　",ta.selectionStart,ta.selectionEnd,"end");persist();upd()}});
+  const olBox=h("div",{class:"xsol"},...b.fields.map(f=>h("p",{},h("b",{},f.label+"："),(S.ol[f.k]||"").trim()||"（还没写）")));
+  const tipBox=h("ol",{class:"xstips"},...b.tips.map(t=>h("li",{},t)));
+  const side=h("aside",{class:"xsside"},h("h3",{},"我的提纲"),olBox,h("h3",{},"五条提示"),tipBox);
+  const tog=h("button",{class:"ghost small",onclick:()=>{const on=wrap.classList.toggle("noside");tog.textContent=on?"提纲 ▸":"收起提纲"}},"收起提纲");
+  let left=(b.minutes||22)*60,tm=null;const clk=h("button",{class:"ghost small xsclk",onclick:()=>{if(tm){clearInterval(tm);tm=null;clk.textContent="计时 22:00";left=(b.minutes||22)*60;return}
+    tm=setInterval(()=>{left--;clk.textContent=`⏱ ${String(Math.floor(left/60)).padStart(2,"0")}:${String(left%60).padStart(2,"0")}`;if(left===Math.floor((b.minutes||22)*30)&&clsOn())toast("写到一半了。可以和同桌交换，读读对方的开头和第一段。");if(left<=0){clearInterval(tm);tm=null;clk.textContent="时间到";toast("时间到了。写完这一段就收个尾吧。")}},1000)}},"计时 22:00");
+  if(window.matchMedia&&matchMedia("(max-width:760px)").matches)setTimeout(()=>tog.click(),0);
+  done.onclick=()=>{persist();logQ({k:b.id,type:"compose",ok:null,n:hanLen(ta.value)});if(!S.fx[b.id]){S.fx[b.id]=1;S.pts+=30;floatTxt("+30 "+PTS());updHud()}save();
+    document.body.classList.remove("xsw");window.__bgmHold=0;speaker(dlg,"du","kx",`写完了，一共 ${hanLen(ta.value)} 字。先别急着交，下一步对照五条提示，自己检查一遍。`,{next,au:false});done.disabled=true};
+  const main=h("div",{class:"xsmain"},h("div",{class:"xsbar"},ti,cnt),ta,h("div",{class:"xsfoot"},tog,clk,tip,done));
+  const wrap=h("div",{class:"card xsc"},main,side);stage.append(wrap);upd();setTimeout(()=>{ta.focus({preventScroll:true});ta.setSelectionRange(ta.value.length,ta.value.length)},120);
+  gameStop=()=>{if(tm)clearInterval(tm);document.body.classList.remove("xsw");window.__bgmHold=0;persist()}}
+function vCheck(stage,dlg,b){S.ck=S.ck||{};const res=Object.assign({},S.ck[b.id]||{});const rows=h("div",{class:"cklist"});const fin=h("div",{class:"row"});
+  const upd=()=>{fin.innerHTML="";const n=Object.keys(res).length;if(n<b.items.length){fin.append(h("small",{class:"muted"},`还有 ${b.items.length-n} 条没勾`));return}
+    S.ck[b.id]=res;S.wr[b.id]=b.items.map((it,i)=>`${res[i]?"✓":"✗"} ${it.t}`).join("\n");save();const bad=b.items.filter((x,i)=>!res[i]).length;
+    if(bad)fin.append(h("button",{class:"btn",onclick:()=>{const j=S.q.findIndex(q=>beatOf(q).id===b.back);if(j>=0){logQ({k:b.id,type:"check",ok:null,back:1});S.pos=j;save();render()}}},"← 回去改"));
+    fin.append(h("button",{class:"btn primary",onclick:()=>{logQ({k:b.id,type:"check",ok:null,bad});if(!S.fx[b.id]){S.fx[b.id]=1;S.pts+=10;floatTxt("+10 "+PTS());updHud()}save();
+      speaker(dlg,"du",bad?"gk":"kx",bad?`还有 ${bad} 条没做到。时间来得及就回去改一改；来不及，课后接着改，改好了再交一次。`:"五条都做到了。好故事都是改出来的。",{next,au:false});fin.innerHTML=""}},bad?"先这样，继续":"都检查好了"))};
+  b.items.forEach((it,i)=>{const yes=h("button",{class:"ckb"},"做到了"),no=h("button",{class:"ckb no"},"还没有");
+    const set=v=>{res[i]=v;yes.classList.toggle("on",v===true);no.classList.toggle("on",v===false);upd()};yes.onclick=()=>set(true);no.onclick=()=>set(false);if(i in res)set(res[i]);
+    rows.append(h("div",{class:"ckrow"},h("div",{},h("b",{},`${i+1}. ${it.t}`),h("small",{},"自查："+it.how)),h("div",{class:"ckbtns"},yes,no)))});
+  stage.append(h("div",{class:"card ckc"},h("div",{class:"eyebrow"},"自评清单"),h("h2",{class:"q"},b.q),rows,fin));upd();
+  speaker(dlg,"du","jj",b.tip||"一条一条对照，诚实地勾。",{noNext:true,au:false})}
 
 /* ---------- 键盘 ---------- */
 addEventListener("keydown",e=>{const tag=document.activeElement?.tagName;if(["TEXTAREA","INPUT"].includes(tag))return;
