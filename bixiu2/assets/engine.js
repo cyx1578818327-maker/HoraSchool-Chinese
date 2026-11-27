@@ -186,7 +186,7 @@ function render(){stopAu();if(gameStop){gameStop();gameStop=null}
   const c=it.cam||b.cam;if(c)applyCam(c);else if(fresh||!["ask","fix","read","write","pair","recite","test","testcheck","info","end"].includes(b.t))applyCam(curCam(),fresh?0:1.6);
   cardStart=Date.now();if(b.t==="testcheck")return vTestCheck(it);
   const {stage,dlg}=frame();
-  const V={sort:vSort,say:vSay,read:vRead,ask:vAsk,fix:vAsk,pair:vPair,order:vOrder,write:vWrite,recite:vRecite,end:vEnd,info:vInfo,hot:vHot,punct:vPunct,map6:vMap6,chop:vChop,cover:vCover,route:vRoute,canal:vCanal,walk:vWalk,find:vFind,zoom:vZoom,scratch:vScratch,slider:vSlider,tour:vTour,cloze:vCloze,dictate:vDictate,fulltext:vFull,case:vCase,ifswitch:vIf,mirror:vMirror,take:vTake,spend:vSpend,balance:vBalance,anger:vAnger,fires:vFires,burn:vBurn,halfrelay:vHalfRelay,carts:vCarts,thunder:vThunder,wait:vWait,flip:vFlip,cut:vCut,outline:vOutline,compose:vCompose,check:vCheck,task:vTask,pick:vPick,reveal:vReveal,score:vScore};
+  const V={sort:vSort,say:vSay,read:vRead,ask:vAsk,fix:vAsk,pair:vPair,order:vOrder,write:vWrite,recite:vRecite,end:vEnd,info:vInfo,hot:vHot,punct:vPunct,map6:vMap6,chop:vChop,cover:vCover,route:vRoute,canal:vCanal,walk:vWalk,find:vFind,zoom:vZoom,scratch:vScratch,slider:vSlider,tour:vTour,cloze:vCloze,dictate:vDictate,fulltext:vFull,case:vCase,ifswitch:vIf,mirror:vMirror,take:vTake,spend:vSpend,balance:vBalance,anger:vAnger,fires:vFires,burn:vBurn,halfrelay:vHalfRelay,carts:vCarts,thunder:vThunder,wait:vWait,flip:vFlip,cut:vCut,outline:vOutline,compose:vCompose,check:vCheck,task:vTask,pick:vPick,reveal:vReveal,score:vScore,lead:vLead};
   V[b.t](stage,dlg,b,it);setTimeout(()=>dlg.querySelector("button.go:not([disabled])")?.focus({preventScroll:true}),60)}
 function vSay(stage,dlg,b){if(b.ov)addOv(b.ov);if(b.fx==="spin"){SC.el.classList.add("spin");stage.append(h("div",{class:"spincmp"},h("i"),h("span",{},"东？西？")));SFX.whoosh()}speaker(dlg,b.who,b.face,b.text,{next})}
 function vInfo(stage,dlg,b){stage.append(h("div",{class:"card"+(b.big?" tk infobig":"")},b.eyebrow?h("div",{class:"eyebrow"},b.eyebrow):null,h("h2",{},b.title),...(b.paras||[]).map(p=>h("p",{},p))));speaker(dlg,b.who||"du",b.face||"jj",b.say||"准备好了就继续。",{next,au:!!b.voiced})}
@@ -825,14 +825,23 @@ function tkCard(cls,b,body){const img=b.img&&IMG[b.img]?h("img",{class:"tkimg",s
   return h("div",{class:"card tk tk-"+cls+(img?" wimg":"")},img,h("div",{class:"tkbody"},...body))}
 function vTask(stage,dlg,b){stage.append(tkCard("task",b,[h("div",{class:"eyebrow"},b.eyebrow||"小组任务"),h("h2",{},b.title),...(b.lines||[]).map(l=>h("p",{class:"tkl"},l)),b.secs?timerW(b.secs):null,b.score?h("p",{class:"tkscore"},b.score):null]));
   speaker(dlg,b.who||"du",b.face||"jj",b.say,{next,nextLabel:b.nextLabel||"完成了 ▸"})}
-function vPick(stage,dlg,b){S.picked=S.picked||[];const nm=h("div",{class:"pkname"},"？");let rolling=false;
+function pickWidget(){S.picked=S.picked||[];const nm=h("div",{class:"pkname"},"？");let rolling=false;
   const roll=pool=>{if(rolling||!pool.length)return;let cand=pool.filter(n=>!S.picked.includes(n));if(!cand.length){S.picked=S.picked.filter(n=>!pool.includes(n));cand=pool.slice()}
     rolling=true;nm.classList.remove("on");let d=60;const step=()=>{nm.textContent=cand[Math.floor(Math.random()*cand.length)];d*=1.15;if(d<480)setTimeout(step,d);else{const f=cand[Math.floor(Math.random()*cand.length)];nm.textContent=f;nm.classList.add("on");S.picked.push(f);save();rolling=false;try{SFX.ok()}catch(x){}}};step()};
   const all=GRP?GRP.flatMap(g=>g.m):[];
-  const btns=h("div",{class:"pkbtns"},h("button",{class:"btn primary",onclick:()=>roll(all)},"全班抽一位"),...(GRP||[]).map(g=>h("button",{class:"btn",onclick:()=>roll(g.m)},g.n+"抽一位")));
+  return h("div",{class:"pkrow"},nm,h("div",{class:"pkbtns"},h("button",{class:"btn pkall",onclick:()=>roll(all)},"全班抽一位"),...(GRP||[]).map(g=>h("button",{class:"btn",onclick:()=>roll(g.m)},g.n+"抽一位"))))}
+function vLead(stage,dlg,b){const rows=[];let cur=-1;const box=h("div",{class:"ldbox"+(b.parts.length>1?" multi":"")});
+  b.parts.forEach((pt,pi)=>{const lab=h("div",{class:"ldlab"},pt.label);const ls=h("div",{class:"ldlines"});
+    pt.lines.forEach(i=>{const p=rubyLine(P1[i]);p.classList.add("ldl");const idx=rows.length;p.onclick=()=>go(idx);rows.push({p,pi,lab});ls.append(p)});box.append(h("div",{class:"ldpart"},lab,ls))});
+  const nb=h("button",{class:"btn primary",onclick:()=>go(cur+1)},"下一句 ▸"),pb=h("button",{class:"btn",onclick:()=>go(cur-1)},"◂ 上一句");
+  const go=k=>{cur=Math.max(0,Math.min(rows.length-1,k));rows.forEach((r,j)=>{r.p.classList.toggle("on",j===cur);r.p.classList.toggle("done",j<cur)});rows.forEach(r=>r.lab.classList.toggle("on",r.pi===rows[cur].pi));
+    nb.disabled=cur>=rows.length-1;pb.disabled=cur<=0};
+  stage.append(h("div",{class:"card tk tk-lead"+(rows.length>4?" long":"")},h("div",{class:"eyebrow"},b.eyebrow||"一起读"),h("h2",{},b.title),b.pick?pickWidget():null,box,h("div",{class:"row ldctl"},pb,nb,h("small",{class:"muted"},"也可以直接点某一句"))));
+  speaker(dlg,b.who||"du",b.face||"jj",b.say,{next,nextLabel:b.nextLabel||"读完了 ▸"});setTimeout(()=>go(0),30)}
+function vPick(stage,dlg,b){
   stage.append(tkCard("pick",b,[h("div",{class:"eyebrow"},b.eyebrow||(b.grab?"抢答":"随机点名")),h("h2",{class:"pkq"},b.q),b.quote?h("p",{class:"pkquote"},b.quote):null,
-    b.grab?h("p",{class:"tkl grab"},"知道的组，举手抢答！"):h("div",{class:"pkrow"},nm,btns),b.score?h("p",{class:"tkscore"},b.score):null]));
-  speaker(dlg,b.who||"du",b.face||"jj",b.say,{next,nextLabel:"看答案 ▸"})}
+    b.grab?h("p",{class:"tkl grab"},b.grabText||"知道的组，举手抢答！"):pickWidget(),...(b.lines||[]).map(l=>h("p",{class:"tkl"},l)),b.score?h("p",{class:"tkscore"},b.score):null]));
+  speaker(dlg,b.who||"du",b.face||"jj",b.say,{next,nextLabel:b.nextLabel||"看答案 ▸"})}
 function vReveal(stage,dlg,b){let i=0;const items=b.items.map((it,k)=>h("div",{class:"rvitem hid"},h("span",{class:"rvn"},String(k+1)),h("div",{},h("b",{class:"rvt"},it.t),it.d?h("p",{class:"rvd"},it.d):null)));
   stage.append(tkCard("reveal2",b,[h("div",{class:"eyebrow"},b.eyebrow||"答案"),h("h2",{},b.title),h("div",{class:"rvlist"+(items.length>4?" dense":"")},...items)]));
   const step=()=>{if(i<items.length){items[i].classList.remove("hid");items[i].classList.add("in");const it=b.items[i];i++;
