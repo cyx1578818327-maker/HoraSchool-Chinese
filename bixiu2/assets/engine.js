@@ -859,7 +859,7 @@ function vScore(stage,dlg,b){const sc=scGet();const mx=Math.max(0,...GRP.map(g=>
   stage.append(h("div",{class:"card tk score"},h("div",{class:"eyebrow"},b.eyebrow||"今天的分数"),h("h2",{},b.title||"哪个组领先？"),
     h("div",{class:"scrow"},...GRP.map((g,i)=>h("div",{class:"scg g"+i+((sc[g.n]||0)===mx&&mx>0?" top":""),"data-n":g.n},h("b",{},g.n),h("span",{class:"scv"},String(sc[g.n]||0)),h("small",{},g.m.join("　"))))),
     ...(b.lines||[]).map(l=>h("p",{class:"tkl"},l)),h("p",{class:"muted small"},b.note||"分数会累计到下一课时。"),clr));
-  speaker(dlg,b.who||"du",b.face||"kx",b.say,{next,nextLabel:"结束 ▸"})}
+  speaker(dlg,b.who||"du",b.face||"kx",b.say,{next:()=>{try{stopAu();bgmStop()}catch(e){}location.hash=window.HUBBACK||"";location.reload()},nextLabel:"结束，回到首页"})}
 
 /* ---------- 键盘 ---------- */
 addEventListener("keydown",e=>{const tag=document.activeElement?.tagName;if(["TEXTAREA","INPUT"].includes(tag))return;
