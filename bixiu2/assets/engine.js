@@ -161,7 +161,7 @@ function speaker(dlg,who,face,text,{next:nx,nextLabel="继续",noNext=false,extr
   const tx=h("div",{class:"tx"},h("div",{class:"nm"},NAME[who]),h("p",{},...boldParts(text)));
   const k=auKey(text);const btns=h("div",{class:"dbtn"},...extra);if(au&&AUD[k])btns.prepend(h("button",{class:"ghost",title:"再听一遍",onclick:()=>playAu(k)},"↻ 再听"));
   if(!noNext&&nx)btns.append(h("button",{class:"go",onclick:nx},nextLabel+" ▸"));
-  dlg.append(av,tx,btns);if(au&&AUD[k])setTimeout(()=>playAu(k),250)}
+  dlg.append(av,tx,btns);if(window.__onSpeak)window.__onSpeak(who,face);if(au&&AUD[k])setTimeout(()=>playAu(k),250)}
 function task(stage,txt,sub){const t=h("div",{class:"task"},h("b",{},txt),sub?h("small",{},sub):null);stage.append(t);return t}
 function next(){stopAu();S.pos++;save();render()}
 function clsOn(){try{return localStorage.getItem("afg-class")==="1"}catch(x){return false}}
@@ -808,6 +808,12 @@ function vCheck(stage,dlg,b){S.ck=S.ck||{};const res=Object.assign({},S.ck[b.id]
 const GRP=LX.groups||null;const SCK="afg-class-score-"+(LX.scoreKey||"x");
 function scGet(){try{return JSON.parse(localStorage.getItem(SCK)||"{}")||{}}catch(e){return {}}}
 function scPut(o){try{localStorage.setItem(SCK,JSON.stringify(o))}catch(e){}}
+function lectureSides(){const mk=(who,cls,role)=>{const img=h("img",{alt:NAME[who]});const el=h("div",{class:"side "+cls},img,h("div",{class:"sidenm"},h("b",{},NAME[who]),h("small",{},role)));el._img=img;el._who=who;return el};
+  const Lw=LX.lecturer||"du",Bw=LX.buddy||"fan";const a=mk(Lw,"sideL",LX.lecturerRole||"主讲"),b=FACE[Bw]?mk(Bw,"sideB",LX.buddyRole||"伴学"):null;
+  const set=(el,who,face)=>{const st=LX.standing&&LX.standing[who];const f=(st&&(st[face]||Object.values(st)[0]))||FACE[who][face]||Object.values(FACE[who])[0];if(IMG[f])el._img.src=IMG[f]};
+  set(a,Lw,"jj");if(b)set(b,Bw,Object.keys(FACE[Bw])[0]);
+  window.__onSpeak=(who,face)=>{[a,b].forEach(el=>{if(!el)return;const on=el._who===who;el.classList.toggle("on",on);if(on)set(el,who,face)})};
+  document.body.append(a);if(b)document.body.append(b)}
 let sbDraw=null;
 function scoreBoard(){const box=h("div",{class:"sboard",role:"group","aria-label":"小组计分板"});
   sbDraw=()=>{const sc=scGet();box.innerHTML="";box.append(h("span",{class:"sbt"},"计分"));GRP.forEach((g,i)=>{const n=sc[g.n]||0;
@@ -823,7 +829,8 @@ function timerW(secs){let left=secs,run=true;const t=h("b",{class:"tmv"});const 
   w.append(h("span",{class:"tml"},"倒计时"),t,pb,ad);fmt();gameStop=()=>clearInterval(tm);return w}
 function tkCard(cls,b,body){const img=b.img&&IMG[b.img]?h("img",{class:"tkimg",src:IMG[b.img],alt:b.alt||""}):null;
   return h("div",{class:"card tk tk-"+cls+(img?" wimg":"")},img,h("div",{class:"tkbody"},...body))}
-function vTask(stage,dlg,b){stage.append(tkCard("task",b,[h("div",{class:"eyebrow"},b.eyebrow||"小组任务"),h("h2",{},b.title),...(b.lines||[]).map(l=>h("p",{class:"tkl"},l)),b.secs?timerW(b.secs):null,b.score?h("p",{class:"tkscore"},b.score):null]));
+function bookBadge(b){return b.book?h("div",{class:"bookb"},h("span",{class:"bookic"}),h("b",{},"课本"),h("span",{},b.book)):null}
+function vTask(stage,dlg,b){stage.append(tkCard("task",b,[h("div",{class:"eyebrow"},b.eyebrow||"小组任务"),bookBadge(b),h("h2",{},b.title),...(b.lines||[]).map(l=>h("p",{class:"tkl"},l)),b.secs?timerW(b.secs):null,b.score?h("p",{class:"tkscore"},b.score):null]));
   speaker(dlg,b.who||"du",b.face||"jj",b.say,{next,nextLabel:b.nextLabel||"完成了 ▸"})}
 function pickWidget(){S.picked=S.picked||[];const nm=h("div",{class:"pkname"},"？");let rolling=false;
   const roll=pool=>{if(rolling||!pool.length)return;let cand=pool.filter(n=>!S.picked.includes(n));if(!cand.length){S.picked=S.picked.filter(n=>!pool.includes(n));cand=pool.slice()}
@@ -839,11 +846,11 @@ function vLead(stage,dlg,b){const rows=[];let cur=-1;const box=h("div",{class:"l
   stage.append(h("div",{class:"card tk tk-lead"+(rows.length>4?" long":"")},h("div",{class:"eyebrow"},b.eyebrow||"一起读"),h("h2",{},b.title),b.pick?pickWidget():null,box,h("div",{class:"row ldctl"},pb,nb,h("small",{class:"muted"},"也可以直接点某一句"))));
   speaker(dlg,b.who||"du",b.face||"jj",b.say,{next,nextLabel:b.nextLabel||"读完了 ▸"});setTimeout(()=>go(0),30)}
 function vPick(stage,dlg,b){
-  stage.append(tkCard("pick",b,[h("div",{class:"eyebrow"},b.eyebrow||(b.grab?"抢答":"随机点名")),h("h2",{class:"pkq"},b.q),b.quote?h("p",{class:"pkquote"},b.quote):null,
+  stage.append(tkCard("pick",b,[h("div",{class:"eyebrow"},b.eyebrow||(b.grab?"抢答":"随机点名")),bookBadge(b),h("h2",{class:"pkq"},b.q),b.quote?h("p",{class:"pkquote"},b.quote):null,
     b.grab?h("p",{class:"tkl grab"},b.grabText||"知道的组，举手抢答！"):pickWidget(),...(b.lines||[]).map(l=>h("p",{class:"tkl"},l)),b.score?h("p",{class:"tkscore"},b.score):null]));
   speaker(dlg,b.who||"du",b.face||"jj",b.say,{next,nextLabel:b.nextLabel||"看答案 ▸"})}
 function vReveal(stage,dlg,b){let i=0;const items=b.items.map((it,k)=>h("div",{class:"rvitem hid"},h("span",{class:"rvn"},String(k+1)),h("div",{},h("b",{class:"rvt"},it.t),it.d?h("p",{class:"rvd"},it.d):null)));
-  stage.append(tkCard("reveal2",b,[h("div",{class:"eyebrow"},b.eyebrow||"答案"),h("h2",{},b.title),h("div",{class:"rvlist"+(items.length>4?" dense":"")},...items)]));
+  stage.append(tkCard("reveal2",b,[h("div",{class:"eyebrow"},b.eyebrow||"答案"),bookBadge(b),h("h2",{},b.title),h("div",{class:"rvlist"+(items.length>4?" dense":"")},...items)]));
   const step=()=>{if(i<items.length){items[i].classList.remove("hid");items[i].classList.add("in");const it=b.items[i];i++;
       speaker(dlg,it.who||b.who||"du",it.face||b.face||"jj",it.say||it.t,{next:i<items.length?step:(b.after?()=>speaker(dlg,b.who||"du",b.afterFace||"kx",b.after,{next}):next),nextLabel:i<items.length?"下一条 ▸":"继续 ▸"})}else next()};
   if(b.say)speaker(dlg,b.who||"du",b.face||"jj",b.say,{next:step,nextLabel:"显示答案 ▸"});else step()}
@@ -859,7 +866,7 @@ addEventListener("keydown",e=>{const tag=document.activeElement?.tagName;if(["TE
   if(/^[1-4]$/.test(e.key)){const b=document.querySelector(`.opt[data-k="${e.key}"]:not([disabled])`);if(b){b.click();e.preventDefault()}return}
   const dk={ArrowUp:"n",ArrowDown:"s",ArrowLeft:"w",ArrowRight:"e"}[e.key];if(dk){const b=document.querySelector(".dp-"+dk);if(b){b.click();e.preventDefault();return}}
   if(e.key==="Enter"||e.key===" "){if(document.activeElement?.classList.contains("holdbtn"))return;const g=document.querySelector(".dlg button.go:not([disabled]):not(.holdbtn)");if(g&&document.activeElement!==g){e.preventDefault();g.click()}}});
-if(GRP){document.body.classList.add("clsroom");document.body.append(scoreBoard())}
+if(GRP){document.body.classList.add("clsroom");document.body.append(scoreBoard());lectureSides()}
 render();
 
 if(PROJ){document.addEventListener("keydown",ev=>{if(/INPUT|TEXTAREA|SELECT/.test(ev.target.tagName))return;
