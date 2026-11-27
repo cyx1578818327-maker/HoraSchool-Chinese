@@ -186,10 +186,10 @@ function render(){stopAu();if(gameStop){gameStop();gameStop=null}
   const c=it.cam||b.cam;if(c)applyCam(c);else if(fresh||!["ask","fix","read","write","pair","recite","test","testcheck","info","end"].includes(b.t))applyCam(curCam(),fresh?0:1.6);
   cardStart=Date.now();if(b.t==="testcheck")return vTestCheck(it);
   const {stage,dlg}=frame();
-  const V={sort:vSort,say:vSay,read:vRead,ask:vAsk,fix:vAsk,pair:vPair,order:vOrder,write:vWrite,recite:vRecite,end:vEnd,info:vInfo,hot:vHot,punct:vPunct,map6:vMap6,chop:vChop,cover:vCover,route:vRoute,canal:vCanal,walk:vWalk,find:vFind,zoom:vZoom,scratch:vScratch,slider:vSlider,tour:vTour,cloze:vCloze,dictate:vDictate,fulltext:vFull,case:vCase,ifswitch:vIf,mirror:vMirror,take:vTake,spend:vSpend,balance:vBalance,anger:vAnger,fires:vFires,burn:vBurn,halfrelay:vHalfRelay,carts:vCarts,thunder:vThunder,wait:vWait,flip:vFlip,cut:vCut,outline:vOutline,compose:vCompose,check:vCheck};
+  const V={sort:vSort,say:vSay,read:vRead,ask:vAsk,fix:vAsk,pair:vPair,order:vOrder,write:vWrite,recite:vRecite,end:vEnd,info:vInfo,hot:vHot,punct:vPunct,map6:vMap6,chop:vChop,cover:vCover,route:vRoute,canal:vCanal,walk:vWalk,find:vFind,zoom:vZoom,scratch:vScratch,slider:vSlider,tour:vTour,cloze:vCloze,dictate:vDictate,fulltext:vFull,case:vCase,ifswitch:vIf,mirror:vMirror,take:vTake,spend:vSpend,balance:vBalance,anger:vAnger,fires:vFires,burn:vBurn,halfrelay:vHalfRelay,carts:vCarts,thunder:vThunder,wait:vWait,flip:vFlip,cut:vCut,outline:vOutline,compose:vCompose,check:vCheck,task:vTask,pick:vPick,reveal:vReveal,score:vScore};
   V[b.t](stage,dlg,b,it);setTimeout(()=>dlg.querySelector("button.go:not([disabled])")?.focus({preventScroll:true}),60)}
 function vSay(stage,dlg,b){if(b.ov)addOv(b.ov);if(b.fx==="spin"){SC.el.classList.add("spin");stage.append(h("div",{class:"spincmp"},h("i"),h("span",{},"东？西？")));SFX.whoosh()}speaker(dlg,b.who,b.face,b.text,{next})}
-function vInfo(stage,dlg,b){stage.append(h("div",{class:"card"},h("h2",{},b.title),...(b.paras||[]).map(p=>h("p",{},p))));speaker(dlg,"du","jj",b.say||"准备好了就继续。",{next,au:false})}
+function vInfo(stage,dlg,b){stage.append(h("div",{class:"card"+(b.big?" tk infobig":"")},b.eyebrow?h("div",{class:"eyebrow"},b.eyebrow):null,h("h2",{},b.title),...(b.paras||[]).map(p=>h("p",{},p))));speaker(dlg,b.who||"du",b.face||"jj",b.say||"准备好了就继续。",{next,au:!!b.voiced})}
 function rubyLine(l){const p=h("p");[...l].forEach((ch,k)=>{const need=RUBY[ch]&&(!RUBY_ONLY[ch]||l.slice(Math.max(0,k-1),k+2).includes(RUBY_ONLY[ch]));p.append(ch==="/"?h("span",{class:"k br"},h("br")):h("span",{class:"k"},need?h("ruby",{},ch,h("rt",{},RUBY[ch])):ch))});return p}
 let karaRAF=0;
 function kara(el,id,au){cancelAnimationFrame(karaRAF);document.querySelectorAll(".k.on").forEach(x=>x.classList.remove("on"));if(!el||!au)return;const ks=[...el.querySelectorAll(".k")];const T=(window.TIM||{})[id];
@@ -804,11 +804,53 @@ function vCheck(stage,dlg,b){S.ck=S.ck||{};const res=Object.assign({},S.ck[b.id]
   stage.append(h("div",{class:"card ckc"},h("div",{class:"eyebrow"},"自评清单"),h("h2",{class:"q"},b.q),rows,fin));upd();
   speaker(dlg,"du","jj",b.tip||"一条一条对照，诚实地勾。",{noNext:true,au:false})}
 
+/* ---------- 课堂投屏：小组任务 / 随机点名 / 逐条揭晓 / 计分板 ---------- */
+const GRP=LX.groups||null;const SCK="afg-class-score-"+(LX.scoreKey||"x");
+function scGet(){try{return JSON.parse(localStorage.getItem(SCK)||"{}")||{}}catch(e){return {}}}
+function scPut(o){try{localStorage.setItem(SCK,JSON.stringify(o))}catch(e){}}
+let sbDraw=null;
+function scoreBoard(){const box=h("div",{class:"sboard",role:"group","aria-label":"小组计分板"});
+  sbDraw=()=>{const sc=scGet();box.innerHTML="";box.append(h("span",{class:"sbt"},"计分"));GRP.forEach((g,i)=>{const n=sc[g.n]||0;
+    box.append(h("div",{class:"sbg g"+i},h("button",{class:"sbn",title:"给"+g.n+"加 1 分",onclick:e=>{const o=scGet();o[g.n]=(o[g.n]||0)+1;scPut(o);try{SFX.ok()}catch(x){}sbDraw();const r=e.currentTarget.getBoundingClientRect();const f=h("div",{class:"sbplus",style:`left:${r.left+r.width/2}px;top:${r.top}px`},"+1");document.body.append(f);setTimeout(()=>f.remove(),900)}},
+      h("b",{},g.n.replace("组","")),h("span",{class:"sbv"},String(n))),h("button",{class:"sbm",title:"给"+g.n+"减 1 分",onclick:()=>{const o=scGet();o[g.n]=Math.max(0,(o[g.n]||0)-1);scPut(o);sbDraw()}},"−")))})};
+  const d0=sbDraw;sbDraw=()=>{d0();const sc=scGet();const mx=Math.max(0,...GRP.map(g=>sc[g.n]||0));document.querySelectorAll(".scg[data-n]").forEach(el=>{const v=sc[el.dataset.n]||0;el.querySelector(".scv").textContent=v;el.classList.toggle("top",v===mx&&mx>0)})};
+  sbDraw();return box}
+function timerW(secs){let left=secs,run=true;const t=h("b",{class:"tmv"});const w=h("div",{class:"tmw"});
+  const fmt=()=>{t.textContent=left>0?`${Math.floor(left/60)}:${String(left%60).padStart(2,"0")}`:"时间到";w.classList.toggle("end",left<=0)};
+  const tm=setInterval(()=>{if(run&&left>0){left--;fmt();if(left===0){try{SFX.ok()}catch(x){}}}},1000);
+  const pb=h("button",{class:"ghost small",onclick:()=>{run=!run;pb.textContent=run?"暂停":"继续计时"}},"暂停");
+  const ad=h("button",{class:"ghost small",onclick:()=>{left+=60;fmt()}},"+1 分钟");
+  w.append(h("span",{class:"tml"},"倒计时"),t,pb,ad);fmt();gameStop=()=>clearInterval(tm);return w}
+function tkCard(cls,b,body){const img=b.img&&IMG[b.img]?h("img",{class:"tkimg",src:IMG[b.img],alt:b.alt||""}):null;
+  return h("div",{class:"card tk tk-"+cls+(img?" wimg":"")},img,h("div",{class:"tkbody"},...body))}
+function vTask(stage,dlg,b){stage.append(tkCard("task",b,[h("div",{class:"eyebrow"},b.eyebrow||"小组任务"),h("h2",{},b.title),...(b.lines||[]).map(l=>h("p",{class:"tkl"},l)),b.secs?timerW(b.secs):null,b.score?h("p",{class:"tkscore"},b.score):null]));
+  speaker(dlg,b.who||"du",b.face||"jj",b.say,{next,nextLabel:b.nextLabel||"完成了 ▸"})}
+function vPick(stage,dlg,b){S.picked=S.picked||[];const nm=h("div",{class:"pkname"},"？");let rolling=false;
+  const roll=pool=>{if(rolling||!pool.length)return;let cand=pool.filter(n=>!S.picked.includes(n));if(!cand.length){S.picked=S.picked.filter(n=>!pool.includes(n));cand=pool.slice()}
+    rolling=true;nm.classList.remove("on");let d=60;const step=()=>{nm.textContent=cand[Math.floor(Math.random()*cand.length)];d*=1.15;if(d<480)setTimeout(step,d);else{const f=cand[Math.floor(Math.random()*cand.length)];nm.textContent=f;nm.classList.add("on");S.picked.push(f);save();rolling=false;try{SFX.ok()}catch(x){}}};step()};
+  const all=GRP?GRP.flatMap(g=>g.m):[];
+  const btns=h("div",{class:"pkbtns"},h("button",{class:"btn primary",onclick:()=>roll(all)},"全班抽一位"),...(GRP||[]).map(g=>h("button",{class:"btn",onclick:()=>roll(g.m)},g.n+"抽一位")));
+  stage.append(tkCard("pick",b,[h("div",{class:"eyebrow"},b.eyebrow||(b.grab?"抢答":"随机点名")),h("h2",{class:"pkq"},b.q),b.quote?h("p",{class:"pkquote"},b.quote):null,
+    b.grab?h("p",{class:"tkl grab"},"知道的组，举手抢答！"):h("div",{class:"pkrow"},nm,btns),b.score?h("p",{class:"tkscore"},b.score):null]));
+  speaker(dlg,b.who||"du",b.face||"jj",b.say,{next,nextLabel:"看答案 ▸"})}
+function vReveal(stage,dlg,b){let i=0;const items=b.items.map((it,k)=>h("div",{class:"rvitem hid"},h("span",{class:"rvn"},String(k+1)),h("div",{},h("b",{class:"rvt"},it.t),it.d?h("p",{class:"rvd"},it.d):null)));
+  stage.append(tkCard("reveal2",b,[h("div",{class:"eyebrow"},b.eyebrow||"答案"),h("h2",{},b.title),h("div",{class:"rvlist"+(items.length>4?" dense":"")},...items)]));
+  const step=()=>{if(i<items.length){items[i].classList.remove("hid");items[i].classList.add("in");const it=b.items[i];i++;
+      speaker(dlg,it.who||b.who||"du",it.face||b.face||"jj",it.say||it.t,{next:i<items.length?step:(b.after?()=>speaker(dlg,b.who||"du",b.afterFace||"kx",b.after,{next}):next),nextLabel:i<items.length?"下一条 ▸":"继续 ▸"})}else next()};
+  if(b.say)speaker(dlg,b.who||"du",b.face||"jj",b.say,{next:step,nextLabel:"显示答案 ▸"});else step()}
+function vScore(stage,dlg,b){const sc=scGet();const mx=Math.max(0,...GRP.map(g=>sc[g.n]||0));
+  const clr=h("button",{class:"ghost small",onclick:()=>{if(clr.dataset.ok){scPut({});sbDraw&&sbDraw();render();return}clr.dataset.ok="1";clr.textContent="再点一次，确认清零"}},"三组分数清零");
+  stage.append(h("div",{class:"card tk score"},h("div",{class:"eyebrow"},b.eyebrow||"今天的分数"),h("h2",{},b.title||"哪个组领先？"),
+    h("div",{class:"scrow"},...GRP.map((g,i)=>h("div",{class:"scg g"+i+((sc[g.n]||0)===mx&&mx>0?" top":""),"data-n":g.n},h("b",{},g.n),h("span",{class:"scv"},String(sc[g.n]||0)),h("small",{},g.m.join("　"))))),
+    ...(b.lines||[]).map(l=>h("p",{class:"tkl"},l)),h("p",{class:"muted small"},b.note||"分数会累计到下一课时。"),clr));
+  speaker(dlg,b.who||"du",b.face||"kx",b.say,{next,nextLabel:"结束 ▸"})}
+
 /* ---------- 键盘 ---------- */
 addEventListener("keydown",e=>{const tag=document.activeElement?.tagName;if(["TEXTAREA","INPUT"].includes(tag))return;
   if(/^[1-4]$/.test(e.key)){const b=document.querySelector(`.opt[data-k="${e.key}"]:not([disabled])`);if(b){b.click();e.preventDefault()}return}
   const dk={ArrowUp:"n",ArrowDown:"s",ArrowLeft:"w",ArrowRight:"e"}[e.key];if(dk){const b=document.querySelector(".dp-"+dk);if(b){b.click();e.preventDefault();return}}
   if(e.key==="Enter"||e.key===" "){if(document.activeElement?.classList.contains("holdbtn"))return;const g=document.querySelector(".dlg button.go:not([disabled]):not(.holdbtn)");if(g&&document.activeElement!==g){e.preventDefault();g.click()}}});
+if(GRP){document.body.classList.add("clsroom");document.body.append(scoreBoard())}
 render();
 
 if(PROJ){document.addEventListener("keydown",ev=>{if(/INPUT|TEXTAREA|SELECT/.test(ev.target.tagName))return;
